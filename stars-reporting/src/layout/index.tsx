@@ -1,14 +1,11 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import SideMenu from "@/components/sidemenu";
-import React from "react";
+import React, { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 import LayoutStyles from "./layout.module.css";
 
-interface LayoutProps {
-  children?: React.ReactNode;
-}
-
-const Layout = ({ children }: LayoutProps) => {
+const Layout = () => {
   return (
     <>
       <div className={LayoutStyles["outer-container"]}>
@@ -20,7 +17,9 @@ const Layout = ({ children }: LayoutProps) => {
             <Header />
           </div>
           <div className={LayoutStyles["body-container"]}>
-            <>{children}</>
+            <Suspense fallback={<>loading...</>}>
+              <Outlet />
+            </Suspense>
           </div>
           <div className={LayoutStyles["footer-container"]}>
             <Footer />
