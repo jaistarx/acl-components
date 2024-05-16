@@ -26,7 +26,7 @@ const config: Configuration = {
     path: destDir,
     clean: true,
     publicPath: "/",
-    filename: "[name].[contenthash].js",
+    filename: "js/[name].[contenthash].js",
   },
   entry: "./src/index.tsx",
   module: {
@@ -135,7 +135,9 @@ const config: Configuration = {
     new Dotenv({
       path: "./env/.env.dev",
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+    }),
     new CopyPlugin({
       patterns: [
         { from: "./public/manifest.json", to: "manifest.json" },
