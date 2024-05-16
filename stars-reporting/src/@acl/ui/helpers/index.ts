@@ -1,0 +1,1 @@
+export { getAclRootProperty } from "./aclHelper";

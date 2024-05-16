@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@": ["src"],
+      "@/*": ["src/*"],
+      "@acl": ["src/@acl"],
+      "@acl/*": ["src/@acl/*"]
+    }
+  }
+}

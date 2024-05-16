@@ -1,0 +1,19 @@
+:root {
+  /* main color */
+  --main-teal: #0097ac;
+  /* background color */
+  --bg-gray: #f4f6fa;
+  --bg-white: #ffffff;
+  /* stroke color */
+  --stroke-gray: #f4f6fa;
+  --stroke-teal: #0097ac;
+  /* text color */
+  --text-teal: #0097ac;
+  --text-black: #323c47;
+  --text-gray: #9ea2b5;
+  --text-white: #ffffff;
+  --disable-gray: #bebebe;
+
+  /* font family */
+  --font-family: "Poppins, Arial, sans-serif";
+}

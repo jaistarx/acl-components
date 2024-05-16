@@ -1,0 +1,27 @@
+.intro-wrapper {
+    background-color: #F6F9FC;
+    padding: 10px;
+    font-family: "Open Sans",sans-serif;
+    font-size: 14px;
+}
+
+.acl-header {
+  text-align: center;
+  text-decoration: underline;
+  margin: 0px;
+  padding: 0px;
+}
+
+.aclcard-body {
+  padding: 10px;
+}
+
+.acl-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.question {
+  margin: 0px;
+}
