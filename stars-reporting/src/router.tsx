@@ -1,10 +1,11 @@
 import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
+import PlanMarketAnalysis from "./pages/reporting-screens/plan-market-analysis";
 
 // MUST: Lazy load pages
-const PlanMarketAnalysis = lazy(
-  () => import("./pages/reporting-screens/plan-market-analysis")
-);
+// const PlanMarketAnalysis = lazy(
+//   () => import("./pages/reporting-screens/plan-market-analysis")
+// );
 
 const Router = () => {
   return (
