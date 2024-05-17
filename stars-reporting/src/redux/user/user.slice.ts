@@ -7,6 +7,8 @@ const INITIAL_STATE: UserState = {
   firstName: "",
   lastName: "",
   userName: "",
+  loading: false,
+  error: "",
 };
 
 const userSlice = createSlice({
@@ -16,10 +18,11 @@ const userSlice = createSlice({
     updateUser(state: UserState, action: { payload: UserState }) {
       const actionPayload = action.payload;
       if (Boolean(actionPayload)) {
-        state.userEmail = actionPayload.userEmail;
-        state.firstName = actionPayload.firstName;
-        state.lastName = actionPayload.lastName;
-        state.userName = actionPayload.userName;
+        // state.userEmail = actionPayload.userEmail;
+        // state.firstName = actionPayload.firstName;
+        // state.lastName = actionPayload.lastName;
+        // state.userName = actionPayload.userName;
+        return { ...action.payload };
       }
     },
     clearUser(state: UserState) {

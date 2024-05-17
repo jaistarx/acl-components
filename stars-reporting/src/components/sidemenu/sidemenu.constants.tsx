@@ -4,7 +4,7 @@ export const CHECK_LIST: CheckListItem[] = [
   {
     groupName: "Operation Screens",
     options: [
-      { name: "Dashboard", navigateTo: "" },
+      { name: "Dashboard", navigateTo: "/admin" },
       { name: "Contract Summary", navigateTo: "" },
       { name: "Perform monthly Report", navigateTo: "" },
     ],

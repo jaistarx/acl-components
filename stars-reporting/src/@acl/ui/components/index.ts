@@ -17,4 +17,5 @@ export { default as AclCollapse } from "./aclCollapse";
 export { default as AclSnackbar } from "./aclSnackbar";
 export { default as AclIconButton } from "./aclIconButton";
 export { default as AclListItemButton } from "./aclListItemButton";
+export { default as AclBackdrop } from "./aclBackdrop";
 export * from "./aclAccordion";

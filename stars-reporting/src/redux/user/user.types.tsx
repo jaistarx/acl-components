@@ -4,6 +4,6 @@ export type UserState = {
   lastName: string;
   userName: string;
   data?: any;
-  loading?: boolean;
-  error?: any;
+  loading: boolean;
+  error: any;
 };

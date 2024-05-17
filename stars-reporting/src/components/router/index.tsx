@@ -1,4 +1,5 @@
 import Layout from "@/layout";
+import Admin from "@/pages/admin-screens";
 import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -13,6 +14,7 @@ const Router = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<></>} />
         <Route path="plan-market-analysis" element={<PlanMarketAnalysis />} />
+        <Route path="admin" element={<Admin />} />
       </Route>
     </Routes>
   );
