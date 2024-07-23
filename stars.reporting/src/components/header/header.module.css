@@ -1,0 +1,76 @@
+:root {
+  --header-height: 73px;
+}
+
+.outer-container {
+  background-color: #EFEFEF;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
+  border-bottom: solid 1px #dee0e7;
+}
+
+.user-fullname {
+  font-weight: 700;
+}
+
+.select-logout-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.header-icon:hover {
+  cursor: pointer;
+}
+
+.header-advlogo-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 62px;
+  margin-left: 27px;
+}
+
+.header-adv-logo {
+  height: 28px;
+  width: 186px;
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  column-gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  color: #5F6062;
+}
+
+.menu-item {
+  padding: 10px 14px 10px 14px;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-item:hover {
+  cursor: pointer;
+  background: #313D4F;
+  color: white;
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+  padding-right: 36px;
+  column-gap: 40px;
+}
+
+.menu-item-selected {
+  background: #313D4F;
+  color: white;
+}

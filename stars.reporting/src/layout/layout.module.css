@@ -1,0 +1,33 @@
+.outer-container {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.header-body-footer-container {
+  flex: 1;
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header-container {
+  /* position: fixed; */
+  width: 100%;
+}
+
+.footer-container {
+  /* position: fixed; */
+  /* bottom: 0px; */
+  width: 100%;
+}
+
+.body-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+}
