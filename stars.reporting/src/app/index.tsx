@@ -118,6 +118,7 @@ const App = () => {
         </>
       )}
       <AclBackdrop open={global.showBackdrop || Boolean(user.isLoading)} />
+      <>learn react</>
     </>
   );
 };
