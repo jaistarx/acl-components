@@ -1,8 +1,8 @@
-import { CircularProgress, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { AclSpinnerProps } from "../../types/aclSpinnerEntity";
-import { SPINNER_WRAPPER } from "../../constants/aclSpinnerConstant";
+import { CircularProgress, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclSpinnerProps } from '../../types/aclSpinnerEntity';
+import { SPINNER_WRAPPER } from '../../constants/aclSpinnerConstant';
 
 const getExposedProps = (props: AclSpinnerProps) => {
   return {

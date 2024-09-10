@@ -1,3 +1,3 @@
-import { PopperProps } from "@mui/material";
+import { PopperProps } from '@mui/material';
 
 export declare type AclPopperProps = PopperProps & {};

@@ -1,1 +1,1 @@
-export { default } from "./aclIcon";
+export { default } from './aclIcon';

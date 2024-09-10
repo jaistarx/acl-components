@@ -1,7 +1,7 @@
-import { Collapse, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { AclCollapseProps } from "../../types/aclCollapseEntity";
+import { Collapse, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclCollapseProps } from '../../types/aclCollapseEntity';
 
 const getExposedProps = (props: AclCollapseProps) => {
   return {

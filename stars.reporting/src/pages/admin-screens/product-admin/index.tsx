@@ -1,137 +1,199 @@
-import AddIcon from '@/assets/images/add-icon.svg';
-import { fetchLookupData, lookupActions } from '@/redux/lookup';
+import EditIcon from '@/assets/images/edit-icon.svg';
+import MeasureViewIcon from '@/assets/images/visibility.svg';
+import ProductAdminEditMeasure from '@/components/product-admin-edit-measure';
+import ProductAdminMeasure from '@/components/product-admin-measure';
+import ProductAdminSidePanel from '@/components/product-admin-side-panel';
+import { fetchLookupData } from '@/redux/lookup';
+import { MeasureType, fetchMeasureData } from '@/redux/measure';
 import useAppDispatch from '@/utils/hooks/app-dispatch';
 import useAppSelector from '@/utils/hooks/app-selector';
-import { AclButton, AclDatepicker, AclIcon, AclSpinner } from '@acl/ui';
-import React, { useEffect, useState } from 'react';
+import { AclButton, AclIcon, AclSpinner } from '@acl/ui';
+import React, { useCallback, useEffect, useState } from 'react';
+import { CATEGORIES, PAGE_SIZE } from './product-admin.constant';
 import ProductAdminStyles from './product-admin.module.css';
-import { Row } from './product-admin.type';
 
 const ProductAdmin = () => {
-  const [rows, setRows] = useState<Row[]>([]);
   const dispatch = useAppDispatch();
-  const lookup = useAppSelector((state) => state.lookup);
+  const measureData = useAppSelector((state) => state.measure);
+  const lookupData = useAppSelector((state) => state.lookup);
+  const [selectedCategory, setSelectedCategory] = useState<string>(CATEGORIES[0]);
+  const [accordionExpanded, setAccordionExpanded] = useState<{ [key: string]: boolean }>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [readOnlyStatuses, setReadOnlyStatuses] = useState<{ [key: string]: boolean }>({});
+  const [selectedMeasure, setSelectedMeasure] = useState<MeasureType | null>(null);
+  const [visibleData, setVisibleData] = useState<MeasureType[]>([]);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const [filteredData, setFilteredData] = useState<MeasureType[] | undefined>(undefined);
+
+  const loadMoreData = useCallback(() => {
+    if (!filteredData || loadingMore) return;
+
+    setLoadingMore(true);
+    const nextPageData = filteredData.slice(visibleData.length, visibleData.length + PAGE_SIZE);
+    setVisibleData((prevData) => [...prevData, ...nextPageData]);
+    setTimeout(() => {
+      setLoadingMore(false);
+    }, 5000);
+  }, [filteredData, visibleData, loadingMore]);
 
   useEffect(() => {
-    dispatch(lookupActions.reset());
+    const filtered: MeasureType[] | undefined =
+      selectedCategory !== CATEGORIES[0]
+        ? measureData.data?.filter((measure) => measure.categoryName?.trim() === selectedCategory)
+        : measureData.data;
+    setFilteredData(filtered);
+
+    if (filtered?.length) {
+      setVisibleData(filtered.slice(0, PAGE_SIZE));
+    }
+  }, [measureData.data, selectedCategory]);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const bottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop - e.currentTarget.clientHeight < 1;
+
+    if (bottom && !loadingMore && visibleData.length < (filteredData ? filteredData.length : 0)) {
+      loadMoreData();
+    }
+  };
+
+  const handleAccordionChange = (groupName: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    setAccordionExpanded({
+      ...accordionExpanded,
+      [groupName]: isExpanded,
+    });
+  };
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category?.trim());
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedMeasure(null);
+    setIsEdit(false);
+
+    if (selectedMeasure) {
+      setReadOnlyStatuses({ ...readOnlyStatuses, [selectedMeasure.measureId]: true });
+    }
+  };
+
+  const handleEditClick = (measure: MeasureType) => {
+    setSelectedMeasure(measure);
+    setIsEdit(true);
+  };
+
+  const getCategories = (): string[] => {
+    const uniqueCategoriesSet = new Set([...CATEGORIES]);
+
+    measureData.data?.forEach((measure) => {
+      const trimmedCategory = measure.categoryName?.trim();
+
+      if (trimmedCategory) {
+        uniqueCategoriesSet.add(trimmedCategory);
+      }
+    });
+
+    const uniqueCategories = Array.from(uniqueCategoriesSet);
+
+    return uniqueCategories;
+  };
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      dispatch(fetchMeasureData({ measureYear: 2024 }));
+    }
+  }, [dispatch, isModalOpen]);
+
+  useEffect(() => {
+    if (selectedMeasure && isEdit) {
+      setIsModalOpen(true);
+    }
+  }, [selectedMeasure, isEdit]);
+
+  useEffect(() => {
+    dispatch(fetchLookupData({ measureYear: 2024 }));
   }, [dispatch]);
-
-  const AddRow = () => {
-    const newRow: Row = {
-      measureCode: '',
-      measureName: '',
-      abbreviation: '',
-      oneStar: '',
-      twoStar: '',
-      threeStar: '',
-      fourStar: '',
-      fiveStar: '',
-      measureWeight: '',
-      correlation: '',
-      measureCategory: '',
-      measureSubcategory: '',
-      contractType: '',
-      measureType: '',
-      domainType: '',
-      isEditing: true,
-    };
-    setRows([...rows, newRow]);
-  };
-
-  const deleteRow = (index: number) => {
-    setRows(rows.filter((_, i) => i !== index));
-  };
+  //Todos: Needs to handle visible data refresh case
+  // useEffect(() => {
+  //   const initialLoad = async (): Promise<void> => {
+  //     await dispatch(fetchLookupData({ measureYear: 2024 }));
+  //     await dispatch(fetchMeasureData({ measureYear: 2024 }));
+  //   };
+  //   initialLoad();
+  // }, [dispatch]);
 
   return (
     <>
-      <div className={ProductAdminStyles['product-admin-outer-container']}>
-        <div className={ProductAdminStyles['heading-datepicker-wrapper']}>
-          <h2 className={ProductAdminStyles['product-admin-main-name']}>Product Admin</h2>
-          <AclDatepicker
-            onChange={(date: Date | null) => dispatch(fetchLookupData({ measureYear: date?.getFullYear() }))}
-            label="Select Measurement Year"
-            openTo="year"
-            views={['year']}
-            className={ProductAdminStyles['year-picker']}
-          />
-        </div>
-        {lookup.loading ? (
-          <AclSpinner />
-        ) : Boolean(Object.keys((lookup.data?.lookupTypes)??{}).length) ? (
-          <div>
-            <table className={ProductAdminStyles['product-admin-table']}>
-              <thead>
-                <tr>
-                  <th>Measure code</th>
-                  <th>Measure Name</th>
-                  <th>Abbreviation</th>
-                  <th colSpan={5}>Measure Threshold</th>
-                  <th>Measure Weight</th>
-                  <th>Correlation</th>
-                  <th>Measure Category</th>
-                  <th>Measure Sub-category</th>
-                  <th>Contract Type</th>
-                  <th>Measure Type</th>
-                  <th>Domain Type</th>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>1 Star</th>
-                  <th>2 Star</th>
-                  <th>3 Star</th>
-                  <th>4 Star</th>
-                  <th>5 Star</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, index) => (
-                  <tr key={index}>
-                    {Array.from({ length: 10 }).map((_, colIndex) => (
-                      <td key={colIndex}>
-                        <input type="text" />
-                      </td>
-                    ))}
+      {measureData.loading || lookupData.loading ? (
+        <AclSpinner />
+      ) : (
+        <div className={ProductAdminStyles['outer-container']}>
+          <div className={ProductAdminStyles['header-section']}>
+            <h2 className={ProductAdminStyles['main-name']}>Measures (2024)</h2>
 
-                    {Object.keys(lookup.data?.lookupTypes ?? {}).map((colIndex) => (
-                      <td key={colIndex}>
-                        <select>
-                          {lookup.data?.lookupTypes?.[colIndex]?.map((value: string, index: number) => (
-                            <option key={index} value={value}>
-                              {value}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
-                    ))}
-
-                    <td>
-                      <button onClick={() => deleteRow(index)}>Delete</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <AclButton
-              variant="outlined"
-              onClick={AddRow}
-              endIcon={<AclIcon className={ProductAdminStyles['product-admin-add-icon']} src={AddIcon} />}
-            >
-              Add
+            <AclButton variant="text">
+              View Activity Log
+              <AclIcon className={ProductAdminStyles['icon-view-activity']} src={MeasureViewIcon} />
             </AclButton>
           </div>
-        ) : (
-          <h3>No Data Found</h3>
-        )}
-      </div>
+
+          <div className={ProductAdminStyles['inner-container']}>
+            <div className={ProductAdminStyles['sidepanel-section']}>
+              <ProductAdminSidePanel
+                categories={getCategories()}
+                onCategoryClick={handleCategoryClick}
+                selectedCategory={selectedCategory}
+              />
+            </div>
+
+            <div className={ProductAdminStyles['content-section']} onScroll={handleScroll}>
+              <div className={ProductAdminStyles['header-container']}>
+                <div className={ProductAdminStyles['header-left']}>
+                  <h3>Category: {selectedCategory}</h3>
+                  <AclIcon src={EditIcon} />
+                  <span>Rename Category</span>
+                </div>
+
+                <div>
+                  <AclButton variant="outlined" onClick={handleOpenModal}>
+                    + Add Measure
+                  </AclButton>
+                </div>
+              </div>
+
+              <div className={ProductAdminStyles['content-body-section']}>
+                {visibleData.map((measure) => (
+                  <div key={measure.measureId} className={ProductAdminStyles['content-container']}>
+                    <ProductAdminMeasure
+                      expanded={accordionExpanded?.[measure.measureId] ?? false}
+                      onChange={handleAccordionChange(measure.measureId)}
+                      measure={measure}
+                      onEditClick={() => handleEditClick(measure)}
+                      readOnly={readOnlyStatuses[measure.measureId] ?? true}
+                    />
+                  </div>
+                ))}
+
+                {loadingMore && <AclSpinner />}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isModalOpen && (
+        <ProductAdminEditMeasure
+          measure={selectedMeasure}
+          isEdit={isEdit}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 };

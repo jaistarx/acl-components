@@ -1,4 +1,4 @@
-import { ToggleButtonGroupProps } from "@mui/material";
+import { ToggleButtonGroupProps } from '@mui/material';
 
 type OmittedToggleButtonProps = {
   // Omit the property to override it
@@ -11,10 +11,7 @@ export declare type IToggleButtonOptions = {
   [key: string]: any;
 };
 
-export declare type IToggleButtonProps = Omit<
-  ToggleButtonGroupProps,
-  keyof OmittedToggleButtonProps
-> & {
+export declare type IToggleButtonProps = Omit<ToggleButtonGroupProps, keyof OmittedToggleButtonProps> & {
   options?: IToggleButtonOptions[];
   onChange?: (event: any) => void;
   defaultValue?: IToggleButtonOptions;

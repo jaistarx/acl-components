@@ -1,6 +1,6 @@
 import { TableColDef, TableRowDef } from './view-files.type';
 
-export const columns: TableColDef<TableRowDef>[] = [
+export const COLUMNS: TableColDef<TableRowDef>[] = [
   { field: 'requirements', headerName: 'Requirement' },
   {
     field: 'fileName',

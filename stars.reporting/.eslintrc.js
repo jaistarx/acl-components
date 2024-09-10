@@ -43,6 +43,15 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        types: {
+          '{}': false,
+        },
+      },
+    ],
+    'react/display-name': 'off',
   },
-  ignorePatterns: ['build/', 'dist/', 'node_modules/', '@acl/'],
+  ignorePatterns: ['build/', 'dist/', 'node_modules/', '@acl/', 'src/type.d.ts'],
 };

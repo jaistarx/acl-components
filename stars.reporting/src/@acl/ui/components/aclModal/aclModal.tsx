@@ -1,22 +1,14 @@
-import { Backdrop, Box, Fade, Modal, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import {
-  DEFAULT_BOX_STYLE,
-  DEFAULT_CLOSE_BUTTON_STYLE,
-} from "../../constants/aclModalConstant";
-import { AclModalProps } from "../../types/aclModalEntity";
-import AclIcon from "../aclIcon";
-import ModalCloseIcon from "./icons/modal-close-icon.svg";
+import { Backdrop, Box, Fade, Modal, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { DEFAULT_BOX_STYLE, DEFAULT_CLOSE_BUTTON_STYLE } from '../../constants/aclModalConstant';
+import { AclModalProps } from '../../types/aclModalEntity';
+import AclIcon from '../aclIcon';
+import ModalCloseIcon from './icons/modal-close-icon.svg';
 
 const seperatePropsToBePassed = (props: AclModalProps) => {
-  const {
-    openModal,
-    toggleOpenModal,
-    modalDisplayStyle,
-    closeIconPosition,
-    ...originalProps
-  } = props;
+  const { openModal, toggleOpenModal, modalDisplayStyle, closeIconPosition, closeIconComponent, ...originalProps } =
+    props;
   return originalProps;
 };
 
@@ -59,9 +51,7 @@ const AclModal = ({ ...props }: AclModalProps) => {
                   <AclIcon
                     src={ModalCloseIcon}
                     alt="modal-close-icon"
-                    onClick={() =>
-                      props.toggleOpenModal && props.toggleOpenModal(false)
-                    }
+                    onClick={() => props.toggleOpenModal && props.toggleOpenModal(false)}
                   ></AclIcon>
                 )}
               </Box>

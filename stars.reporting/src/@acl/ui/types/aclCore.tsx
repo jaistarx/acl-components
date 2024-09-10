@@ -2,14 +2,7 @@ export declare type IDictionary<T> = {
   [key: string]: T;
 };
 
-export declare type IColor =
-  | "primary"
-  | "secondary"
-  | "error"
-  | "info"
-  | "success"
-  | "warning"
-  | undefined;
+export declare type IColor = 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | undefined;
 
 export declare type IAclColorPalette = {
   mainTeal: string;
@@ -27,15 +20,15 @@ export declare type IAclColorPalette = {
 };
 
 export declare type IAclRootProperty = {
-  "--main-teal"?: string;
-  "--bg-gray"?: string;
-  "--bg-white"?: string;
-  "--stroke-gray"?: string;
-  "--stroke-teal"?: string;
-  "--text-teal"?: string;
-  "--text-black"?: string;
-  "--text-gray"?: string;
-  "--text-white"?: string;
-  "--disable-gray"?: string;
-  "--font-family"?: string;
+  '--main-teal'?: string;
+  '--bg-gray'?: string;
+  '--bg-white'?: string;
+  '--stroke-gray'?: string;
+  '--stroke-teal'?: string;
+  '--text-teal'?: string;
+  '--text-black'?: string;
+  '--text-gray'?: string;
+  '--text-white'?: string;
+  '--disable-gray'?: string;
+  '--font-family'?: string;
 };

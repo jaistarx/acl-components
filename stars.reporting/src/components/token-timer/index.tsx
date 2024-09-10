@@ -1,7 +1,7 @@
 import { userActions } from '@/redux/user';
 import useAppDispatch from '@/utils/hooks/app-dispatch';
 import { AclButton, AclModal } from '@acl/ui';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import TokenTimerStyles from './token-timer.module.css';
 import { PopupAction, TokenTimerProps } from './token-timer.type';
 
@@ -9,11 +9,11 @@ const TokenTimer = ({ authHydrate }: TokenTimerProps) => {
   const dispatch = useAppDispatch();
   const [showTimeExpiryPopup, setShowTimeExpiryPopup] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  const fiveMinutes = 5 * 60 * 1000; //  5 minutes in milliseconds
-  const frSdk = localStorage.getItem(`FR-SDK-${window.REACT_APP_CLIENTID}`) ?? '';
+  const fiveMinutes = useMemo(() => 5 * 60 * 1000, []); // 5 minutes in milliseconds
+  const frSdk = useMemo(() => localStorage.getItem(`FR-SDK-${window.REACT_APP_CLIENTID}`) ?? '', []);
 
   const handlePopUpAction = useCallback(
-    (popUpAction: PopupAction) => {
+    (popUpAction: PopupAction): void => {
       setShowTimeExpiryPopup(false);
 
       switch (popUpAction) {
@@ -30,19 +30,19 @@ const TokenTimer = ({ authHydrate }: TokenTimerProps) => {
     [dispatch, authHydrate],
   );
 
-  const formatTime = (milliseconds: number) => {
+  const formatTime = useCallback((milliseconds: number): string => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return ` ${minutes} minutes ${seconds < 10 ? '0' : ''}${seconds} seconds `;
-  };
+
+    return `${minutes} minutes ${seconds < 10 ? '0' : ''}${seconds} seconds`;
+  }, []);
 
   useEffect(() => {
     if (Boolean(frSdk)) {
       const tokenExpiry = JSON.parse(frSdk)?.tokenExpiry ?? 0;
       const currentTime = Date.now();
-      const twoMinute = 2 * 60 * 1000; // 2 minutes in milliseconds
-      const initialTimeRemaining = tokenExpiry - currentTime - twoMinute; // FEATURE: Reduced 2 minutes for handling side effects
+      const initialTimeRemaining = tokenExpiry - currentTime;
 
       if (initialTimeRemaining <= 0) {
         handlePopUpAction('logout');
@@ -63,7 +63,7 @@ const TokenTimer = ({ authHydrate }: TokenTimerProps) => {
         }
       }
     }
-  }, [handlePopUpAction, fiveMinutes, frSdk]);
+  }, [frSdk, fiveMinutes, handlePopUpAction]);
 
   useEffect(() => {
     if (showTimeExpiryPopup) {
@@ -92,7 +92,7 @@ const TokenTimer = ({ authHydrate }: TokenTimerProps) => {
         <div className={TokenTimerStyles['text-wrapper']}>
           <div>
             You will be logged out in
-            <span className={TokenTimerStyles['formatted-time']}>{formatTime(timeRemaining)}</span>!
+            <span className={TokenTimerStyles['formatted-time']}>{' ' + formatTime(timeRemaining)}</span>!
           </div>
           <div>Do you want to continue your session?</div>
         </div>

@@ -1,8 +1,8 @@
-import { IAclDrawerIconPosition } from "../types/aclDrawerEntity";
+import { IAclDrawerIconPosition } from '../types/aclDrawerEntity';
 
 export const ICON_CONTAINER = (iconPosition: IAclDrawerIconPosition) => {
   return {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1201,
     ...iconPosition,
   };

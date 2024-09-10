@@ -1,4 +1,4 @@
-import { CardProps } from "@mui/material";
+import { CardProps } from '@mui/material';
 
 export declare type ICardExposedProps = CardProps & {
   raised?: boolean | undefined;

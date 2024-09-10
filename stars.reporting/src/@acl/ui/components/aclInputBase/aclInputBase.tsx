@@ -1,7 +1,7 @@
-import { InputBase, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { AclInputBaseProps } from "../../types/aclInputBaseEntity";
+import { InputBase, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclInputBaseProps } from '../../types/aclInputBaseEntity';
 
 const getExposedProps = (props: AclInputBaseProps) => {
   return {

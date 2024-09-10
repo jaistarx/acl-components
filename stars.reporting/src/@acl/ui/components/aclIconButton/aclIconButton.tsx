@@ -1,7 +1,7 @@
-import { IconButton, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { AclIconButtonProps } from "../../types/aclIconButtonEntity";
+import { IconButton, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclIconButtonProps } from '../../types/aclIconButtonEntity';
 
 const getExposedProps = (props: AclIconButtonProps) => {
   return {

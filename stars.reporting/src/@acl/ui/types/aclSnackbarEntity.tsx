@@ -1,4 +1,4 @@
-import { SnackbarProps } from "@mui/material";
+import { SnackbarProps } from '@mui/material';
 
 export declare type AclSnackbarProps = SnackbarProps & {
   setOpen?: (event: boolean) => void;

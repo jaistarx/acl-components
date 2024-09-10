@@ -1,1 +1,1 @@
-export { default } from "./aclModal";
+export { default } from './aclModal';

@@ -1,5 +1,5 @@
-import React, { CSSProperties } from "react";
-import { IAclIconProps } from "../../types/aclIconEntity";
+import React, { CSSProperties } from 'react';
+import { IAclIconProps } from '../../types/aclIconEntity';
 
 const AclIcon = ({ style, src, alt, crossOrigin, ...props }: IAclIconProps) => {
   const defaultStyle: CSSProperties = {
@@ -9,13 +9,7 @@ const AclIcon = ({ style, src, alt, crossOrigin, ...props }: IAclIconProps) => {
 
   return (
     <>
-      <img
-        style={imageStyle}
-        src={src}
-        alt={alt ?? "icon"}
-        {...props}
-        crossOrigin={crossOrigin ?? ""}
-      />
+      <img style={imageStyle} src={src} alt={alt ?? 'icon'} {...props} crossOrigin={crossOrigin ?? ''} />
     </>
   );
 };

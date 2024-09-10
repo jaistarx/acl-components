@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosResponse, CancelTokenSource } from 'axios';
-import { FetchMeasureDataParam } from './measure.type';
+import { FetchMeasureDataParam, MeasureType, PostMeasureDataParam, UpdateMeasureDataParam } from './measure.type';
 
 let cancelSource: CancelTokenSource;
 
@@ -19,4 +19,14 @@ export const fetchMeasureData = createAsyncThunk('fetchMeasureData', async ({ me
 
     return response.data;
   }
+});
+
+export const postMeasureData = createAsyncThunk('postMeasureData', async (data: PostMeasureDataParam) => {
+  const response: AxiosResponse<MeasureType> = await axios.post('Measure', data);
+  return response.data;
+});
+
+export const updateMeasureData = createAsyncThunk('updateMeasureData', async (data: UpdateMeasureDataParam) => {
+  const response: AxiosResponse<MeasureType> = await axios.put('Measure', data);
+  return response.data;
 });

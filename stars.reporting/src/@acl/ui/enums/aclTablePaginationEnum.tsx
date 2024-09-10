@@ -3,8 +3,8 @@ export enum RowsPerPageEnum {
 }
 
 export enum OnChangePageEnum {
-  Initial = "Initial",
-  Previous = "Previous",
-  Next = "Next",
-  Final = "Final",
+  Initial = 'Initial',
+  Previous = 'Previous',
+  Next = 'Next',
+  Final = 'Final',
 }

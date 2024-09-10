@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { deleteLookupData, fetchLookupData, saveLookupData } from './lookup.api';
 import { LookupData, LookupItem, LookupState } from './lookup.type';
+import { getValuesByType, getValuesByTypeWithValue } from '@/utils/common/helper';
 
 const initialState: LookupState = {
   data: null,
@@ -43,8 +44,18 @@ const lookupSlice = createSlice({
       };
 
       const actionPayload = action.payload;
+      state.data = {
+        actionPayload,
+        lookupTypes: transformData(actionPayload),
+        categoryLookup: getValuesByType(actionPayload, 'MeasureCategory'),
+        subcategoryLookup: getValuesByType(actionPayload, 'SubMeasureCategory'),
+        reportingRequirementsLookup: getValuesByType(actionPayload, 'ReportingRequirements'),
+        measureTypeLookup: getValuesByType(actionPayload, 'MeasureType'),
+        domainTypelookup: getValuesByType(actionPayload, 'DomainType'),
+        weighingCategoryLookup: getValuesByTypeWithValue(actionPayload, 'WeighingCategory'),
+        generalTrendLookup: getValuesByType(actionPayload, 'GeneralTrend'),
+      };
       state.loading = false;
-      state.data = {actionPayload, lookupTypes:transformData(actionPayload)};
       state.error = null;
     });
     builder.addCase(fetchLookupData.rejected, (state, action) => {
@@ -62,8 +73,7 @@ const lookupSlice = createSlice({
 
       const newData = state.data ? { ...state.data } : null;
 
-      if(newData)
-        newData.actionPayload = newData.actionPayload.filter((item) => item.lookupId !== lookupIdToDelete);
+      if (newData) newData.actionPayload = newData.actionPayload.filter((item) => item.lookupId !== lookupIdToDelete);
 
       state.loading = false;
       state.data = newData;

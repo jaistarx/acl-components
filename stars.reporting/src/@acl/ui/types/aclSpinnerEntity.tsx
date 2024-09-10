@@ -1,3 +1,3 @@
-import { CircularProgressProps } from "@mui/material";
+import { CircularProgressProps } from '@mui/material';
 
 export type AclSpinnerProps = CircularProgressProps & {};

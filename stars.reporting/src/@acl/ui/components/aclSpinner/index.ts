@@ -1,1 +1,1 @@
-export { default } from "./aclSpinner";
+export { default } from './aclSpinner';

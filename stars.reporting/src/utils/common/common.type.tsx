@@ -5,3 +5,9 @@ export type UnparsedUser = {
   name: string;
   group: string[];
 };
+
+export type Option = {
+  id: string;
+  value: string;
+  [key: string | number]: string | number;
+};

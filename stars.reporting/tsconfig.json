@@ -16,9 +16,9 @@
     "sourceMap": true,
     "jsx": "react",
     "module": "esnext",
-    "types": ["jest", "@testing-library/jest-dom", "node"],
-    "typeRoots": ["node_modules/@types", "src/type"]
+    "typeRoots": ["./node_modules/@types", "./src/type", "./node_modules/@testing-library"],
+    "types": ["jest", "jest-dom"]
   },
-  "include": ["src", "react-app-env.d.ts", "configs"],
+  "include": ["src", "react-app-env.d.ts"],
   "extends": "./tsconfig.paths.json"
 }

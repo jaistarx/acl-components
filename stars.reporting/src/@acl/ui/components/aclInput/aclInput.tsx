@@ -9,7 +9,7 @@ const getExposedProps = (props: AclInputProps) => {
   return {
     ...props,
     InputLabelProps: props.InputLabelProps ?? { style: INPUTLABEL_CSS_CONFIG },
-    variant: props.variant ?? 'standard',
+    variant: props.variant ?? 'outlined',
   };
 };
 

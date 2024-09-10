@@ -37,7 +37,6 @@ const fileSlice = createSlice({
     });
     builder.addCase(getUploadedFiles.pending, (state) => {
       state.loading = true;
-      state.data.uploadedFiles = { ...initialState.data.uploadedFiles };
       state.error = null;
     });
     builder.addCase(getUploadedFiles.fulfilled, (state, action) => {
@@ -48,7 +47,6 @@ const fileSlice = createSlice({
     });
     builder.addCase(getUploadedFiles.rejected, (state, action) => {
       state.loading = false;
-      state.data.uploadedFiles = { ...initialState.data.uploadedFiles };
       state.error = action.error;
     });
   },

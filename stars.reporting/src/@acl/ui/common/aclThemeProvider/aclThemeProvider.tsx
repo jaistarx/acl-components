@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const AclThemeProvider = createTheme({
   palette: {
     primary: {
-      main: '#0097ac',
+      main: '#04636d',
     },
     // TODO: Change color from palette
     secondary: {
@@ -14,7 +14,8 @@ const AclThemeProvider = createTheme({
     htmlFontSize: 16,
     fontFamily: 'Poppins, Arial, sans-serif',
     body1: {
-      color: '#323c47',
+      //TODOs: selected case for LisItemButton needs to handle
+      // color: '#323c47',
       fontWeight: 400,
       fontSize: 14,
       letterSpacing: 0,
@@ -111,6 +112,17 @@ const AclThemeProvider = createTheme({
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           fontSize: '14px',
+        },
+        contained: {
+          '&:hover': {
+            backgroudColor: '#002E33',
+          },
+        },
+        outlined: {
+          '&:hover': {
+            color: '#002E33',
+            borderColor: '#002E33',
+          },
         },
       },
     },
@@ -227,15 +239,49 @@ const AclThemeProvider = createTheme({
         },
       },
     },
+    // MuiInputBase
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          padding: '0px',
+          margin: '0px',
+          borderRadius: '4px !important',
+        },
+      },
+    },
+    MuiFilledInput: {
+      defaultProps: {
+        disableUnderline: true,
+      },
+      styleOverrides: {
+        root: {
+          backgroundColor: '#EFF1F7',
+          '&:hover': {
+            backgroundColor: '#E0E3EB',
+          },
+          '&.Mui-focused': {
+            backgroundColor: '#EFF1F7',
+          },
+          '&.Mui-disabled': {
+            backgroundColor: '#F5F5F5',
+          },
+          '&::before': {
+            borderBottom: 'none',
+          },
+          '&::after': {
+            borderBottom: 'none',
+          },
+        },
+      },
+    },
     // MuiAccordion
     MuiAccordion: {
       styleOverrides: {
         root: {
-          color: 'white',
-          background: 'transparent',
+          color: '#202224',
           textTransform: 'none',
-          border: 'none',
-          borderRadius: '12px',
+          border: 'solid 1px #DEE0E7',
+          borderRadius: '12px !important',
           position: 'relative',
           boxShadow: 'none',
           fontSize: '14px',
@@ -244,20 +290,15 @@ const AclThemeProvider = createTheme({
             content: 'none',
           },
           '.Mui-expanded': {
-            borderRadius: '12px',
-            background: 'linear-gradient(90deg, #262B68 0%, #262B68 96.28%)',
-            fontWeight: 700,
-            letterSpacing: '-0.5px',
+            borderRadius: '0px',
           },
           '.MuiAccordionSummary-root': {
-            height: '40px',
-            '&:hover': {
-              fontWeight: 700,
-              letterSpacing: '-0.5px',
-            },
+            // background: '#F4F4F4',
+            height: '66px',
           },
           '.MuiAccordionDetails-root': {
             padding: '0px',
+            borderRadius: '0px',
           },
         },
       },
@@ -304,6 +345,27 @@ const AclThemeProvider = createTheme({
       styleOverrides: {
         root: {
           color: '#0097ac',
+        },
+      },
+    },
+    // MuiSelect
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          '&.readonly': {
+            pointerEvents: 'none',
+            backgroundColor: '#f5f5f5',
+          },
+        },
+      },
+    },
+    // MuiMenu
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          '.MuiBackdrop-root': {
+            backgroundColor: 'transparent',
+          },
         },
       },
     },

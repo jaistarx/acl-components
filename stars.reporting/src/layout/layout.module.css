@@ -12,7 +12,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* FEATURE: uncomment if needed */
+  /* overflow: hidden; */
 }
 
 .header-container {

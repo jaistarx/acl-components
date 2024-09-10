@@ -28,7 +28,7 @@ export const deleteLookupData = createAsyncThunk('deleteLookupData', async (look
 
   const source = axios.CancelToken.source();
   cancelSource = source;
-  
+
   const response: AxiosResponse = await axios.delete(`Lookup/${lookupId}`, {
     cancelToken: source.token,
   });
@@ -45,7 +45,7 @@ export const saveLookupData = createAsyncThunk('saveLookupData', async (lookupIt
   cancelSource = source;
 
   const currentDate = new Date().toISOString();
-  const measureYear = lookupItem.measureYear.toString();
+  const measureYear = lookupItem.measureYear?.toString();
 
   const lookupData = {
     createdBy: lookupItem.userName,
@@ -57,10 +57,25 @@ export const saveLookupData = createAsyncThunk('saveLookupData', async (lookupIt
     lookupType: lookupItem.lookupType,
     lookupName: lookupItem.lookupName,
     lookupValue: lookupItem.lookupValue,
-    measureYear: measureYear
+    measureYear: measureYear,
   };
- 
+
   const response: AxiosResponse = await axios.post(`Lookup`, lookupData, {
+    cancelToken: source.token,
+  });
+
+  return response.data;
+});
+
+export const editLookupData = createAsyncThunk('editLookupData', async (lookupItem: LookupItem) => {
+  if (cancelSource) {
+    cancelSource.cancel('Operation canceled due to new request.');
+  }
+
+  const source = axios.CancelToken.source();
+  cancelSource = source;
+
+  const response: AxiosResponse = await axios.put(`Lookup`, lookupItem, {
     cancelToken: source.token,
   });
 

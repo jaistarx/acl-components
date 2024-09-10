@@ -3,29 +3,30 @@ import DeleteOutlineIcon from '@/assets/images/delete_outline.svg';
 import DragNDropIcon from '@/assets/images/drag-n-drop.svg';
 import VisibilityIcon from '@/assets/images/visibility.svg';
 import { fileActions, getUploadedFiles } from '@/redux/file';
-import { postUploadedFile } from '@/redux/function-app';
-import { convertFileNameFormatToRegex, extractMonthAndYearFromFileName } from '@/utils/common/helper';
+import { postDeleteFile, postUploadedFile } from '@/redux/function-app';
+import { convertBytes, convertFileNameFormatToRegex, extractDateFromFileName } from '@/utils/common/helper';
 import useAppDispatch from '@/utils/hooks/app-dispatch';
 import useAppSelector from '@/utils/hooks/app-selector';
-import { AclDatepicker, AclIcon, AclListItemButton, AclSpinner } from '@acl/ui';
+import { AclBackdrop, AclDatepicker, AclIcon, AclListItemButton, useAclSnackbar } from '@acl/ui';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
-import { columns } from './view-files.constant';
+import { COLUMNS } from './view-files.constant';
 import ViewFilesStyles from './view-files.module.css';
 import { TableColDef, TableRowDef } from './view-files.type';
 
 const ViewFiles = () => {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar, closeSnackbar } = useAclSnackbar();
   const file = useAppSelector((state) => state.file);
   const user = useAppSelector((state) => state.user);
   const [measureDate, setMeasureDate] = useState<string>('');
 
-  const handleDateChange = (selectedDate: Date | null) => {
+  const handleDateChange = async (selectedDate: Date | null) => {
     if (selectedDate) {
       const measureDate = format(selectedDate, 'dd-MMM-yyyy');
       setMeasureDate(measureDate);
-      dispatch(getUploadedFiles({ measureDate }));
+      await dispatch(getUploadedFiles({ measureDate }));
     }
   };
 
@@ -33,9 +34,9 @@ const ViewFiles = () => {
     uploadedFileNameWithoutExtension: string,
     fileFrequency: TableRowDef['fileFrequency'],
   ) => {
-    const extractedDateString = extractMonthAndYearFromFileName(uploadedFileNameWithoutExtension);
-    const extractedDate = new Date(extractedDateString);
-    const currentDate = new Date();
+    const extractedDate = extractDateFromFileName(uploadedFileNameWithoutExtension);
+    if (!extractedDate || !measureDate) return false;
+    const currentDate = new Date(measureDate);
 
     switch (fileFrequency?.trim()) {
       case 'Yearly':
@@ -50,47 +51,108 @@ const ViewFiles = () => {
     }
   };
 
-  const checkFileValidity = (file: File, row: TableRowDef) => {
-    const uploadedFileExtension = file.name?.split('.')?.pop()?.toLowerCase() || '';
-    const uploadedFileNameWithoutExtension = file.name?.substring(0, file.name?.lastIndexOf('.')) || file.name;
-    const uploadedFileSize = file.size;
+  const showFileValidityErrorSnackbar = (error: string, solution: string, rowRequirement: string | null): void => {
+    enqueueSnackbar(
+      <div>
+        <b>{rowRequirement ?? ''}</b> upload failed! {error}
+        <br />
+        Required: <b>{solution}</b>
+      </div>,
+      { variant: 'error', autoHideDuration: null },
+    );
+  };
+
+  const checkFileValidity = (file: File, row: TableRowDef): boolean => {
+    const { name, size } = file;
+    const { fileExtension, originalFileName, requirements, fileFrequency } = row;
+    const uploadedFileExtension = name.split('.').pop()?.toLowerCase() || '';
+    const uploadedFileNameWithoutExtension = name.substring(0, name.lastIndexOf('.')) || name;
     const maxFileSize = 1048576 * 5; // 5 MB in Bytes
+    let isFileValid = true;
 
-    if (uploadedFileExtension !== row.fileExtension?.trim())
-      return { message: `File extension doesn't match!\nRequired extension: ${row.fileExtension?.trim()}` };
-    if (uploadedFileSize > maxFileSize)
-      return { message: `File size exceeded limit!\nMaximum limit: ${maxFileSize / 1048576} MB` };
-    if (!convertFileNameFormatToRegex(row.originalFileName?.trim() || '').test(uploadedFileNameWithoutExtension))
-      return {
-        message: `File name format doesn't match the requirement!\nRequired format: ${
-          row.originalFileName?.trim() || ''
-        }`,
-      };
-    if (!checkFileFrequency(uploadedFileNameWithoutExtension, row.fileFrequency))
-      return { message: "Date given in the file name doesn't match the requirement!" };
+    if (uploadedFileExtension !== fileExtension?.trim()) {
+      showFileValidityErrorSnackbar(`File extension doesn't match.`, `${fileExtension?.trim()}`, requirements);
+      isFileValid = false;
+    }
 
-    return { message: null };
+    if (size > maxFileSize) {
+      showFileValidityErrorSnackbar(`File size limit exceeded.`, `< ${maxFileSize / 1048576} MB`, requirements);
+      isFileValid = false;
+    }
+
+    if (size <= 0) {
+      showFileValidityErrorSnackbar(`File size is invalid.`, `> 0 KB`, requirements);
+      isFileValid = false;
+    }
+
+    if (!convertFileNameFormatToRegex(originalFileName?.trim() || '').test(uploadedFileNameWithoutExtension)) {
+      showFileValidityErrorSnackbar(
+        `File name format doesn't match.`,
+        `${originalFileName?.trim() || ''}`,
+        requirements,
+      );
+      isFileValid = false;
+    }
+
+    if (!checkFileFrequency(uploadedFileNameWithoutExtension, fileFrequency)) {
+      const formattedMeasureDate =
+        fileFrequency?.trim() === 'Monthly' ? format(measureDate, 'MMM yyyy') : format(measureDate, 'yyyy');
+
+      showFileValidityErrorSnackbar(`Date doesn't match.`, `${formattedMeasureDate.toString()}`, requirements);
+      isFileValid = false;
+    }
+
+    return isFileValid;
   };
 
   const handleFileDrop = async (files: File[], row: TableRowDef) => {
+    closeSnackbar();
     const file = files[0];
-    const { message } = checkFileValidity(file, row);
+    const isValid = checkFileValidity(file, row);
 
-    if (!Boolean(message)) {
+    if (isValid) {
       try {
         await dispatch(postUploadedFile({ user, file, fileType: row.fileType, date: measureDate })).unwrap();
         await dispatch(getUploadedFiles({ measureDate }));
+        enqueueSnackbar(
+          <div>
+            <b>{row.requirements}</b> uploaded successfully
+          </div>,
+          { variant: 'success' },
+        );
       } catch (error) {
-        console.error((error as Error).message);
+        enqueueSnackbar((error as Error).message, { variant: 'error' });
       }
-    } else {
-      alert(message);
+    }
+  };
+
+  const handleDeleteFile = async (row: TableRowDef) => {
+    const { fileName, fileType } = row;
+    const fileMeasureDate = row.measureDate?.trim().split('T')[0] || measureDate;
+
+    if (fileName && fileMeasureDate && fileType) {
+      try {
+        await dispatch(postDeleteFile({ user, fileName, measureDate: fileMeasureDate, fileType })).unwrap();
+        await dispatch(getUploadedFiles({ measureDate }));
+        enqueueSnackbar(
+          <div>
+            <b>{row.requirements}</b> deleted successfully
+          </div>,
+          { variant: 'success' },
+        );
+      } catch (error) {
+        enqueueSnackbar((error as Error).message, { variant: 'error' });
+      }
     }
   };
 
   useEffect(() => {
     dispatch(fileActions.reset());
-  }, [dispatch]);
+
+    return () => {
+      closeSnackbar();
+    };
+  }, [dispatch, closeSnackbar]);
 
   return (
     <>
@@ -105,14 +167,12 @@ const ViewFiles = () => {
           />
         </div>
         <div className={ViewFilesStyles['file-upload-text']}>File Upload</div>
-        {file.loading ? (
-          <AclSpinner />
-        ) : Boolean(file.data?.uploadedFiles?.length) ? (
+        {Boolean(file.data?.uploadedFiles?.length) ? (
           <div>
             <table className={ViewFilesStyles['table']}>
               <thead className={ViewFilesStyles['table-head']}>
                 <tr>
-                  {columns.map((column: TableColDef<TableRowDef>, colIndex: number) => (
+                  {COLUMNS.map((column: TableColDef<TableRowDef>, colIndex: number) => (
                     <th key={colIndex}>{column.headerName}</th>
                   ))}
                 </tr>
@@ -120,13 +180,13 @@ const ViewFiles = () => {
               <tbody className={ViewFilesStyles['table-body']}>
                 {file.data?.uploadedFiles?.map((row: TableRowDef, rowIndex: number) => (
                   <tr key={rowIndex}>
-                    {columns.map((column: TableColDef<TableRowDef>, colIndex: number) => {
+                    {COLUMNS.map((column: TableColDef<TableRowDef>, colIndex: number) => {
                       if (Boolean(row['fileName'])) {
                         switch (column.field) {
                           case 'uploadDate':
                             return <td key={colIndex}>{row[column.field]?.split('T')[0]}</td>;
                           case 'fileSize':
-                            return <td key={colIndex}>{Number(row[column.field]) / 1048576 + ' MB'}</td>;
+                            return <td key={colIndex}>{convertBytes(Number(row[column.field]))}</td>;
                           case 'actions':
                             return (
                               <td key={colIndex + 1}>
@@ -135,7 +195,10 @@ const ViewFiles = () => {
                                     <AclIcon src={VisibilityIcon} alt="" />
                                     <span>View</span>
                                   </AclListItemButton>
-                                  <AclListItemButton className={ViewFilesStyles['actions-icon-text-wrapper']}>
+                                  <AclListItemButton
+                                    className={ViewFilesStyles['actions-icon-text-wrapper']}
+                                    onClick={() => handleDeleteFile(row)}
+                                  >
                                     <AclIcon src={DeleteOutlineIcon} alt="" />
                                     <span>Remove</span>
                                   </AclListItemButton>
@@ -194,6 +257,7 @@ const ViewFiles = () => {
           <h3>No Data Found</h3>
         )}
       </div>
+      <AclBackdrop open={file.loading}></AclBackdrop>
     </>
   );
 };

@@ -1,7 +1,7 @@
-import { Divider, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { IAclDividerProps } from "../../types/aclDividerEntity";
+import { Divider, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { IAclDividerProps } from '../../types/aclDividerEntity';
 
 const getExposedProps = (props: IAclDividerProps) => {
   return {

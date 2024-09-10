@@ -15,7 +15,7 @@ const ClientSelection = () => {
   const navigate = useNavigate();
   const [filteredClients, setFilteredClients] = useState(user.clientRoles);
 
-  const handleSearch = (value: string) => {
+  const handleSearch = (value: string): void => {
     const filteredClientObj: ClientRoles = {};
     Object.keys(user.clientRoles).forEach((clientName: string) => {
       if (clientName.toLowerCase().includes(value.toLowerCase())) {
@@ -25,7 +25,7 @@ const ClientSelection = () => {
     setFilteredClients(filteredClientObj);
   };
 
-  const handleClientClick = (clientName: string) => {
+  const handleClientClick = (clientName: string): void => {
     sessionStorage.setItem('selectedClient', clientName);
     dispatch(globalActions.update({ selectedClient: clientName }));
     navigate(`${clientName}/dashboard`);
@@ -36,10 +36,18 @@ const ClientSelection = () => {
     sessionStorage.removeItem('selectedClient');
     dispatch(globalActions.update({ selectedClient: '' }));
 
+    const clientNames = Object.keys(user.clientRoles);
+
+    if (clientNames?.length === 1 && clientNames[0] === 'Global') {
+      sessionStorage.setItem('selectedClient', 'Global');
+      dispatch(globalActions.update({ selectedClient: 'Global' }));
+      navigate('Global/dashboard');
+    }
+
     return () => {
       dispatch(globalActions.update({ showSidemenu: true }));
     };
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, user.clientRoles]);
 
   return (
     <div className={ClientSelectionStyles['client-selection']}>
@@ -50,29 +58,34 @@ const ClientSelection = () => {
         <AclInputSuggestion options={OPTIONS} placeholder="Search Clients" onChange={(e) => handleSearch(e)} />
       </div>
       <div className={ClientSelectionStyles['client-list']}>
-        {Object.keys(filteredClients).map((clientName: string, index: number) => (
-          <AclCard
-            key={index}
-            className={ClientSelectionStyles['client-card']}
-            onClick={() => handleClientClick(clientName)}
-          >
-            <div className={ClientSelectionStyles['each-client-wrapper']}>
-              <div>
-                {getIconFromClient(clientName) && (
-                  <AclIcon
-                    className={ClientSelectionStyles['client-icon']}
-                    src={getIconFromClient(clientName)}
-                    alt={`${clientName}-logo-icon`}
-                  />
-                )}
+        {Object.keys(filteredClients).map((clientName: string, index: number) => {
+          if (clientName === 'Global') return <div key={index}></div>;
+          return (
+            <AclCard
+              key={index}
+              className={ClientSelectionStyles['client-card']}
+              onClick={() => handleClientClick(clientName)}
+            >
+              <div className={ClientSelectionStyles['each-client-wrapper']}>
+                <div>
+                  {getIconFromClient(clientName) && (
+                    <AclIcon
+                      className={ClientSelectionStyles['client-icon']}
+                      src={getIconFromClient(clientName)}
+                      alt={`${clientName}-logo-icon`}
+                    />
+                  )}
+                </div>
+                <div>
+                  <div className={ClientSelectionStyles['client-heading']}>{clientName}</div>
+                  <div className={ClientSelectionStyles['client-sub-text']}>
+                    {filteredClients[clientName].join(', ')}
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className={ClientSelectionStyles['client-heading']}>{clientName}</div>
-                <div className={ClientSelectionStyles['client-sub-text']}>{filteredClients[clientName].join(', ')}</div>
-              </div>
-            </div>
-          </AclCard>
-        ))}
+            </AclCard>
+          );
+        })}
       </div>
     </div>
   );

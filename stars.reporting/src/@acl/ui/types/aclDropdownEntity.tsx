@@ -1,6 +1,6 @@
-import { JSXElementConstructor } from "react";
-import { IColor, IDictionary } from "./aclCore";
-import { SelectProps } from "@mui/material";
+import { JSXElementConstructor } from 'react';
+import { IColor, IDictionary } from './aclCore';
+import { SelectProps } from '@mui/material';
 
 export declare type IDropdownOptions = {
   id: string | number;
@@ -35,7 +35,7 @@ export declare type IDropdownExposedProps = SelectProps & {
   maxWidth?: string | number;
   color?: IColor;
   error?: boolean;
-  size?: "small" | "medium";
+  size?: 'small' | 'medium';
   ref?: React.Ref<unknown>;
   triggerReset?: boolean;
 };

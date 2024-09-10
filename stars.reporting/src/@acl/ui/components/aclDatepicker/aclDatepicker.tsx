@@ -5,6 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { DEMO_CONTAINER } from '../../constants/aclDatepickerConstant';
 import { IAclDatePickerProps } from '../../types/aclDatepickerEntity';
 
 const getExposedProps = (props: IAclDatePickerProps) => {
@@ -22,8 +23,13 @@ export default function AclDatePicker(props: IAclDatePickerProps) {
     <>
       <ThemeProvider theme={AclThemeProvider}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DemoContainer components={['DatePicker']}>
-            <DatePicker {...exposedProps} />
+          <DemoContainer sx={DEMO_CONTAINER} components={['DatePicker']}>
+            <DatePicker
+              slotProps={{
+                textField: { size: 'small' },
+              }}
+              {...exposedProps}
+            />
           </DemoContainer>
         </LocalizationProvider>
       </ThemeProvider>

@@ -14,3 +14,10 @@ export type PostUploadedFileParam = {
   fileType: UploadedFilesData['fileType'];
   date: string;
 };
+
+export type PostDeleteFileParam = {
+  user: UserState;
+  fileName: string;
+  measureDate: string;
+  fileType: UploadedFilesData['fileType'];
+};

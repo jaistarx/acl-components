@@ -1,0 +1,39 @@
+.product-admin-outer-container {
+  overflow: auto;
+  padding: 10px;
+  height: calc(100vh - 142px);
+  width: calc(100% - 20px);
+}
+
+.product-admin-main-name {
+  margin: 0px;
+}
+
+.heading-datepicker-wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 100px;
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  border: none;
+}
+
+thead,
+td,
+th {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+.product-admin-add-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.year-picker {
+  max-width: 300px;
+}

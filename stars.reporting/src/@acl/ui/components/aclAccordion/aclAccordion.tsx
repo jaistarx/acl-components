@@ -1,7 +1,7 @@
-import { Accordion, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { IAclAccordionProps } from "../../types/aclAccordionEntity";
+import { Accordion, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { IAclAccordionProps } from '../../types/aclAccordionEntity';
 
 const getExposedProps = (props: IAclAccordionProps) => {
   return {

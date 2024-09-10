@@ -3,7 +3,7 @@
 }
 
 .outer-container {
-  background-color: #EFEFEF;
+  background-color: #efefef;
   height: var(--header-height);
   display: flex;
   align-items: center;
@@ -22,21 +22,16 @@
   column-gap: 10px;
 }
 
-.header-icon:hover {
-  cursor: pointer;
+.header-icon {
+  height: 24px;
+  width: 24px;
 }
 
-.header-advlogo-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-right: 62px;
-  margin-left: 27px;
-}
-
-.header-adv-logo {
-  height: 28px;
-  width: 186px;
+.header-healthproof-logo {
+  height: 35px;
+  width: auto;
+  margin-left: 20px;
+  margin-right: 50px;
 }
 
 .title-group {
@@ -47,7 +42,7 @@
   font-size: 16px;
   font-weight: 700;
   text-align: center;
-  color: #5F6062;
+  color: #5f6062;
 }
 
 .menu-item {
@@ -59,18 +54,18 @@
 
 .menu-item:hover {
   cursor: pointer;
-  background: #313D4F;
   color: white;
+  background: #002e33;
 }
 
 .icon-group {
   display: flex;
   align-items: center;
-  padding-right: 36px;
+  padding-right: 20px;
   column-gap: 40px;
 }
 
 .menu-item-selected {
-  background: #313D4F;
+  background: #04636d;
   color: white;
 }

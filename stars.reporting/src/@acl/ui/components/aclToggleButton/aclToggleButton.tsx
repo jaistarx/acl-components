@@ -1,16 +1,7 @@
-import { ThemeProvider, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import React, {
-  RefObject,
-  createRef,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import {
-  IToggleButtonOptions,
-  IToggleButtonProps,
-} from "../../types/aclToggleButtonEntity";
+import { ThemeProvider, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import React, { RefObject, createRef, useEffect, useRef, useState } from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { IToggleButtonOptions, IToggleButtonProps } from '../../types/aclToggleButtonEntity';
 
 const getExposedProps = (props: IToggleButtonProps) => {
   return {
@@ -24,20 +15,15 @@ const getPassedProps = (props: IToggleButtonProps) => {
 };
 
 const AclToggleButton = ({ children, ...props }: IToggleButtonProps) => {
-  const optionLabelRef = useRef<RefObject<HTMLDivElement>[]>(
-    props.options?.map(() => createRef()) || []
-  );
+  const optionLabelRef = useRef<RefObject<HTMLDivElement>[]>(props.options?.map(() => createRef()) || []);
   const [value, setValue] = useState<IToggleButtonOptions>({
-    id: "",
-    label: "",
+    id: '',
+    label: '',
   });
   const exposedProps = getExposedProps(props);
   const passedProps = getPassedProps(props);
 
-  const handleValueChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newValue: IToggleButtonOptions
-  ) => {
+  const handleValueChange = (event: React.MouseEvent<HTMLElement>, newValue: IToggleButtonOptions) => {
     if (newValue) {
       setValue(newValue);
       if (exposedProps.onChange) {
@@ -70,19 +56,13 @@ const AclToggleButton = ({ children, ...props }: IToggleButtonProps) => {
           aria-label="text alignment"
           {...passedProps}
         >
-          {exposedProps.options?.map(
-            (option: IToggleButtonOptions, key: number) => (
-              <ToggleButton
-                key={option.id}
-                value={option}
-                aria-label={`${key}-toggle-value`}
-              >
-                <div ref={optionLabelRef.current[key]} title={option.label}>
-                  {option.label}
-                </div>
-              </ToggleButton>
-            )
-          )}
+          {exposedProps.options?.map((option: IToggleButtonOptions, key: number) => (
+            <ToggleButton key={option.id} value={option} aria-label={`${key}-toggle-value`}>
+              <div ref={optionLabelRef.current[key]} title={option.label}>
+                {option.label}
+              </div>
+            </ToggleButton>
+          ))}
         </ToggleButtonGroup>
       </ThemeProvider>
     </>

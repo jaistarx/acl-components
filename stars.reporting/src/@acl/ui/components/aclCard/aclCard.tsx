@@ -1,8 +1,8 @@
-import { Card, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { ICardExposedProps, ICardProps } from "../../types/aclCardEntity";
-import { IDictionary } from "../../types/aclCore";
+import { Card, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { ICardExposedProps, ICardProps } from '../../types/aclCardEntity';
+import { IDictionary } from '../../types/aclCore';
 
 const getExposedProps = (props: ICardExposedProps): IDictionary<any> => {
   return {

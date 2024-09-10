@@ -7,7 +7,6 @@ import useAppSelector from '@/utils/hooks/app-selector';
 import { AclCard, AclDatepicker, AclIcon, AclSpinner } from '@acl/ui';
 import { format } from 'date-fns';
 import React, { useEffect } from 'react';
-import { ROLE_LIST } from './dashboard.constant';
 import DashboardStyles from './dashboard.module.css';
 import { FileRow, MeasureRow } from './dashboard.type';
 
@@ -28,11 +27,8 @@ const Dashboard = () => {
     }
   };
 
-  // Function to check if the user has the required role for a given className
-  const hasRoleForClassName = (className: string): boolean => {
-    const roleItem = ROLE_LIST.find((item) => item.className === className);
-
-    return roleItem ? roleItem.roles.some((role) => user.clientRoles[global.selectedClient].includes(role)) : false;
+  const isRolePresent = (role: string): boolean => {
+    return user.clientRoles[global.selectedClient].includes(role);
   };
 
   useEffect(() => {
@@ -42,7 +38,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      {hasRoleForClassName('product-admin') && (
+      {isRolePresent('ProjectAdministrator') && (
         <div className={DashboardStyles['dashboard-scroll-container']}>
           <div className={DashboardStyles['dashboard-flex-container']}>
             <h2 className={DashboardStyles['dashboard-main-name']}>Dashboard</h2>

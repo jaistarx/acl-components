@@ -5,7 +5,7 @@ import { userActions } from '@/redux/user';
 import { createUser } from '@/utils/common/helper';
 import useAppDispatch from '@/utils/hooks/app-dispatch';
 import useAppSelector from '@/utils/hooks/app-selector';
-import { AclBackdrop } from '@acl/ui';
+import { AclBackdrop, AclSnackbarProvider } from '@acl/ui';
 import { Config, GetTokensOptions, TokenManager, UserManager } from '@forgerock/javascript-sdk';
 import axios from 'axios';
 import React, { useCallback, useEffect } from 'react';
@@ -18,7 +18,7 @@ Config.set({
   },
   realmPath: window.REACT_APP_REALM_PATH,
   clientId: window.REACT_APP_CLIENTID,
-  redirectUri: window.location.origin + '/starsreporting/dashboard',
+  redirectUri: window.location.origin + '/starsreporting',
   scope: 'openid profile',
 });
 
@@ -113,12 +113,13 @@ const App = () => {
     <>
       {user.isAuthenticated && (
         <>
-          <Router />
-          <TokenTimer authHydrate={authHydrate} />
+          <AclSnackbarProvider>
+            <Router />
+            <TokenTimer authHydrate={authHydrate} />
+          </AclSnackbarProvider>
         </>
       )}
       <AclBackdrop open={global.showBackdrop || Boolean(user.isLoading)} />
-      <>learn react</>
     </>
   );
 };

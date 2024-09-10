@@ -1,1 +1,1 @@
-export * from "./aclTablePaginationEnum";
+export * from './aclTablePaginationEnum';

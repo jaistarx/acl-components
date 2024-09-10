@@ -1,7 +1,7 @@
-import { Backdrop, CircularProgress, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { AclBackdropProps } from "../../types/aclBackdropEntity";
+import { Backdrop, CircularProgress, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclBackdropProps } from '../../types/aclBackdropEntity';
 
 const getExposedProps = (props: AclBackdropProps) => {
   return {

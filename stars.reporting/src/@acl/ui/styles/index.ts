@@ -1,1 +1,1 @@
-export { default as AclStyles } from "./aclStyles.module.css";
+export { default as AclStyles } from './aclStyles.module.css';

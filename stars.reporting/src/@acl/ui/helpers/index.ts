@@ -1,1 +1,1 @@
-export { getAclRootProperty } from "./aclHelper";
+export { getAclRootProperty } from './aclHelper';

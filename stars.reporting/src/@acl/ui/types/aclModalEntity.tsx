@@ -1,5 +1,5 @@
-import { ModalProps } from "@mui/material";
-import { IDictionary } from "./aclCore";
+import { ModalProps } from '@mui/material';
+import { IDictionary } from './aclCore';
 
 type OmittedModalProps = {
   // Omit the property to override it
@@ -7,10 +7,7 @@ type OmittedModalProps = {
   children?: React.ReactNode;
 };
 
-export declare type AclModalProps = Omit<
-  ModalProps,
-  keyof OmittedModalProps
-> & {
+export declare type AclModalProps = Omit<ModalProps, keyof OmittedModalProps> & {
   openModal: boolean;
   toggleOpenModal?: (event: boolean) => void;
   children?: React.ReactNode;
@@ -22,5 +19,6 @@ export declare type AclModalProps = Omit<
     right?: string | number;
     left?: string | number;
     transform?: string;
+    display?: string;
   };
 };

@@ -1,18 +1,18 @@
-import { Popover, ThemeProvider } from "@mui/material";
-import React from "react";
-import AclThemeProvider from "../../common/aclThemeProvider/aclThemeProvider";
-import { AclPopoverProps } from "../../types/aclPopoverEntity";
+import { Popover, ThemeProvider } from '@mui/material';
+import React from 'react';
+import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclPopoverProps } from '../../types/aclPopoverEntity';
 
 const getExposedProps = (props: AclPopoverProps) => {
   return {
     ...props,
     anchorOrigin: props.anchorOrigin ?? {
-      vertical: "bottom",
-      horizontal: "left",
+      vertical: 'bottom',
+      horizontal: 'left',
     },
     transformOrigin: props.transformOrigin ?? {
-      vertical: "top",
-      horizontal: "left",
+      vertical: 'top',
+      horizontal: 'left',
     },
   };
 };
