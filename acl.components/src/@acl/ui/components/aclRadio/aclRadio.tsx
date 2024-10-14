@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclRadioProps } from './aclRadio.type';
 
-const getExposedProps = (props: AclRadioProps) => {
+const getForwardedProps = (props: AclRadioProps) => {
   return {
     ...props,
   };
 };
 
 const AclRadio = ({ ...props }: AclRadioProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Radio {...exposedProps} />
+        <Radio {...forwardedProps} />
       </ThemeProvider>
     </>
   );

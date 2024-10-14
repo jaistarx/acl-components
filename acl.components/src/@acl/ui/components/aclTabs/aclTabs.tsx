@@ -5,7 +5,7 @@ import { IDictionary } from '../../common/types/common.type';
 import { TABS_CONTAINER, TAB_LABEL_CONTAINER, TAB_LABEL_COUNT } from './aclTabs.constant';
 import { AclTabItems, AclTabsProps } from './aclTabs.type';
 
-const getExposedProps = (props: AclTabsProps) => {
+const getForwardedProps = (props: AclTabsProps) => {
   const { tabItems, variant, ...passedProps } = props;
   return {
     ...passedProps,
@@ -13,12 +13,12 @@ const getExposedProps = (props: AclTabsProps) => {
 };
 
 const AclTabs = ({ children, ...props }: AclTabsProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Tabs sx={TABS_CONTAINER(props.variant)} {...exposedProps}>
+        <Tabs sx={TABS_CONTAINER(props.variant)} {...forwardedProps}>
           {props.tabItems?.map((item: AclTabItems, index: number) => {
             if (!Boolean(item)) return <></>;
 

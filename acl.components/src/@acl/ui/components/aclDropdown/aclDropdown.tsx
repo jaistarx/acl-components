@@ -13,7 +13,7 @@ import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { IDictionary } from '../../common/types/common.type';
 import { AclDropdownProps } from './aclDropdown.type';
 
-const getExposedProps = (props: AclDropdownProps): IDictionary<any> => {
+const getForwardedProps = (props: AclDropdownProps): IDictionary<any> => {
   const { onChange, value, options, optionIdKey, optionValueKey, ...passedProps } = props;
 
   return {
@@ -35,9 +35,9 @@ const getDefaultValues = (
 };
 
 const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
   const [selectedOptions, setSelectedOptions] = useState<string | string[]>(
-    getDefaultValues(exposedProps.defaultValue, exposedProps.multiple),
+    getDefaultValues(forwardedProps.defaultValue, forwardedProps.multiple),
   );
 
   const handleChange = (event: SelectChangeEvent<typeof selectedOptions>, child: React.ReactNode): void => {
@@ -60,7 +60,7 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <FormControl {...exposedProps}>
+        <FormControl {...forwardedProps}>
           <InputLabel>{props.label}</InputLabel>
           <Select
             value={selectedOptions}
@@ -81,11 +81,11 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
                 </span>
               )
             }
-            {...exposedProps}
+            {...forwardedProps}
           >
             {props.options?.map((option: IDictionary<any>, index: number) => (
               <MenuItem key={option[props.optionIdKey ?? 'id'] ?? index} value={JSON.stringify(option)}>
-                {exposedProps.multiple && <Checkbox checked={selectedOptions.indexOf(JSON.stringify(option)) > -1} />}
+                {forwardedProps.multiple && <Checkbox checked={selectedOptions.indexOf(JSON.stringify(option)) > -1} />}
                 <ListItemText primary={option[props.optionValueKey ?? 'value'] ?? ''} />
               </MenuItem>
             ))}

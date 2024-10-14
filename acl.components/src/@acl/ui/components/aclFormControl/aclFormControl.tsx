@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclFormControlProps } from './aclFormControl.type';
 
-const getExposedProps = (props: AclFormControlProps) => {
+const getForwardedProps = (props: AclFormControlProps) => {
   return {
     ...props,
   };
 };
 
 const AclFormControl = ({ children, ...props }: AclFormControlProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <FormControl {...exposedProps}>{children}</FormControl>
+        <FormControl {...forwardedProps}>{children}</FormControl>
       </ThemeProvider>
     </>
   );

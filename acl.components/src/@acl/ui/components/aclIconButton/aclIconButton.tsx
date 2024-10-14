@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclIconButtonProps } from './aclIconButton.type';
 
-const getExposedProps = (props: AclIconButtonProps) => {
+const getForwardedProps = (props: AclIconButtonProps) => {
   return {
     ...props,
   };
 };
 
 const AclIconButton = ({ children, ...props }: AclIconButtonProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <IconButton {...exposedProps}>{children}</IconButton>
+        <IconButton {...forwardedProps}>{children}</IconButton>
       </ThemeProvider>
     </>
   );

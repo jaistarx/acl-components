@@ -11,7 +11,7 @@ const seperatePropsToBePassed = (props: AclModalProps) => {
   return originalProps;
 };
 
-const getExposedProps = (props: AclModalProps) => {
+const getForwardedProps = (props: AclModalProps) => {
   const originalProps = seperatePropsToBePassed(props);
   return {
     ...originalProps,
@@ -21,7 +21,7 @@ const getExposedProps = (props: AclModalProps) => {
 };
 
 const AclModal = ({ ...props }: AclModalProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
@@ -36,7 +36,7 @@ const AclModal = ({ ...props }: AclModalProps) => {
               timeout: 500,
             },
           }}
-          {...exposedProps}
+          {...forwardedProps}
         >
           <Fade in={props.openModal}>
             <Box sx={{ ...DEFAULT_BOX_STYLE, ...props.modalDisplayStyle }}>

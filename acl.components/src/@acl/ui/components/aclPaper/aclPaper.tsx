@@ -3,18 +3,18 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclPaperProps } from './aclPaper.type';
 
-const getExposedProps = (props: AclPaperProps) => {
+const getForwardedProps = (props: AclPaperProps) => {
   return {
     ...props,
   };
 };
 
 const AclPaper = ({ children, ...props }: AclPaperProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <ThemeProvider theme={AclThemeProvider}>
-      <Paper {...exposedProps}>{children}</Paper>
+      <Paper {...forwardedProps}>{children}</Paper>
     </ThemeProvider>
   );
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclPopperProps } from './aclPopper.type';
 
-const getExposedProps = (props: AclPopperProps) => {
+const getForwardedProps = (props: AclPopperProps) => {
   return {
     ...props,
     disablePortal: props.disablePortal ?? true,
@@ -12,13 +12,13 @@ const getExposedProps = (props: AclPopperProps) => {
 };
 
 const AclPopper = ({ children, ...props }: AclPopperProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        {exposedProps.transition ? (
-          <Popper {...exposedProps}>
+        {forwardedProps.transition ? (
+          <Popper {...forwardedProps}>
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
                 <Box>
@@ -28,7 +28,7 @@ const AclPopper = ({ children, ...props }: AclPopperProps) => {
             )}
           </Popper>
         ) : (
-          <Popper {...exposedProps}>
+          <Popper {...forwardedProps}>
             <Box>
               <>{children}</>
             </Box>

@@ -1,5 +1,6 @@
 import {
   AclButton,
+  AclCssBaseline,
   AclDatepicker,
   AclDropdown,
   AclTabItems,
@@ -748,10 +749,8 @@ const App = () => {
           ></AclDropdown>
           <AclDatepicker label="select date"></AclDatepicker>
         </div>
-        {/* <AclCssBaseline /> */}
-        <div></div>
+        <AclCssBaseline />
         <h2>hello age 3</h2>
-
         <div style={{ height: '500px' }}>
           <AclTable
             rowItems={rows}

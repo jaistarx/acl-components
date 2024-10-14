@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclDividerProps } from './aclDivider.type';
 
-const getExposedProps = (props: AclDividerProps) => {
+const getForwardedProps = (props: AclDividerProps) => {
   return {
     ...props,
   };
 };
 
 const AclDivider = ({ children, ...props }: AclDividerProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Divider {...exposedProps}>{children}</Divider>
+        <Divider {...forwardedProps}>{children}</Divider>
       </ThemeProvider>
     </>
   );

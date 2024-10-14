@@ -3,7 +3,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclPopoverProps } from './aclPopover.type';
 
-const getExposedProps = (props: AclPopoverProps) => {
+const getForwardedProps = (props: AclPopoverProps) => {
   return {
     ...props,
     anchorOrigin: props.anchorOrigin ?? {
@@ -18,12 +18,12 @@ const getExposedProps = (props: AclPopoverProps) => {
 };
 
 const AclPopover = ({ children, ...props }: AclPopoverProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Popover {...exposedProps}>{children}</Popover>
+        <Popover {...forwardedProps}>{children}</Popover>
       </ThemeProvider>
     </>
   );

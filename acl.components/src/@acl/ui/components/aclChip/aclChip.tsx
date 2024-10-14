@@ -3,7 +3,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclChipProps } from './aclChip.type';
 
-const getExposedProps = (props: AclChipProps) => {
+const getForwardedProps = (props: AclChipProps) => {
   const { chipStyle, ...passedProps } = props;
 
   return {
@@ -13,12 +13,12 @@ const getExposedProps = (props: AclChipProps) => {
 };
 
 const AclChip = ({ ...props }: AclChipProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Chip sx={{ ...props.chipStyle }} {...exposedProps} />
+        <Chip sx={{ ...props.chipStyle }} {...forwardedProps} />
       </ThemeProvider>
     </>
   );

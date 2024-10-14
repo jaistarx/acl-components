@@ -3,7 +3,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclCollapseProps } from './aclCollapse.type';
 
-const getExposedProps = (props: AclCollapseProps) => {
+const getForwardedProps = (props: AclCollapseProps) => {
   return {
     ...props,
     unmountOnExit: props.unmountOnExit ?? true,
@@ -11,12 +11,12 @@ const getExposedProps = (props: AclCollapseProps) => {
 };
 
 const AclCollapse = ({ children, ...props }: AclCollapseProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Collapse {...exposedProps}>{children}</Collapse>
+        <Collapse {...forwardedProps}>{children}</Collapse>
       </ThemeProvider>
     </>
   );

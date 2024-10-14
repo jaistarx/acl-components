@@ -3,7 +3,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclLinkProps } from './aclLink.type';
 
-const getExposedProps = (props: AclLinkProps) => {
+const getForwardedProps = (props: AclLinkProps) => {
   return {
     ...props,
     component: props.component ?? 'button',
@@ -12,12 +12,12 @@ const getExposedProps = (props: AclLinkProps) => {
 };
 
 const AclLink = ({ children, ...props }: AclLinkProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Link {...exposedProps}>{children}</Link>
+        <Link {...forwardedProps}>{children}</Link>
       </ThemeProvider>
     </>
   );

@@ -4,7 +4,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclInputProps } from './aclInput.type';
 
-const getExposedProps = (props: AclInputProps) => {
+const getForwardedProps = (props: AclInputProps) => {
   return {
     ...props,
     variant: 'outlined' as TextFieldProps['variant'],
@@ -12,12 +12,12 @@ const getExposedProps = (props: AclInputProps) => {
 };
 
 const AclInput = ({ children, ...props }: AclInputProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <TextField {...exposedProps}>{children}</TextField>
+        <TextField {...forwardedProps}>{children}</TextField>
       </ThemeProvider>
     </>
   );

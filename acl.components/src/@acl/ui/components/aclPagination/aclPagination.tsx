@@ -5,14 +5,14 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclPaginationProps } from './aclPagination.type';
 
-const getExposedProps = (props: AclPaginationProps) => {
+const getForwardedProps = (props: AclPaginationProps) => {
   return {
     ...props,
   };
 };
 
 const AclPagination = ({ ...props }: AclPaginationProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
@@ -21,7 +21,7 @@ const AclPagination = ({ ...props }: AclPaginationProps) => {
           renderItem={(item) => (
             <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />
           )}
-          {...exposedProps}
+          {...forwardedProps}
         />
       </ThemeProvider>
     </>

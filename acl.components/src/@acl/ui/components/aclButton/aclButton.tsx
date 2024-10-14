@@ -3,7 +3,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclButtonProps } from './aclButton.type';
 
-const getExposedProps = (props: AclButtonProps) => {
+const getForwardedProps = (props: AclButtonProps) => {
   return {
     ...props,
     variant: props.variant ?? 'contained',
@@ -11,12 +11,12 @@ const getExposedProps = (props: AclButtonProps) => {
 };
 
 const AclButton = ({ children, ...props }: AclButtonProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Button {...exposedProps}>{children}</Button>
+        <Button {...forwardedProps}>{children}</Button>
       </ThemeProvider>
     </>
   );

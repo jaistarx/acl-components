@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclBackdropProps } from './aclBackdrop.type';
 
-const getExposedProps = (props: AclBackdropProps) => {
+const getForwardedProps = (props: AclBackdropProps) => {
   return {
     ...props,
   };
 };
 
 const AclBackdrop = ({ ...props }: AclBackdropProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Backdrop {...exposedProps}>
+        <Backdrop {...forwardedProps}>
           <CircularProgress color="inherit" />
         </Backdrop>
       </ThemeProvider>

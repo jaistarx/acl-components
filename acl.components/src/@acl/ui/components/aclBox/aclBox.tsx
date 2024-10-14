@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclBoxProps } from './aclBox.type';
 
-const getExposedProps = (props: AclBoxProps) => {
+const getForwardedProps = (props: AclBoxProps) => {
   return {
     ...props,
   };
 };
 
 const AclBox = ({ children, ...props }: AclBoxProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Box {...exposedProps}>{children}</Box>
+        <Box {...forwardedProps}>{children}</Box>
       </ThemeProvider>
     </>
   );

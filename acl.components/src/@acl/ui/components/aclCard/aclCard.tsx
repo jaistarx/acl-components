@@ -3,7 +3,7 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclCardProps } from './aclCard.type';
 
-const getExposedProps = (props: AclCardProps) => {
+const getForwardedProps = (props: AclCardProps) => {
   return {
     ...props,
     raised: props.raised ?? false,
@@ -11,12 +11,12 @@ const getExposedProps = (props: AclCardProps) => {
 };
 
 const AclCard = ({ children, ...props }: AclCardProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Card {...exposedProps}>{children}</Card>
+        <Card {...forwardedProps}>{children}</Card>
       </ThemeProvider>
     </>
   );

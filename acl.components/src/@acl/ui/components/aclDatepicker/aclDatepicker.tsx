@@ -10,7 +10,7 @@ import CancelIcon from '../../common/imageComponents/cancelIcon';
 import { DEMO_CONTAINER } from './aclDatepicker.constant';
 import { IAclDatePickerProps } from './aclDatepicker.type';
 
-const getExposedProps = (props: IAclDatePickerProps) => {
+const getForwardedProps = (props: IAclDatePickerProps) => {
   const { slotProps, ...passedProps } = props;
   return {
     ...passedProps,
@@ -18,7 +18,7 @@ const getExposedProps = (props: IAclDatePickerProps) => {
 };
 
 export default function AclDatePicker(props: IAclDatePickerProps) {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   // defaultvalue reference : const defaultDate = parse("2022-04-22", "yyyy-MM-dd", new Date());
 
@@ -33,11 +33,11 @@ export default function AclDatePicker(props: IAclDatePickerProps) {
                 clearIcon: CancelIcon,
               }}
               slotProps={{
-                textField: { fullWidth: exposedProps.fullWidth },
+                textField: { fullWidth: forwardedProps.fullWidth },
                 field: { clearable: true },
                 ...props.slotProps,
               }}
-              {...exposedProps}
+              {...forwardedProps}
             />
           </DemoContainer>
         </LocalizationProvider>

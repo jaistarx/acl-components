@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclCheckboxProps } from './aclCheckbox.type';
 
-const getExposedProps = (props: AclCheckboxProps) => {
+const getForwardedProps = (props: AclCheckboxProps) => {
   return {
     ...props,
   };
 };
 
 const AclCheckbox = ({ ...props }: AclCheckboxProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Checkbox {...exposedProps} />
+        <Checkbox {...forwardedProps} />
       </ThemeProvider>
     </>
   );

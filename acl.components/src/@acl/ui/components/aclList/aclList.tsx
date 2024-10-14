@@ -3,18 +3,18 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclListProps } from './aclList.type';
 
-const getExposedProps = (props: AclListProps) => {
+const getForwardedProps = (props: AclListProps) => {
   return {
     ...props,
   };
 };
 
 const AclList = ({ children, ...props }: AclListProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <ThemeProvider theme={AclThemeProvider}>
-      <List {...exposedProps}>{children}</List>
+      <List {...forwardedProps}>{children}</List>
     </ThemeProvider>
   );
 };

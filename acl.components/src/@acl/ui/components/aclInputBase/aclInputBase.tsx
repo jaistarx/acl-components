@@ -3,19 +3,19 @@ import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { AclInputBaseProps } from './aclInputBase.type';
 
-const getExposedProps = (props: AclInputBaseProps) => {
+const getForwardedProps = (props: AclInputBaseProps) => {
   return {
     ...props,
   };
 };
 
 const AclInputBase = ({ ...props }: AclInputBaseProps) => {
-  const exposedProps = getExposedProps(props);
+  const forwardedProps = getForwardedProps(props);
 
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <InputBase {...exposedProps}></InputBase>
+        <InputBase {...forwardedProps}></InputBase>
       </ThemeProvider>
     </>
   );
