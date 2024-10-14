@@ -15,7 +15,7 @@ export const TABLE_CELL = (column: AclTableColDef, props: AclTableProps) => {
   };
 };
 
-export const OUTER_CONTAINER = { height: '100%', width: '100%' };
+export const OUTER_CONTAINER = { height: '100%', width: '100%', flex: 1 };
 
 export const TABLE_VIRTUOSO = {
   border: 'none',
