@@ -7,7 +7,7 @@ import {
   AclTableColDef,
   AclTablePagination,
   IDictionary,
-  useAclSnackbar
+  useAclSnackbar,
 } from '@acl/ui';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import React, { useEffect, useState } from 'react';

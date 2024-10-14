@@ -179,7 +179,6 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
           data={props.rowItems}
           components={VirtuosoTableComponents(selectedStringified, handleClick)}
           fixedHeaderContent={() => fixedHeaderContent(contextValues)}
-          fixedFooterContent={() => fixedHeaderContent(contextValues)}
           itemContent={rowContent}
           context={contextValues}
           overscan={{ main: 5, reverse: 5 }}
