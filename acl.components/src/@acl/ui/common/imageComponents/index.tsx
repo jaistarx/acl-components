@@ -1,2 +1,2 @@
-export * from './calendar-icon';
-export * from './cancel-icon';
+export * from './calendarIcon';
+export * from './cancelIcon';

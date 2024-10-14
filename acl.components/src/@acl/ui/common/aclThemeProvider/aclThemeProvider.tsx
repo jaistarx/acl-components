@@ -14,12 +14,15 @@ const AclThemeProvider = createTheme({
       main: '#9F1853',
     },
   },
+  typography: {
+    fontFamily: '"Manrope", "Helvetica", "Arial", sans-serif',
+  },
   components: {
-    // MuiBase
+    // MuiCssBaseline
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          fontFamily: 'Poppins, Arial, sans-serif',
+          fontFamily: 'Manrope, "Helvetica", "Arial", sans-serif',
         },
       },
     },
@@ -52,8 +55,8 @@ const AclThemeProvider = createTheme({
           overflow: 'auto',
           borderRadius: '4px',
           '&::-webkit-scrollbar': {
-            width: '0px !important',
-            height: '0px !important',
+            width: '0px',
+            height: '0px',
           },
         },
       },
@@ -207,7 +210,6 @@ const AclThemeProvider = createTheme({
           textDecorationColor: '#0097AC',
           fontWeight: 500,
           fontSize: '14px',
-          fontFamily: 'Poppins, Arial, sans-serif',
           letterSpacing: '-0.022em',
           ':hover': {
             cursor: 'pointer',

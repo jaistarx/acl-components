@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import { SnackbarKey, SnackbarProvider, useSnackbar } from 'notistack';
 import React from 'react';
-import Closeicon from '../../common/images/snackbar-close-icon.svg';
+import Closeicon from '../../common/assets/images/snackbar-close-icon.svg';
 import { SNACKBAR_CONTAINER_STYLE } from './aclSnackbar.constant';
 import { AclSnackbarProviderProps } from './aclSnackbar.type';
 

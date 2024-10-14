@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: 'Manrope';
   src:
     local('Manrope'),
@@ -8,7 +8,7 @@
 body {
   margin: 0;
   font-family: Manrope;
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

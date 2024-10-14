@@ -5,8 +5,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
-import CalendarIcon from '../../common/imageComponents/calendar-icon';
-import CancelIcon from '../../common/imageComponents/cancel-icon';
+import CalendarIcon from '../../common/imageComponents/calendarIcon';
+import CancelIcon from '../../common/imageComponents/cancelIcon';
 import { DEMO_CONTAINER } from './aclDatepicker.constant';
 import { IAclDatePickerProps } from './aclDatepicker.type';
 

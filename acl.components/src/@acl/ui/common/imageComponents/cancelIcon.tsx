@@ -1,5 +1,5 @@
 import React from 'react';
-import cancelSVG from '../images/cancel-icon.svg';
+import cancelSVG from '../assets/images/cancel-icon.svg';
 
 const CalendarIcon = () => <img src={cancelSVG} alt="cancel-icon" />;
 
