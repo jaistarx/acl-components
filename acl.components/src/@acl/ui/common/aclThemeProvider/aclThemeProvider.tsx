@@ -71,6 +71,7 @@ const AclThemeProvider = createTheme({
             backgroundColor: '#E5E5E5',
             fontWeight: 700,
             fontSize: 14,
+            height: '49px',
             padding: '3px 8px',
             '&:first-of-type': {
               borderLeft: '2px solid transparent',
@@ -106,6 +107,7 @@ const AclThemeProvider = createTheme({
             backgroundColor: 'inherit',
             padding: '8px',
             color: '#000000',
+            height: '59px',
             borderBottom: '1px solid #E5E5E5',
             '&:first-of-type': {
               borderLeft: '2px solid transparent',
@@ -132,6 +134,7 @@ const AclThemeProvider = createTheme({
             backgroundColor: '#FFFFFF',
             borderTop: '1px solid #E5E5E5',
             padding: '3px 8px',
+            height: '49px',
             '&:first-of-type': {
               borderLeft: '2px solid transparent',
             },
