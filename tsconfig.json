@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noUnusedLocals": false,
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "dist/esm",
+    "allowSyntheticDefaultImports": true,
+    "emitDeclarationOnly": false,
+    "lib": ["es5", "es2015", "es2016", "dom", "esnext"],
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "react-app-env.d.ts"],
+  "exclude": ["src/cTest/**/*"]
+}

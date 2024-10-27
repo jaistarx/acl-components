@@ -1,0 +1,37 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+name: $(Build.DefinitionName)_$(SourceBranchName).$(Rev:r)
+trigger:
+- dev
+pr: none
+pool:
+  name: rq-agent-pools
+resources:
+  repositories:
+  - repository: ConfInfo
+    type: github
+    endpoint: Advantasure-RAQ
+    name: Advantasure-RAQ/configurations
+    ref: feature/AzureDevOpsPOC
+  - repository: BuildTools
+    type: github
+    endpoint: Advantasure-RAQ
+    name: Advantasure-RAQ/buildtools
+    ref: master
+variables:
+  buildConfiguration: 'Release'
+  buildPlatform: 'Any CPU'
+  product: 'rqsr-ui-design-library'
+  sourceFolder: 'rqsr-ui-design-library'
+  projectFile: ''
+  #This is a React Package that need to be Published
+  productType: 'NPM'
+  publishProfile: ''
+  publishUrl: 'https://pkgs.dev.azure.com/AdvantasureRAQ/RAQ/_packaging/Prod/npm/registry/'
+  TargetBranch: $env:SYSTEM_PULLREQUEST_TARGETBRANCH
+stages:
+- template: templates/Build.yml@BuildTools
+  parameters:
+    productType: ${{ variables.productType }}

@@ -1,0 +1,9 @@
+{
+  "short_name": "ACL",
+  "name": "Advantasure Components Library",
+  "description": "RAQ Reuseable React Components Library",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

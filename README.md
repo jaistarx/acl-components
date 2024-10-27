@@ -1,46 +1,145 @@
-# Getting Started with Create React App
+# RAQ Reuseable React Components Library
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A collection of versatile and reusable React components built with Material-UI (MUI). This library aims to streamline the development process by providing ready-to-use components that adhere to RAQ standards, guidelines and best practices, ensuring a consistent and cohesive user experience across applications.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This repository is to upload the source code of the components built for RAQ reuseable React Components Library.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:1200](http://localhost:1200) to view it in the browser.
+- [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Integrating the Library(@acl/ui) into your project
 
-### `npm test`
+### Setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Add a `.npmrc` to your project, in the same directory as your `package.json`
 
-### `npm run build`
+2. Add the content below into your `.npmrc` file
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```
+   registry=https://pkgs.dev.azure.com/AdvantasureRAQ/RAQ/_packaging/Prod/npm/registry/
+   always-auth=true
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. _[Optional]_ Run this command to install `vsts-npm-auth` if it's not available
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```
+   npm install -g vsts-npm-auth --registry https://registry.npmjs.com --always-auth false
+   ```
 
-### `npm run eject`
+4. Run this command to get an Azure Artifacts token added to your user-level `.npmrc` file
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+   ```
+   npx vsts-npm-auth -config .npmrc
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   - Login using your `entcorecloud account` and proceed with the instructions given by them
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- _`Note: Steps 1, 2 and 3 are a one-time setup. Step 4 needs to be run again only if npm gives you a 401 Unauthorized error while installing @acl/ui.`_
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+5. _[Must]_ Delete `@acl or @acl/ui alias name` from `all the webpack configs`(Eg: inside webpack.config.ts) if it's present
 
-## Learn More
+6. _[Must]_ Delete `@acl directory` from `src directory` if it's present
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Run this command in your project directory
+
+  ```
+  npm install @acl/ui
+  ```
+
+### Upgradation
+
+- Run this command in your project directory
+
+  ```
+  npm install @acl/ui@latest
+  ```
+
+## Commonly faced issues after installation
+
+### Module not found: Error: Can't resolve '@acl/ui'
+
+1. Delete the `node_modules directory`
+
+2. Delete the `package-lock.json file`
+
+3. Clean up the NPM cache by running this command in your project directory
+
+   ```
+   npm cache clean --force
+   ```
+
+4. Install all packages again by running this command in your project directory
+
+   ```
+   npm install
+   ```
+
+- If the error still shows up, check `all the webpack configs` and delete the line containing `@acl alias name`.
+
+  ```
+  // Delete this line from all the webpack configs
+  '@acl': path.resolve(__dirname, 'src/@acl'),
+  ```
+
+## Features
+
+- Run this command to start testing the components after importing them inside `src/cTest/index.tsx`
+
+  ```
+  npm run ctest
+  ```
+
+- Run this command to create a production bundle of the components(excluding `cTest directory`)
+
+  ```
+  npm run build
+  ```
+
+- Run this command to lint and format all files inside `src directory`(excluding `cTest directory`)
+
+  ```
+  npm run format
+  ```
+
+## Available components
+
+```
+AclAvatar
+AclBackdrop
+AclBox
+AclButton
+AclCard
+AclCheckbox
+AclChip
+AclCollapse
+AclCssBaseline
+AclDatepicker
+AclDivider
+AclDropdown
+AclFormControl
+AclFormControlLabel
+AclIcon
+AclIconButton
+AclInput
+AclInputBase
+AclLink
+AclList
+AclListItemButton
+AclListItemText
+AclModal
+AclPagination
+AclPaper
+AclPopover
+AclPopper
+AclRadio
+AclRadioGroup
+AclSnackbar
+AclTable
+AclTablePagination
+AclTabs
+```

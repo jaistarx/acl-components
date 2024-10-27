@@ -1,0 +1,84 @@
+{
+  "name": "@acl/ui",
+  "version": "1.0.5",
+  "description": "UST Healthproof RAQ Component Library",
+  "author": "Jaison Jeyakrishnan",
+  "license": "UST Healthproof",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "url": "https://github.com/Advantasure-RAQ/rqsr-ui-design-library"
+  },
+  "scripts": {
+    "ctest": "webpack server --config webpack.config.ts --progress --stats-error-details",
+    "build": "rimraf dist/ && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc && npm run copycss:esm",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs && npm run copycss:cjs",
+    "copycss:esm": "copyfiles -u 1 -e \"./src/cTest/**/*.{css,svg,png,ttf,woff,woff2}\" \"./src/**/*.{css,svg,png,ttf,woff,woff2}\" ./dist/esm",
+    "copycss:cjs": "copyfiles -u 1 -e \"./src/cTest/**/*.{css,svg,png,ttf,woff,woff2}\" \"./src/**/*.{css,svg,png,ttf,woff,woff2}\" ./dist/cjs",
+    "format": "tsc --noEmit && eslint --config .eslintrc.js \"src/**/*.{ts,tsx}\" && prettier --config .prettierrc.js --write \"src/**/*.{ts,tsx,css}\""
+  },
+  "keywords": [
+    "react",
+    "toast",
+    "components"
+  ],
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.0",
+    "@mui/material": "^6.0.2",
+    "@mui/x-date-pickers": "^7.16.0",
+    "date-fns": "^3.6.0",
+    "notistack": "^3.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.2.3",
+    "react-router-dom": "^6.25.1",
+    "react-virtuoso": "^4.10.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.25.0",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
+    "@babel/register": "^7.25.9",
+    "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
+    "@types/mini-css-extract-plugin": "^2.5.1",
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "babel-loader": "^9.2.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "copyfiles": "^2.4.1",
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-webpack-plugin": "^4.2.0",
+    "favicons-webpack-plugin": "^6.0.1",
+    "html-webpack-plugin": "^5.6.3",
+    "mini-css-extract-plugin": "^2.9.1",
+    "prettier": "^3.3.3",
+    "rimraf": "^5.0.5",
+    "ts-loader": "^9.5.0",
+    "typescript": "^4.9.5",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }
+}
