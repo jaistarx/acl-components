@@ -1,4 +1,5 @@
 import { Tab, Tabs, ThemeProvider } from '@mui/material';
+import React from 'react';
 import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
 import { stringifyObjectValues } from '../../common/helpers/common.helper';
 import { IDictionary } from '../../common/types/common.type';
