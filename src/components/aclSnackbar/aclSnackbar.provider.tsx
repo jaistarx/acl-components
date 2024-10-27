@@ -2,15 +2,15 @@ import { IconButton } from '@mui/material';
 import { SnackbarKey, SnackbarProvider, useSnackbar } from 'notistack';
 import React from 'react';
 import Closeicon from '../../common/assets/images/snackbar-close-icon.svg';
-import { SNACKBAR_CONTAINER_STYLE } from './aclSnackbar.constant';
+import { CLOSE_ICON_STYLE, SNACKBAR_CONTAINER_STYLE } from './aclSnackbar.constant';
 import { AclSnackbarProviderProps } from './aclSnackbar.type';
 
 const SnackbarCloseIconButton = ({ snackbarKey }: { snackbarKey: SnackbarKey }) => {
   const { closeSnackbar } = useSnackbar();
 
   return (
-    <IconButton size="small" id={String(snackbarKey)} onClick={() => closeSnackbar(snackbarKey)}>
-      <img style={{ height: '16px', width: '16px' }} src={Closeicon} alt="close-icon" />
+    <IconButton id={String(snackbarKey)} onClick={() => closeSnackbar(snackbarKey)}>
+      <img style={CLOSE_ICON_STYLE} src={Closeicon} alt="close-icon" />
     </IconButton>
   );
 };
@@ -24,6 +24,7 @@ const getSnackbarProps = (props: AclSnackbarProviderProps) => {
     action:
       props.action ??
       ((snackbarKey: SnackbarKey) => <SnackbarCloseIconButton snackbarKey={snackbarKey}></SnackbarCloseIconButton>),
+    ...props,
   };
 };
 

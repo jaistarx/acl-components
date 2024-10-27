@@ -16,6 +16,42 @@ const AclThemeProvider = createTheme({
   },
   typography: {
     fontFamily: '"Manrope", "Helvetica", "Arial", sans-serif',
+    fontSize: 12, // Base font size in px (default is 14px)
+    h1: {
+      fontSize: '32px',
+    },
+    h2: {
+      fontSize: '28px',
+    },
+    h3: {
+      fontSize: '24px',
+    },
+    h4: {
+      fontSize: '20px',
+    },
+    h5: {
+      fontSize: '16px',
+    },
+    h6: {
+      fontSize: '14px',
+    },
+    body1: {
+      fontSize: '12px',
+      fontWeight: 500,
+    },
+    body2: {
+      fontSize: '12px',
+      fontWeight: 400,
+    },
+    caption: {
+      fontSize: '10px',
+    },
+    subtitle1: {
+      fontSize: '14px',
+    },
+    subtitle2: {
+      fontSize: '12px',
+    },
   },
   components: {
     // MuiCssBaseline
@@ -29,6 +65,12 @@ const AclThemeProvider = createTheme({
     // MuiCheckbox
     MuiCheckbox: {
       styleOverrides: {
+        root: {
+          '.MuiSvgIcon-root': {
+            width: '18px',
+            height: '18px',
+          },
+        },
         colorSecondary: {
           '&.Mui-checked': {
             color: '#F53D6B',
@@ -44,6 +86,8 @@ const AclThemeProvider = createTheme({
           tableLayout: 'fixed',
           borderSpacing: '0px',
           position: 'relative',
+          fontWeight: 500,
+          fontSize: '12px',
         },
       },
     },
@@ -54,31 +98,22 @@ const AclThemeProvider = createTheme({
           background: '#FFFFFF',
           overflow: 'auto',
           borderRadius: '4px',
-          '&::-webkit-scrollbar': {
-            width: '0px',
-            height: '0px',
-          },
         },
       },
     },
     MuiTableHead: {
       styleOverrides: {
         root: {
-          // TODO: Remove all unused zIndex after testing
-          // zIndex: '3 !important',
           '.MuiTableCell-root': {
             color: '#4B4B4B',
             backgroundColor: '#E5E5E5',
-            fontWeight: 700,
-            fontSize: 14,
-            height: '49px',
+            height: '44px',
             padding: '3px 8px',
+            // TODO: Replace with F37 Hybrid
+            fontFamily: '',
             '&:first-of-type': {
               borderLeft: '2px solid transparent',
             },
-            // '&:last-child': {
-            //   zIndex: '4 !important',
-            // },
           },
         },
       },
@@ -103,18 +138,14 @@ const AclThemeProvider = createTheme({
             },
           },
           '.MuiTableCell-root': {
-            // zIndex: 1,
             backgroundColor: 'inherit',
             padding: '8px',
             color: '#000000',
-            height: '59px',
+            height: '72px',
             borderBottom: '1px solid #E5E5E5',
             '&:first-of-type': {
               borderLeft: '2px solid transparent',
             },
-            // '&:last-child': {
-            //   zIndex: '2 !important',
-            // },
           },
         },
       },
@@ -129,18 +160,14 @@ const AclThemeProvider = createTheme({
     MuiTableFooter: {
       styleOverrides: {
         root: {
-          // zIndex: '3 !important',
           '.MuiTableCell-root': {
             backgroundColor: '#FFFFFF',
             borderTop: '1px solid #E5E5E5',
             padding: '3px 8px',
-            height: '49px',
+            height: '44px',
             '&:first-of-type': {
               borderLeft: '2px solid transparent',
             },
-            // '&:last-child': {
-            //   zIndex: '4 !important',
-            // },
           },
         },
       },
@@ -164,6 +191,7 @@ const AclThemeProvider = createTheme({
           fontSize: '14px',
           position: 'relative',
           whiteSpace: 'nowrap',
+          height: '48px',
         },
         contained: {
           border: '1px solid transparent',
@@ -224,7 +252,17 @@ const AclThemeProvider = createTheme({
         },
       },
     },
-    // MuiSwitch
+    // MuiRadio
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          '.MuiSvgIcon-root': {
+            width: '16px',
+            height: '16px',
+          },
+        },
+      },
+    },
     MuiSwitch: {
       styleOverrides: {
         root: {
@@ -246,11 +284,6 @@ const AclThemeProvider = createTheme({
           margin: '0px',
           borderRadius: '4px',
           borderColor: 'blue',
-          '.MuiInputBase-input': {
-            padding: '0px',
-            margin: '0px',
-            // maxHeight: '48px !important',
-          },
           '.MuiFormLabel-root': {
             color: '#4B4B4B',
           },
@@ -269,8 +302,8 @@ const AclThemeProvider = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#FCFCFC',
-          boxShadow: '0px 4px 11px 2px #262B6808',
-          borderRadius: '16px',
+          boxShadow: '0px 2px 8px 0px #00D6B829',
+          borderRadius: '4px',
         },
       },
     },
@@ -278,8 +311,8 @@ const AclThemeProvider = createTheme({
     MuiDivider: {
       styleOverrides: {
         root: {
-          color: '#9FA2B459',
-          border: '1px solid #9FA2B459',
+          color: '#E5E5E5',
+          borderBottom: '1px solid #E5E5E5',
         },
       },
     },
@@ -310,9 +343,23 @@ const AclThemeProvider = createTheme({
         root: {
           padding: '0px',
           margin: '0px',
+          height: '48px',
         },
       },
     },
+    // MuiInputLabel
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#4B4B4B',
+          transform: 'translate(14px, 15px) scale(1)',
+          '&.Mui-focused, &.MuiFormLabel-filled': {
+            transform: 'translate(14px, -6px) scale(0.75)',
+          },
+        },
+      },
+    },
+    // MuiFilledInput
     MuiFilledInput: {
       defaultProps: {
         disableUnderline: true,
@@ -357,7 +404,6 @@ const AclThemeProvider = createTheme({
             borderRadius: '0px',
           },
           '.MuiAccordionSummary-root': {
-            // background: '#F4F4F4',
             height: '66px',
           },
           '.MuiAccordionDetails-root': {
@@ -396,14 +442,6 @@ const AclThemeProvider = createTheme({
         },
       },
     },
-    // MuiInputLabel
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          color: '#4B4B4B',
-        },
-      },
-    },
     // MuiMenu
     MuiMenu: {
       styleOverrides: {
@@ -412,7 +450,19 @@ const AclThemeProvider = createTheme({
             backgroundColor: 'transparent',
           },
           '.MuiPaper-root': {
-            boxShadow: 'none',
+            boxShadow: '0px 2px 8px 0px #00D6B829',
+          },
+          '.MuiList-root': {
+            margin: '0px',
+            padding: '12px',
+          },
+          '.MuiMenuItem-root': {
+            margin: '0px',
+            padding: '0px',
+            height: '44px',
+            '.MuiListItemText-root': {
+              padding: '0px 12px',
+            },
           },
         },
       },
@@ -441,13 +491,24 @@ const AclThemeProvider = createTheme({
         },
       },
     },
+    // MuiOutlinedInput
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderWidth: '1px',
+          },
+        },
+      },
+    },
     // MuiPaper
     MuiPaper: {
       styleOverrides: {
         root: {
           borderRadius: '4px',
-          border: '2px solid #04636D',
-          marginTop: '2px',
+          border: '1px solid #04636D',
+          marginTop: '4px',
+          boxShadow: '0px 2px 8px 0px #00D6B829',
         },
       },
     },
@@ -466,6 +527,7 @@ const AclThemeProvider = createTheme({
         root: {
           textTransform: 'none',
           fontSize: '13px',
+          fontWeight: 400,
           '&.Mui-selected': {
             fontWeight: 600,
             letterSpacing: '-0.1px',
@@ -507,6 +569,17 @@ const AclThemeProvider = createTheme({
           minWidth: '0px',
           fontWeight: 500,
           fontSize: '12px',
+        },
+      },
+    },
+    // MuiDateCalendar
+    MuiDateCalendar: {
+      styleOverrides: {
+        root: {
+          '.MuiButtonBase-root, .MuiTypography-root': {
+            fontWeight: 500,
+            fontSize: '12px',
+          },
         },
       },
     },

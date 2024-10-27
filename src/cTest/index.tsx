@@ -15,6 +15,7 @@ import {
   AclPagination,
   AclRadio,
   AclRadioGroup,
+  AclSnackbarProvider,
   AclTabItem,
   AclTable,
   AclTableColDef,
@@ -793,7 +794,7 @@ const CTest = () => {
           <AclChip chipStyle={{ color: 'white', backgroundColor: 'black' }} label="+" />
         </div>
         <div>
-          <AclDatepicker fullWidth views={['month']} label="label"></AclDatepicker>
+          <AclDatepicker fullWidth label="label"></AclDatepicker>
         </div>
         <div>
           <div style={{ display: 'flex' }}>
@@ -812,6 +813,9 @@ const CTest = () => {
         </div>
         <div>
           <AclInput error label="label" fullWidth></AclInput>
+        </div>
+        <div>
+          <AclDivider></AclDivider>
         </div>
         <div>
           <AclTabs
@@ -847,6 +851,7 @@ const CTest = () => {
           </AclRadioGroup>
         </div>
         <div>
+          <AclInput label="button-group"></AclInput>
           <AclButton onClick={() => handlClick()}>hello</AclButton>
           <AclButton
             variant="outlined"
@@ -894,10 +899,14 @@ const CTest = () => {
   );
 };
 
-// NOTE: Don't change this below part
+// NOTE: Don't change this below line
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+// FEATURE: Add providers here
 root.render(
   <React.StrictMode>
-    <CTest />
+    <AclSnackbarProvider>
+      <CTest />
+    </AclSnackbarProvider>
   </React.StrictMode>,
 );
