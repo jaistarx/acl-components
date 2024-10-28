@@ -8,13 +8,13 @@ This repository is to upload the source code of the components built for RAQ reu
 
 - Latest version
 
-  ```
-  1.0.10
+  ```plaintext
+  1.0.11
   ```
 
 ## Prerequisites
 
-- [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [`Node.js and npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ## Integrating the Library(@acl/ui) into your project
 
@@ -24,20 +24,20 @@ This repository is to upload the source code of the components built for RAQ reu
 
 2. Add the content below into your `.npmrc` file
 
-   ```
+   ```plaintext
    registry=https://pkgs.dev.azure.com/AdvantasureRAQ/RAQ/_packaging/Prod/npm/registry/
    always-auth=true
    ```
 
 3. Run this command to install `vsts-npm-auth` globally if it's not available
 
-   ```
+   ```bash
    npm install -g vsts-npm-auth --registry https://registry.npmjs.com --always-auth false
    ```
 
 4. Run this command in your project directory to get an Azure Artifacts token added to your user-level `.npmrc` file
 
-   ```
+   ```bash
    npx vsts-npm-auth -config .npmrc
    ```
 
@@ -55,7 +55,7 @@ This repository is to upload the source code of the components built for RAQ reu
 
 - Run this command in your project directory
 
-  ```
+  ```bash
   npm install @acl/ui
   ```
 
@@ -63,7 +63,7 @@ This repository is to upload the source code of the components built for RAQ reu
 
 - Run this command in your project directory
 
-  ```
+  ```bash
   npm install @acl/ui@latest
   ```
 
@@ -77,26 +77,26 @@ This repository is to upload the source code of the components built for RAQ reu
 
 3. Clean up the NPM cache by running this command in your project directory
 
-   ```
+   ```bash
    npm cache clean --force
    ```
 
 4. Install all packages again by running this command in your project directory
 
-   ```
+   ```bash
    npm install
    ```
 
 - If the error still shows up, check `all the webpack configs or tsconfig` and delete the line containing `@acl name`
 
-  ```
+  ```ts
   // Delete this line from all the webpack configs(Eg: inside webpack.config.ts)
-  '@acl': path.resolve(__dirname, 'src/@acl'),
+  "@acl": path.resolve(__dirname, "src/@acl"),
   ```
 
-  ```
+  ```ts
   "paths": {
-  // Delete these lines from all the tsconfigs(Eg: inside tsconfig.json or tsconfig.paths.json)
+    // Delete these lines from all the tsconfigs(Eg: inside tsconfig.json or tsconfig.paths.json)
     "@acl": ["src/@acl"],
     "@acl/*": ["src/@acl/*"],
   }
@@ -106,25 +106,25 @@ This repository is to upload the source code of the components built for RAQ reu
 
 - Run this command to start testing the components after importing them inside `src/cTest/index.tsx`
 
-  ```
+  ```bash
   npm run ctest
   ```
 
 - Run this command to create a production bundle of the components(excluding `cTest directory`)
 
-  ```
+  ```bash
   npm run build
   ```
 
 - Run this command to lint and format all files inside `src directory`(excluding `cTest directory`)
 
-  ```
+  ```bash
   npm run format
   ```
 
 ## Available components
 
-```
+```plaintext
 AclAvatar
 AclBackdrop
 AclBox
