@@ -90,13 +90,13 @@ This repository is to upload the source code of the components built for RAQ reu
 - If the error still shows up, check `all the webpack configs or tsconfig` and delete the line containing `@acl name`
 
   ```
-  // Delete this line from all the webpack configs
+  // Delete this line from all the webpack configs(Eg: inside webpack.config.ts)
   '@acl': path.resolve(__dirname, 'src/@acl'),
   ```
 
   ```
   "paths": {
-  // Delete these lines from all the tsconfigs
+  // Delete these lines from all the tsconfigs(Eg: inside tsconfig.json or tsconfig.paths.json)
     "@acl": ["src/@acl"],
     "@acl/*": ["src/@acl/*"],
   }
