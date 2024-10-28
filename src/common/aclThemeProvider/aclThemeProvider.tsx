@@ -532,7 +532,7 @@ const AclThemeProvider = createTheme({
           fontWeight: 400,
           '&.Mui-selected': {
             fontWeight: 600,
-            letterSpacing: '-0.1px',
+            letterSpacing: '-0.2px',
           },
           '&.Mui-disabled': {
             color: '#A6A7AC',

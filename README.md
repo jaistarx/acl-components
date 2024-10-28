@@ -6,6 +6,12 @@ A collection of versatile and reusable React components built with Material-UI (
 
 This repository is to upload the source code of the components built for RAQ reuseable React Components Library.
 
+- Latest version
+
+  ```
+  1.0.10
+  ```
+
 ## Prerequisites
 
 - [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
@@ -23,25 +29,27 @@ This repository is to upload the source code of the components built for RAQ reu
    always-auth=true
    ```
 
-3. _[Optional]_ Run this command to install `vsts-npm-auth` if it's not available
+3. Run this command to install `vsts-npm-auth` globally if it's not available
 
    ```
    npm install -g vsts-npm-auth --registry https://registry.npmjs.com --always-auth false
    ```
 
-4. Run this command to get an Azure Artifacts token added to your user-level `.npmrc` file
+4. Run this command in your project directory to get an Azure Artifacts token added to your user-level `.npmrc` file
 
    ```
    npx vsts-npm-auth -config .npmrc
    ```
 
-   - Login using your `entcorecloud account` and proceed with the instructions given by them
+   - Proceed with the instructions provided. If prompted to log in, use your `entcorecloud account`
 
 - _`Note: Steps 1, 2 and 3 are a one-time setup. Step 4 needs to be run again only if npm gives you a 401 Unauthorized error while installing @acl/ui.`_
 
 5. _[Must]_ Delete `@acl or @acl/ui alias name` from `all the webpack configs`(Eg: inside webpack.config.ts) if it's present
 
-6. _[Must]_ Delete `@acl directory` from `src directory` if it's present
+6. _[Must]_ Delete `@acl or @acl/ui path name` from `tsconfigs`(Eg: inside tsconfig.json or tsconfig.paths.json) if it's present
+
+7. _[Must]_ Delete `@acl directory` from `src directory` if it's present
 
 ### Installation
 
@@ -79,11 +87,19 @@ This repository is to upload the source code of the components built for RAQ reu
    npm install
    ```
 
-- If the error still shows up, check `all the webpack configs` and delete the line containing `@acl alias name`.
+- If the error still shows up, check `all the webpack configs or tsconfig` and delete the line containing `@acl name`
 
   ```
   // Delete this line from all the webpack configs
   '@acl': path.resolve(__dirname, 'src/@acl'),
+  ```
+
+  ```
+  "paths": {
+  // Delete these lines from all the tsconfigs
+    "@acl": ["src/@acl"],
+    "@acl/*": ["src/@acl/*"],
+  }
   ```
 
 ## Features
