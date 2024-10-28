@@ -17,6 +17,10 @@ const AclThemeProvider = createTheme({
   typography: {
     fontFamily: '"Manrope", "Helvetica", "Arial", sans-serif',
     fontSize: 12, // Base font size in px (default is 14px)
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
     h1: {
       fontSize: '32px',
     },
@@ -36,12 +40,10 @@ const AclThemeProvider = createTheme({
       fontSize: '14px',
     },
     body1: {
-      fontSize: '12px',
-      fontWeight: 500,
+      fontSize: '14px',
     },
     body2: {
       fontSize: '12px',
-      fontWeight: 400,
     },
     caption: {
       fontSize: '10px',
@@ -107,7 +109,7 @@ const AclThemeProvider = createTheme({
           '.MuiTableCell-root': {
             color: '#4B4B4B',
             backgroundColor: '#E5E5E5',
-            height: '44px',
+            height: '38px',
             padding: '3px 8px',
             // TODO: Replace with F37 Hybrid
             fontFamily: '',
@@ -141,7 +143,7 @@ const AclThemeProvider = createTheme({
             backgroundColor: 'inherit',
             padding: '8px',
             color: '#000000',
-            height: '72px',
+            height: '56px',
             borderBottom: '1px solid #E5E5E5',
             '&:first-of-type': {
               borderLeft: '2px solid transparent',
@@ -352,9 +354,9 @@ const AclThemeProvider = createTheme({
       styleOverrides: {
         root: {
           color: '#4B4B4B',
-          transform: 'translate(14px, 15px) scale(1)',
+          transform: 'translate(14px, 13px) scale(1)',
           '&.Mui-focused, &.MuiFormLabel-filled': {
-            transform: 'translate(14px, -6px) scale(0.75)',
+            transform: 'translate(14px, -7.5px) scale(0.75)',
           },
         },
       },

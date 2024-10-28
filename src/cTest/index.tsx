@@ -6,7 +6,6 @@ import {
   AclButton,
   AclCheckbox,
   AclChip,
-  AclCssBaseline,
   AclDatepicker,
   AclDivider,
   AclDropdown,
@@ -871,13 +870,12 @@ const CTest = () => {
           ></AclDropdown>
           <AclDatepicker views={['month']} label="select date"></AclDatepicker>
         </div>
-        <AclCssBaseline />
+        {/* <AclCssBaseline /> */}
         <AclDivider />
         <div style={{ height: 'calc(100vh - 200px)' }}>
           <AclTable
             rowItems={rows}
-            hideCheckbox
-            stickyLastColumn={false}
+            // hideCheckbox
             defaultSelectedRows={[rows[1], rows[3], rows[6]]}
             columnItems={columns}
             selectedRows={(row) => console.log(row)}
