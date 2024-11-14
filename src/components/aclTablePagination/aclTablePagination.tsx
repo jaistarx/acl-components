@@ -10,7 +10,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { OUTER_CONTAINER } from './aclTablePagination.constant';
 import { AclTablePaginationProps } from './aclTablePagination.type';
 
@@ -23,7 +23,7 @@ const getPassedProps = (props: AclTablePaginationProps) => {
   };
 };
 
-const AclTable = ({ children, ...props }: AclTablePaginationProps) => {
+const AclTablePagination = ({ children, ...props }: AclTablePaginationProps) => {
   const passedProps = getPassedProps(props);
   const [rowsPerPageValue, setRowsPerPageValue] = useState<number>(
     props.defaultRowsPerPage ?? props.rowsPerPage?.[0] ?? 1,
@@ -75,4 +75,4 @@ const AclTable = ({ children, ...props }: AclTablePaginationProps) => {
   );
 };
 
-export default AclTable;
+export default AclTablePagination;

@@ -1,9 +1,8 @@
 import { Checkbox, Table, TableBody, TableCell, TableFooter, TableHead, TableRow, ThemeProvider } from '@mui/material';
 import React, { useState } from 'react';
 import { TableComponents, TableVirtuoso } from 'react-virtuoso';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
-import { stringifyObjectValues } from '../../common/helpers/common.helper';
-import { IDictionary } from '../../common/types/common.type';
+import { AclThemeProvider, stringifyObjectValues } from '../../common';
+import { IDictionary } from '../../common/types';
 import { OUTER_CONTAINER, TABLE_CELL, TABLE_VIRTUOSO } from './aclTable.constant';
 import { AclTableColDef, AclTableProps, AclTableVirtuosoContext } from './aclTable.type';
 

@@ -9,7 +9,7 @@ This repository is to upload the source code of the components built for RAQ reu
 - Latest version
 
   ```plaintext
-  1.0.11
+  1.3.4
   ```
 
 ## Prerequisites
@@ -29,7 +29,7 @@ This repository is to upload the source code of the components built for RAQ reu
    always-auth=true
    ```
 
-3. Run this command to install `vsts-npm-auth` globally if it's not available
+3. Run this command in your project directory to install `vsts-npm-auth` globally if it's not available
 
    ```bash
    npm install -g vsts-npm-auth --registry https://registry.npmjs.com --always-auth false
@@ -87,11 +87,13 @@ This repository is to upload the source code of the components built for RAQ reu
    npm install
    ```
 
-- If the error still shows up, check `all the webpack configs or tsconfig` and delete the line containing `@acl name`
+- If the error still shows up, check `all the webpack configs or tsconfigs` and delete the line containing `@acl name`
 
   ```ts
-  // Delete this line from all the webpack configs(Eg: inside webpack.config.ts)
-  "@acl": path.resolve(__dirname, "src/@acl"),
+  "alias": {
+    // Delete this line from all the webpack configs(Eg: inside webpack.config.ts)
+    "@acl": path.resolve(__dirname, "src/@acl"),
+  },
   ```
 
   ```ts
@@ -104,7 +106,7 @@ This repository is to upload the source code of the components built for RAQ reu
 
 ## Features
 
-- Run this command to start testing the components after importing them inside `src/cTest/index.tsx`
+- Run this command to start testing the components after importing them inside `src/cTest/cTest.tsx`
 
   ```bash
   npm run ctest
@@ -122,11 +124,27 @@ This repository is to upload the source code of the components built for RAQ reu
   npm run format
   ```
 
+- Run this command to package the build files in the `dist directory` into a `.tgz file` in the `release directory`
+
+  ```bash
+  npm run pack:release
+  ```
+
+- The library can be installed from the generated `.tgz file`. Copy the `.tgz file` into the directory containing your `package.json` and run this command
+
+  ```bash
+  npm install ./acl-ui-version.tgz
+  ```
+
+  - _`Note: Replace acl-ui-version.tgz with the specific version you want to install(Eg: acl-ui-1.0.0.tgz)`_
+
 ## Available components
 
 ```plaintext
+AclAccordion
+AclAutocomplete
 AclAvatar
-AclBackdrop
+AclBackdropLoader
 AclBox
 AclButton
 AclCard
@@ -137,6 +155,7 @@ AclCssBaseline
 AclDatepicker
 AclDivider
 AclDropdown
+AclDropzone
 AclFormControl
 AclFormControlLabel
 AclIcon

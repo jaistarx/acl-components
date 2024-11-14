@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2016",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -15,9 +15,12 @@
     "outDir": "dist/esm",
     "allowSyntheticDefaultImports": true,
     "emitDeclarationOnly": false,
-    "lib": ["es5", "es2015", "es2016", "dom", "esnext"],
-    "types": ["node"]
+    "lib": ["es5", "es2015", "es2016", "dom", "dom.iterable", "esnext"],
+    "types": ["node"],
+    "allowJs": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "react-app-env.d.ts"],
-  "exclude": ["src/cTest/**/*"]
+  "include": ["src", "react-app-env.d.ts"]
 }

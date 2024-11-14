@@ -1,3 +1,3 @@
 import { TextFieldProps } from '@mui/material';
 
-export declare type AclInputProps = TextFieldProps & {};
+export declare type AclInputProps = TextFieldProps;

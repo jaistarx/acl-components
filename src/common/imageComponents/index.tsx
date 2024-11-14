@@ -1,2 +1,2 @@
-export * from './calendarIcon';
-export * from './cancelIcon';
+export { default as CalendarIcon } from './calendarIcon';
+export { default as CancelIcon } from './cancelIcon';

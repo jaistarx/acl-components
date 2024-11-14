@@ -1,6 +1,6 @@
 import { Card, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclCardProps } from './aclCard.type';
 
 const getForwardedProps = (props: AclCardProps) => {

@@ -99,6 +99,7 @@ const config: Configuration = {
     },
   },
   plugins: [
+    new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
@@ -129,6 +130,9 @@ const config: Configuration = {
       minChunkSize: 10000, // Minimum number of characters
     }),
   ],
+  stats: {
+    errorDetails: true,
+  },
   devtool: 'inline-source-map',
   devServer: {
     static: path.join(__dirname, 'dist'),

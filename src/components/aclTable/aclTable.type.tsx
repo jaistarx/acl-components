@@ -1,5 +1,5 @@
 import { TableVirtuosoProps } from 'react-virtuoso';
-import { IDictionary } from '../../common/types/common.type';
+import { IDictionary } from '../../common/types';
 
 export declare type AclTableProps<T = any, C = AclTableVirtuosoContext> = TableVirtuosoProps<T, C> & {
   children?: React.ReactNode;

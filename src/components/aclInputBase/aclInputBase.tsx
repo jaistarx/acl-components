@@ -1,6 +1,6 @@
 import { InputBase, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclInputBaseProps } from './aclInputBase.type';
 
 const getForwardedProps = (props: AclInputBaseProps) => {

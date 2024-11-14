@@ -1,6 +1,6 @@
 import { Checkbox, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclCheckboxProps } from './aclCheckbox.type';
 
 const getForwardedProps = (props: AclCheckboxProps) => {

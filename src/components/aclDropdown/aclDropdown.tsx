@@ -1,4 +1,6 @@
+import DoneIcon from '@mui/icons-material/Done';
 import {
+  Box,
   Checkbox,
   FormControl,
   InputLabel,
@@ -9,12 +11,13 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import React, { useState } from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
-import { IDictionary } from '../../common/types/common.type';
+import { AclThemeProvider } from '../../common';
+import { IDictionary } from '../../common/types';
+import { DONE_ICON, NO_RESULT_FOUND } from './aclDropdown.constant';
 import { AclDropdownProps } from './aclDropdown.type';
 
 const getForwardedProps = (props: AclDropdownProps): IDictionary<any> => {
-  const { onChange, value, options, optionIdKey, optionValueKey, ...passedProps } = props;
+  const { onChange, value, options, optionIdKey, optionValueKey, showCheckbox, ...passedProps } = props;
 
   return {
     ...passedProps,
@@ -36,6 +39,7 @@ const getDefaultValues = (
 
 const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
   const forwardedProps = getForwardedProps(props);
+  const { options = [] } = props;
   const [selectedOptions, setSelectedOptions] = useState<string | string[]>(
     getDefaultValues(forwardedProps.defaultValue, forwardedProps.multiple),
   );
@@ -83,12 +87,19 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
             }
             {...forwardedProps}
           >
-            {props.options?.map((option: IDictionary<any>, index: number) => (
-              <MenuItem key={option[props.optionIdKey ?? 'id'] ?? index} value={JSON.stringify(option)}>
-                {forwardedProps.multiple && <Checkbox checked={selectedOptions.indexOf(JSON.stringify(option)) > -1} />}
-                <ListItemText primary={option[props.optionValueKey ?? 'value'] ?? ''} />
-              </MenuItem>
-            ))}
+            {Boolean(options) && options.length > 0 ? (
+              options?.map((option: IDictionary<any>, index: number) => (
+                <MenuItem key={option[props.optionIdKey ?? 'id'] ?? index} value={JSON.stringify(option)}>
+                  {props.showCheckbox && <Checkbox checked={selectedOptions.indexOf(JSON.stringify(option)) > -1} />}
+                  <ListItemText primary={option[props.optionValueKey ?? 'value'] ?? 'value'} />
+                  {props.variant === 'standard' && selectedOptions.indexOf(JSON.stringify(option)) > -1 && (
+                    <DoneIcon sx={DONE_ICON} />
+                  )}
+                </MenuItem>
+              ))
+            ) : (
+              <Box sx={NO_RESULT_FOUND}>No Results Found</Box>
+            )}
           </Select>
         </FormControl>
       </ThemeProvider>

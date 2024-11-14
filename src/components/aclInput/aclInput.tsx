@@ -1,7 +1,7 @@
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclInputProps } from './aclInput.type';
 
 const getForwardedProps = (props: AclInputProps) => {

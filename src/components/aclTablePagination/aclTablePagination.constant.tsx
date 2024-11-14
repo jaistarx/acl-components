@@ -1,4 +1,4 @@
-import { IDictionary } from '../../common/types/common.type';
+import { IDictionary } from '../../common/types';
 
 export const OUTER_CONTAINER: IDictionary<string> = {
   display: 'flex',

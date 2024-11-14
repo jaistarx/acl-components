@@ -1,13 +1,16 @@
 import { Chip, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclChipProps } from './aclChip.type';
 
 const getForwardedProps = (props: AclChipProps) => {
-  const { chipStyle, ...passedProps } = props;
-
   return {
-    ...passedProps,
+    ...props,
+    sx: {
+      fontWeight: 500,
+      fontSize: '12px',
+      ...props.sx,
+    },
     variant: props.variant ?? 'filled',
   };
 };
@@ -18,7 +21,7 @@ const AclChip = ({ ...props }: AclChipProps) => {
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Chip sx={{ ...props.chipStyle }} {...forwardedProps} />
+        <Chip {...forwardedProps} />
       </ThemeProvider>
     </>
   );

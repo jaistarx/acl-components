@@ -1,6 +1,6 @@
 import { FormControl, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclFormControlProps } from './aclFormControl.type';
 
 const getForwardedProps = (props: AclFormControlProps) => {

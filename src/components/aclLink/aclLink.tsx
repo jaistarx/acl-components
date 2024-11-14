@@ -1,6 +1,6 @@
 import { Link, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclLinkProps } from './aclLink.type';
 
 const getForwardedProps = (props: AclLinkProps) => {

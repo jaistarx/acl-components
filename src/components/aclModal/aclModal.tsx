@@ -1,13 +1,11 @@
 import { Backdrop, Box, Fade, Modal, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
-import { DEFAULT_BOX_STYLE, DEFAULT_CLOSE_BUTTON_STYLE } from './aclModal.constant';
+import { AclThemeProvider } from '../../common';
+import { DEFAULT_BOX_STYLE } from './aclModal.constant';
 import { AclModalProps } from './aclModal.type';
-import ModalCloseIcon from './icons/modal-close-icon.svg';
 
 const seperatePropsToBePassed = (props: AclModalProps) => {
-  const { openModal, toggleOpenModal, modalDisplayStyle, closeIconPosition, closeIconComponent, ...originalProps } =
-    props;
+  const { modalDisplayStyle, ...originalProps } = props;
   return originalProps;
 };
 
@@ -15,7 +13,7 @@ const getForwardedProps = (props: AclModalProps) => {
   const originalProps = seperatePropsToBePassed(props);
   return {
     ...originalProps,
-    open: props.openModal ?? false,
+    open: props.open ?? false,
     disableAutoFocus: props.disableAutoFocus ?? true,
   };
 };
@@ -38,24 +36,8 @@ const AclModal = ({ ...props }: AclModalProps) => {
           }}
           {...forwardedProps}
         >
-          <Fade in={props.openModal}>
-            <Box sx={{ ...DEFAULT_BOX_STYLE, ...props.modalDisplayStyle }}>
-              <Box
-                sx={{
-                  ...DEFAULT_CLOSE_BUTTON_STYLE,
-                  ...props.closeIconPosition,
-                }}
-              >
-                {props.closeIconComponent ?? (
-                  <img
-                    src={ModalCloseIcon}
-                    alt="modal-close-icon"
-                    onClick={() => props.toggleOpenModal && props.toggleOpenModal(false)}
-                  />
-                )}
-              </Box>
-              <>{props.children}</>
-            </Box>
+          <Fade in={props.open}>
+            <Box sx={{ ...DEFAULT_BOX_STYLE, ...props.modalDisplayStyle }}>{props.children}</Box>
           </Fade>
         </Modal>
       </ThemeProvider>

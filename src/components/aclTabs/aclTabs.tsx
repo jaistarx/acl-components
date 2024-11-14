@@ -1,8 +1,7 @@
 import { Tab, Tabs, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
-import { stringifyObjectValues } from '../../common/helpers/common.helper';
-import { IDictionary } from '../../common/types/common.type';
+import { AclThemeProvider, stringifyObjectValues } from '../../common';
+import { IDictionary } from '../../common/types';
 import { TABS_CONTAINER, TAB_LABEL_CONTAINER, TAB_LABEL_COUNT } from './aclTabs.constant';
 import { AclTabItem, AclTabsProps } from './aclTabs.type';
 

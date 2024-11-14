@@ -1,5 +1,7 @@
+export * from './aclAccordion';
+export * from './aclAutocomplete';
 export * from './aclAvatar';
-export * from './aclBackdrop';
+export * from './aclBackdropLoader';
 export * from './aclBox';
 export * from './aclButton';
 export * from './aclCard';
@@ -10,6 +12,7 @@ export * from './aclCssBaseline';
 export * from './aclDatepicker';
 export * from './aclDivider';
 export * from './aclDropdown';
+export * from './aclDropzone';
 export * from './aclFormControl';
 export * from './aclFormControlLabel';
 export * from './aclIcon';

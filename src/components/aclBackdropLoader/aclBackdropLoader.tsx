@@ -1,15 +1,15 @@
 import { Backdrop, CircularProgress, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
-import { AclBackdropProps } from './aclBackdrop.type';
+import { AclThemeProvider } from '../../common';
+import { AclBackdropLoaderProps } from './aclBackdropLoader.type';
 
-const getForwardedProps = (props: AclBackdropProps) => {
+const getForwardedProps = (props: AclBackdropLoaderProps) => {
   return {
     ...props,
   };
 };
 
-const AclBackdrop = ({ ...props }: AclBackdropProps) => {
+const AclBackdropLoader = ({ ...props }: AclBackdropLoaderProps) => {
   const forwardedProps = getForwardedProps(props);
 
   return (
@@ -23,4 +23,4 @@ const AclBackdrop = ({ ...props }: AclBackdropProps) => {
   );
 };
 
-export default AclBackdrop;
+export default AclBackdropLoader;

@@ -339,13 +339,23 @@ const AclThemeProvider = createTheme({
         },
       },
     },
+    // MuiInput
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          height: '48px',
+          margin: '0px',
+          padding: '0px',
+        },
+      },
+    },
     // MuiInputBase
     MuiInputBase: {
       styleOverrides: {
         root: {
-          padding: '0px',
-          margin: '0px',
           height: '48px',
+          margin: '0px',
+          padding: '0px',
         },
       },
     },
@@ -356,7 +366,7 @@ const AclThemeProvider = createTheme({
           color: '#4B4B4B',
           transform: 'translate(14px, 13px) scale(1)',
           '&.Mui-focused, &.MuiFormLabel-filled': {
-            transform: 'translate(14px, -7.5px) scale(0.75)',
+            transform: 'translate(14px, -8px) scale(0.75)',
           },
         },
       },
@@ -391,25 +401,33 @@ const AclThemeProvider = createTheme({
     MuiAccordion: {
       styleOverrides: {
         root: {
-          color: '#202224',
           textTransform: 'none',
-          border: 'solid 1px #DEE0E7',
-          borderRadius: '12px !important',
+          border: 'none',
           position: 'relative',
           boxShadow: 'none',
-          fontSize: '14px',
-          fontWeight: 400,
-          '&:before': {
-            content: 'none',
-          },
-          '.Mui-expanded': {
+          margin: '0px',
+          padding: '0px',
+          borderRadius: '0px',
+          borderBottom: '1px solid #E5E5E5',
+          '&.MuiPaper-root': {
             borderRadius: '0px',
           },
+          '&:first-of-type': {
+            borderTopLeftRadius: '0px',
+            borderTopRightRadius: '0px',
+          },
+          '&:last-of-type': {
+            borderBottomLeftRadius: '0px',
+            borderBottomRightRadius: '0px',
+          },
           '.MuiAccordionSummary-root': {
-            height: '66px',
+            padding: '0px 24px',
+            height: '72px',
           },
           '.MuiAccordionDetails-root': {
             padding: '0px',
+          },
+          '.Mui-expanded': {
             borderRadius: '0px',
           },
         },
@@ -419,7 +437,7 @@ const AclThemeProvider = createTheme({
     MuiBackdrop: {
       styleOverrides: {
         root: {
-          backgroundColor: '#000000b3',
+          backgroundColor: '#00000080',
           zIndex: 1300,
         },
       },
@@ -436,6 +454,20 @@ const AclThemeProvider = createTheme({
     MuiSelect: {
       styleOverrides: {
         root: {
+          '&.MuiInput-root, &.MuiInputBase-root': {
+            height: '48px',
+            margin: '0px',
+            padding: '0px',
+          },
+          '&.MuiInput-root:before': {
+            borderBottom: 'none',
+          },
+          '&:hover:not(.Mui-disabled):before': {
+            borderBottom: 'none',
+          },
+          '&.MuiInput-root:after': {
+            borderBottom: 'none',
+          },
           // NOTE: Use if needed
           // '&.readonly': {
           //   pointerEvents: 'none',
@@ -451,18 +483,32 @@ const AclThemeProvider = createTheme({
           '.MuiBackdrop-root': {
             backgroundColor: 'transparent',
           },
-          '.MuiPaper-root': {
-            boxShadow: '0px 2px 8px 0px #00D6B829',
-          },
           '.MuiList-root': {
             margin: '0px',
             padding: '12px',
           },
           '.MuiMenuItem-root': {
             margin: '0px',
-            padding: '0px',
+            padding: '0px 12px',
             height: '44px',
-            '.MuiListItemText-root': {
+            display: 'flex',
+            alignItems: 'center',
+            '.MuiCheckbox-root': {
+              padding: '0px 8px 0px 0px',
+            },
+          },
+        },
+      },
+    },
+    // MuiAutocomplete
+    MuiAutocomplete: {
+      styleOverrides: {
+        listbox: {
+          padding: '12px',
+          '& .MuiAutocomplete-option': {
+            height: '44px',
+            padding: '0px',
+            '& .MuiListItemText-root': {
               padding: '0px 12px',
             },
           },
@@ -567,10 +613,15 @@ const AclThemeProvider = createTheme({
       styleOverrides: {
         root: {
           borderRadius: '4px',
+          borderWidth: '1px',
           height: '32px',
           minWidth: '0px',
-          fontWeight: 500,
-          fontSize: '12px',
+          '.MuiChip-label': {
+            padding: '0px 12px',
+          },
+          '.MuiChip-icon': {
+            margin: '0px -4px 0px 8px',
+          },
         },
       },
     },

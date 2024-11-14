@@ -1,6 +1,6 @@
 import { ListItemText, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclListItemTextProps } from './aclListItemText.type';
 
 const getForwardedProps = (props: AclListItemTextProps) => {

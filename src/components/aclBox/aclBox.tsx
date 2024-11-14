@@ -1,6 +1,6 @@
 import { Box, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclBoxProps } from './aclBox.type';
 
 const getForwardedProps = (props: AclBoxProps) => {

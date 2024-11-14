@@ -1,6 +1,6 @@
 import { Radio, ThemeProvider } from '@mui/material';
 import React from 'react';
-import AclThemeProvider from '../../common/aclThemeProvider/aclThemeProvider';
+import { AclThemeProvider } from '../../common';
 import { AclRadioProps } from './aclRadio.type';
 
 const getForwardedProps = (props: AclRadioProps) => {
