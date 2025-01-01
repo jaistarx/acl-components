@@ -20,7 +20,7 @@ const config: Configuration = {
     publicPath: '/',
     filename: 'js/[name].[contenthash].js',
   },
-  entry: './src/cTest/index.tsx',
+  entry: './src/c-test/index.tsx',
   module: {
     rules: [
       {

@@ -1,1 +1,1 @@
-export * as AclStyles from './aclStyles.module.css';
+export * as AclStyles from './acl-styles.module.css';

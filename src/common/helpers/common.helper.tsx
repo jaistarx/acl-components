@@ -1,6 +1,8 @@
 import { IDictionary } from '../types';
 
-export const stringifyObjectValues = (object: IDictionary<any>): string => {
+export const stringifyObjectValues = (object: IDictionary<any> | Record<any, any> | null | undefined): string => {
+  if (!object) return '';
+
   return String(Object.values(object).join('-')); // Simple hashing using values
 };
 

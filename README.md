@@ -9,7 +9,7 @@ This repository is to upload the source code of the components built for RAQ reu
 - Latest version
 
   ```plaintext
-  1.3.4
+  1.4.8
   ```
 
 ## Prerequisites
@@ -25,7 +25,7 @@ This repository is to upload the source code of the components built for RAQ reu
 2. Add the content below into your `.npmrc` file
 
    ```plaintext
-   registry=https://pkgs.dev.azure.com/AdvantasureRAQ/RAQ/_packaging/Prod/npm/registry/
+   registry=https://pkgs.dev.azure.com/AdvantasureRAQ/RAQ/_packaging/Prod_v1/npm/registry/
    always-auth=true
    ```
 
@@ -106,19 +106,19 @@ This repository is to upload the source code of the components built for RAQ reu
 
 ## Features
 
-- Run this command to start testing the components after importing them inside `src/cTest/cTest.tsx`
+- Run this command to start testing the components after importing them inside `src/c-test/c-test.tsx`
 
   ```bash
   npm run ctest
   ```
 
-- Run this command to create a production bundle of the components(excluding `cTest directory`)
+- Run this command to create a `production bundle(dist)` of the components(_excluding `c-test directory`_)
 
   ```bash
   npm run build
   ```
 
-- Run this command to lint and format all files inside `src directory`(excluding `cTest directory`)
+- Run this command to lint and format all files inside `src directory`
 
   ```bash
   npm run format
@@ -130,7 +130,7 @@ This repository is to upload the source code of the components built for RAQ reu
   npm run pack:release
   ```
 
-- The library can be installed from the generated `.tgz file`. Copy the `.tgz file` into the directory containing your `package.json` and run this command
+- The library can be installed from the generated `.tgz file inside release directory`. Copy the `.tgz file` into the directory containing your `package.json` and run this command
 
   ```bash
   npm install ./acl-ui-version.tgz
@@ -164,8 +164,10 @@ AclInput
 AclInputBase
 AclLink
 AclList
+AclListItem
 AclListItemButton
 AclListItemText
+AclLoader
 AclModal
 AclPagination
 AclPaper

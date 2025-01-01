@@ -1,7 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2021,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
@@ -25,13 +25,16 @@ module.exports = {
     amd: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react-hooks', 'unused-imports'],
   extends: ['plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
   rules: {
     'padding-line-between-statements': [
       'error',
       { blankLine: 'always', prev: 'block-like', next: '*' },
       { blankLine: 'always', prev: '*', next: 'block-like' },
+      { blankLine: 'always', prev: '*', next: 'return' },
+      { blankLine: 'always', prev: 'directive', next: '*' },
+      { blankLine: 'any', prev: 'directive', next: 'directive' },
     ],
     '@typescript-eslint/triple-slash-reference': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
@@ -44,15 +47,23 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 'off',
-    '@typescript-eslint/ban-types': [
+    '@typescript-eslint/no-empty-object-type': 'error',
+    '@typescript-eslint/no-unsafe-function-type': 'error',
+    '@typescript-eslint/no-wrapper-object-types': 'error',
+    '@typescript-eslint/no-restricted-types': 'error',
+    'no-empty-function': 'off',
+    '@typescript-eslint/no-empty-function': 'error',
+    'react/display-name': 'off',
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
       'error',
       {
-        types: {
-          '{}': false,
-        },
+        vars: 'all',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+        ignoreRestSiblings: true,
       },
     ],
-    'react/display-name': 'off',
   },
-  ignorePatterns: ['build/', 'dist/', 'node_modules/', 'src/cTest/'],
+  ignorePatterns: ['build/', 'dist/', 'node_modules/', 'src/c-test/'],
 };
