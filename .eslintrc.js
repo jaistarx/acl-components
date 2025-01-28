@@ -24,9 +24,15 @@ module.exports = {
     browser: true,
     amd: true,
     node: true,
+    jest: true,
   },
-  plugins: ['@typescript-eslint', 'react-hooks', 'unused-imports'],
-  extends: ['plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint', 'react-hooks', 'unused-imports', 'jest'],
+  extends: [
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:storybook/recommended',
+    'plugin:jest/recommended',
+  ],
   rules: {
     'padding-line-between-statements': [
       'error',
@@ -64,6 +70,11 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
+    'jest/no-disabled-tests': 'warn',
+    'jest/no-focused-tests': 'error',
+    'jest/no-identical-title': 'error',
+    'jest/prefer-to-have-length': 'warn',
+    'jest/valid-expect': 'error',
   },
-  ignorePatterns: ['build/', 'dist/', 'node_modules/', 'src/c-test/'],
+  ignorePatterns: ['build/', 'dist/', 'node_modules/', 'src/development/playground/'],
 };

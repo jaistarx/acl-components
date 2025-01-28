@@ -3,7 +3,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
   Checkbox,
-  Collapse,
   IconButton,
   Table,
   TableBody,
@@ -16,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TableComponents, TableVirtuoso } from 'react-virtuoso';
 import { AclThemeProvider, stringifyObjectValues } from '../../common';
 import { IDictionary } from '../../common/types';
@@ -30,22 +29,24 @@ import {
   TABLE_ROW_SPAN,
   TABLE_VIRTUOSO,
 } from './acl-table.constant';
-import { AclTableColDef, AclTableProps, AclTableVirtuosoContext, Order } from './acl-table.type';
+import { AclTableColDef, AclTableProps, AclTableVirtuosoContext, Order, OrderBy } from './acl-table.type';
 
 const getForwardedProps = (props: AclTableProps) => {
   const {
     rowItems,
     columnItems,
     onRowClick,
+    onChangeSelectedRows,
     selectedRows,
     hideCheckbox,
     stickyLastColumn,
     defaultSelectedRows,
-    defaultSortingKey,
-    defaultSortingOrder,
     noDataText,
     disableRowSelect,
     hasCollapsibleContent,
+    onSelectAll,
+    defaultSortingState,
+    getSortingState,
     ...forwardedProps
   } = props;
 
@@ -66,10 +67,10 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-const getComparator = <Key extends string | number | symbol>(
+const getComparator = <Field extends OrderBy>(
   order: Order,
-  orderBy: Key,
-): ((a: { [key in Key]: number | string | symbol }, b: { [key in Key]: number | string | symbol }) => number) => {
+  orderBy: Field,
+): ((a: { [key in Field]: number | string | symbol }, b: { [key in Field]: number | string | symbol }) => number) => {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -122,9 +123,7 @@ const VirtuosoTableComponents = (
                 style={TABLE_CELL_COLLAPSIBLE_CONTENT(openCollapsibleContent[stringifiedRow])}
                 colSpan={collapsibleColSpan}
               >
-                <Collapse in={openCollapsibleContent[stringifiedRow]} timeout="auto" unmountOnExit>
-                  <Box component="div">{item.collapsibleContent}</Box>
-                </Collapse>
+                {openCollapsibleContent[stringifiedRow] && <Box component="div">{item.collapsibleContent}</Box>}
               </TableCell>
             </TableRow>
           )}
@@ -268,48 +267,42 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
     props.defaultSelectedRows?.map((row) => stringifyObjectValues(row)) ?? [],
   );
   const [selected, setSelected] = useState<readonly IDictionary<any>[]>(props.defaultSelectedRows ?? []);
-  const [order, setOrder] = useState<Order>(props.defaultSortingOrder ?? 'asc');
-  const [orderBy, setOrderBy] = useState<string | number | symbol>(props.defaultSortingKey ?? '');
+  const [order, setOrder] = useState<Order>(props.defaultSortingState?.order ?? 'asc');
+  const [orderBy, setOrderBy] = useState<OrderBy>(props.defaultSortingState?.field ?? '');
   const [openCollapsibleContent, setOpenCollapsibleContent] = useState<IDictionary<boolean>>({});
 
-  const sortedRowItems = useMemo(() => {
-    if (Array.isArray(props.defaultSelectedRows)) {
-      setSelected(props.defaultSelectedRows);
-      setSelectedStringified(props.defaultSelectedRows?.map((row) => stringifyObjectValues(row)));
-    } else {
-      setSelected([]);
-      setSelectedStringified([]);
-    }
+  // NOTE: rowItemsRef is used for tracking previous rowItems value
+  const rowItemsRef = useRef<IDictionary<any>[]>(props.rowItems);
 
-    if (!props.rowItems || props.rowItems.length === 0) return [];
+  const handleSetSelectedRows = (selectedRows: IDictionary<any>[]) => {
+    setSelected(selectedRows);
+    setSelectedStringified(selectedRows.map((row) => stringifyObjectValues(row)));
+  };
 
-    if (orderBy === '') return [...props.rowItems];
-
-    return [...props.rowItems].sort(getComparator(order, orderBy));
-  }, [props.rowItems, order, orderBy, props.defaultSelectedRows]);
-
-  const handleRequestSort = (_event: React.MouseEvent<unknown>, property: string | number | symbol) => {
+  const handleRequestSort = (_event: React.MouseEvent<unknown>, property: OrderBy) => {
     const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const sortingOrder = isAsc ? 'desc' : 'asc';
+    props.getSortingState?.({ field: property, order: sortingOrder });
+    setOrder(sortingOrder);
     setOrderBy(property);
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     event?.stopPropagation();
     event?.preventDefault();
+    props.onSelectAll?.(event);
 
-    if (event.target.checked) {
-      const newSelected = props.rowItems.map((row) => stringifyObjectValues(row));
-      props.selectedRows?.(props.rowItems);
-      setSelected(props.rowItems);
-      setSelectedStringified(newSelected);
+    const totalItems = props.rowItems.length;
+    const selectedCount = selected.length;
+    const shouldUnselectAll = totalItems > 0 && selectedCount > 0 && selectedCount <= totalItems;
 
-      return;
+    if (shouldUnselectAll) {
+      props.onChangeSelectedRows?.(event, []);
+      handleSetSelectedRows([]);
+    } else {
+      props.onChangeSelectedRows?.(event, props.rowItems);
+      handleSetSelectedRows(props.rowItems);
     }
-
-    props.selectedRows?.([]);
-    setSelected([]);
-    setSelectedStringified([]);
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, row: IDictionary<any>) => {
@@ -324,8 +317,8 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
 
     const stringifiedRow = stringifyObjectValues(row);
     const selectedIndex = selectedStringified.indexOf(stringifiedRow);
-    let newSelectedStringified: readonly string[] = [];
-    let newSelected: readonly IDictionary<any>[] = [];
+    let newSelectedStringified: string[] = [];
+    let newSelected: IDictionary<any>[] = [];
 
     if (selectedIndex === -1) {
       newSelectedStringified = newSelectedStringified.concat(selectedStringified, stringifiedRow);
@@ -345,10 +338,37 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
     }
 
     props.onRowClick?.(event, row);
-    props.selectedRows?.(newSelected);
+    props.onChangeSelectedRows?.(event, newSelected);
     setSelected(newSelected);
     setSelectedStringified(newSelectedStringified);
   };
+
+  const sortedRowItems = useMemo(() => {
+    if (!props.rowItems || props.rowItems.length === 0) return [];
+
+    if (orderBy === '') return [...props.rowItems];
+
+    return [...props.rowItems].sort(getComparator(order, orderBy));
+  }, [props.rowItems, order, orderBy]);
+
+  useEffect(() => {
+    if (props.rowItems?.length <= 0) return;
+
+    if ((props.selectedRows?.length ?? 0) > (props.rowItems?.length ?? 0)) {
+      console.warn(
+        `Warning: The number of "selectedRows" (${props.selectedRows?.length}) exceeds the number of "rowItems" (${props.rowItems?.length}). Please ensure that the value passed to "selectedRows" is correct.`,
+      );
+    }
+
+    if (Array.isArray(props.selectedRows)) {
+      handleSetSelectedRows(props.selectedRows);
+    } else if (rowItemsRef.current !== props.rowItems) {
+      handleSetSelectedRows([]);
+    } else {
+      setSelected((prevValue) => prevValue);
+      setSelectedStringified((prevValue) => prevValue);
+    }
+  }, [props.rowItems, props.selectedRows]);
 
   const contextValues: AclTableVirtuosoContext = {
     rowItems: sortedRowItems,

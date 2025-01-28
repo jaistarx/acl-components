@@ -14,6 +14,9 @@ const StyledSnackbarProvider = styled(SnackbarProvider)<SnackbarProviderProps>((
     fontFamily: '"Manrope", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: '14px',
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
   },
   '&.notistack-MuiContent-default': {
     backgroundColor: '#002E33',

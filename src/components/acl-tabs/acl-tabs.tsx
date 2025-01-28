@@ -6,10 +6,15 @@ import { TABS_CONTAINER, TAB_LABEL_CONTAINER, TAB_LABEL_COUNT } from './acl-tabs
 import { AclTabItem, AclTabsProps } from './acl-tabs.type';
 
 const getForwardedProps = (props: AclTabsProps) => {
-  const { tabItems, variant, ...forwardedProps } = props;
+  const { tabItems, variant, justifyContent, ...forwardedProps } = props;
 
   return {
     centered: props.centered ?? true,
+    sx: {
+      ...props.sx,
+      ...TABS_CONTAINER(variant),
+      '& .MuiTabs-flexContainer': { justifyContent: justifyContent ?? 'space-evenly' },
+    },
     ...forwardedProps,
   };
 };
@@ -20,7 +25,7 @@ const AclTabs = ({ children, ...props }: AclTabsProps) => {
   return (
     <>
       <ThemeProvider theme={AclThemeProvider}>
-        <Tabs sx={TABS_CONTAINER(props.variant)} {...forwardedProps}>
+        <Tabs {...forwardedProps}>
           {props.tabItems?.map((item: AclTabItem, index: number) => {
             if (!Boolean(item)) return <></>;
 

@@ -4,17 +4,11 @@ import { AclThemeProvider } from '../../common';
 import { DEFAULT_BOX_STYLE } from './acl-modal.constant';
 import { AclModalProps } from './acl-modal.type';
 
-const seperatePropsToBePassed = (props: AclModalProps) => {
-  const { modalDisplayStyle, ...originalProps } = props;
-
-  return originalProps;
-};
-
 const getForwardedProps = (props: AclModalProps) => {
-  const originalProps = seperatePropsToBePassed(props);
+  const { modalDisplayStyle, ...forwardedProps } = props;
 
   return {
-    ...originalProps,
+    ...forwardedProps,
     open: props.open ?? false,
     disableAutoFocus: props.disableAutoFocus ?? true,
   };

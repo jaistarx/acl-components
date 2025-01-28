@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Manrope';
+  src:
+    local('Manrope'),
+    url(/static/fonts/manrope-variablefont-wght.ttf) format(truetype);
+}

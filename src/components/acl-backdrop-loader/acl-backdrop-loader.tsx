@@ -14,11 +14,13 @@ const AclBackdropLoader = ({ ...props }: AclBackdropLoaderProps) => {
 
   return (
     <>
-      <ThemeProvider theme={AclThemeProvider}>
-        <Backdrop {...forwardedProps}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      </ThemeProvider>
+      {forwardedProps.open && (
+        <ThemeProvider theme={AclThemeProvider}>
+          <Backdrop {...forwardedProps}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </ThemeProvider>
+      )}
     </>
   );
 };

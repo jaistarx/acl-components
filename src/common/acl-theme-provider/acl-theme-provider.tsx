@@ -114,18 +114,7 @@ const AclThemeProvider = createTheme({
     MuiTableHead: {
       styleOverrides: {
         root: {
-          '.MuiTableCell-root': {
-            color: '#4B4B4B',
-            backgroundColor: '#E5E5E5',
-            height: '38px',
-            padding: '3px 8px',
-            fontFamily: '', // TODO: Replace with F37 Hybrid
-            fontWeight: 700,
-            '&:first-of-type': {
-              borderLeft: '2px solid transparent',
-            },
-          },
-          '& > .MuiTableRow-root > .MuiTableCell-root': {
+          '.MuiTableCell-root, & > .MuiTableRow-root > .MuiTableCell-root': {
             color: '#4B4B4B',
             backgroundColor: '#E5E5E5',
             height: '38px',
@@ -153,7 +142,7 @@ const AclThemeProvider = createTheme({
               '&:hover': {
                 backgroundColor: '#d8fdf8',
               },
-              '.MuiTableCell-root:first-of-type': {
+              '> .MuiTableCell-root:first-of-type': {
                 borderLeft: '2px solid #00D6B8',
               },
             },
@@ -174,7 +163,7 @@ const AclThemeProvider = createTheme({
     MuiTableFooter: {
       styleOverrides: {
         root: {
-          '.MuiTableCell-root': {
+          '.MuiTableCell-root, & > .MuiTableRow-root > .MuiTableCell-root': {
             backgroundColor: '#FFFFFF',
             borderTop: '1px solid #E5E5E5',
             padding: '3px 8px',
@@ -579,7 +568,7 @@ const AclThemeProvider = createTheme({
             display: 'flex',
             alignItems: 'center',
             gap: '3px',
-            padding: '9.5px',
+            padding: '10px',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -667,11 +656,6 @@ const AclThemeProvider = createTheme({
     // MuiTabs
     MuiTabs: {
       styleOverrides: {
-        root: {
-          '& .MuiTabs-flexContainer': {
-            justifyContent: 'space-evenly',
-          },
-        },
         indicator: {
           backgroundColor: '#00D6B8',
         },

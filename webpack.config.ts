@@ -20,7 +20,7 @@ const config: Configuration = {
     publicPath: '/',
     filename: 'js/[name].[contenthash].js',
   },
-  entry: './src/c-test/index.tsx',
+  entry: './src/development/index.tsx',
   module: {
     rules: [
       {
@@ -101,7 +101,7 @@ const config: Configuration = {
   plugins: [
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './src/development/index.html',
     }),
     new HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({

@@ -6,15 +6,20 @@ export declare type AclTableProps<T = any, C = AclTableVirtuosoContext> = TableV
   rowItems: IDictionary<T>[];
   columnItems: AclTableColDef<T>[];
   onRowClick?: (event: React.MouseEvent<unknown>, row: IDictionary<T>) => void;
-  selectedRows?: (selectedRows: readonly IDictionary<T>[]) => void;
+  onChangeSelectedRows?: (
+    event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<unknown>,
+    selectedRows: IDictionary<T>[],
+  ) => void;
   defaultSelectedRows?: IDictionary<T>[];
+  selectedRows?: IDictionary<T>[];
   hideCheckbox?: boolean;
   stickyLastColumn?: boolean;
-  defaultSortingKey?: string | number | symbol;
-  defaultSortingOrder?: Order;
   noDataText?: React.ReactNode;
   disableRowSelect?: boolean;
   hasCollapsibleContent?: boolean;
+  onSelectAll?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  defaultSortingState?: { field: OrderBy; order?: Order };
+  getSortingState?: ({ field, order }: { field: OrderBy; order: Order }) => void;
 };
 
 export declare type AclTableVirtuosoContext<T = unknown> = {
@@ -24,8 +29,8 @@ export declare type AclTableVirtuosoContext<T = unknown> = {
   handleSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleClick: (event: React.MouseEvent<unknown>, row: IDictionary<T>) => void;
   order: Order;
-  orderBy: string | number | symbol;
-  handleRequestSort: (event: React.MouseEvent<unknown>, property: string | number | symbol) => void;
+  orderBy: OrderBy;
+  handleRequestSort: (event: React.MouseEvent<unknown>, property: OrderBy) => void;
   props: AclTableProps;
   openCollapsibleContent: IDictionary<boolean>;
   setOpenCollapsibleContent: React.Dispatch<React.SetStateAction<IDictionary<boolean>>>;
@@ -40,3 +45,5 @@ export declare type AclTableColDef<T = unknown> = {
 };
 
 export declare type Order = 'asc' | 'desc';
+
+export declare type OrderBy = string | number | symbol;

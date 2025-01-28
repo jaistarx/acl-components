@@ -1,6 +1,6 @@
 import React from 'react';
-import { AclButton, AclChip, AclTable, AclTableColDef } from '../components';
-import { AColumn, ARow, Row } from './c-test.type';
+import { AclButton, AclChip, AclTable, AclTableColDef } from '../..';
+import { AColumn, ARow, Row } from './playground.type';
 
 export const OPTIONS = [
   { id: 1, value: 'one' },
@@ -220,6 +220,32 @@ const handleButtonClick = (e: any) => {
 
 export const rows2: Row[] = [
   {
+    age1: 34,
+    age2: 34,
+    age3: 34,
+    age4: 34,
+    age5: 34,
+    age6: 34,
+    age7: 34,
+    age8: 34,
+    age9: 34,
+    age10: 34,
+    age11: 34,
+    age12: 34,
+    age13: 34,
+    age14: 34,
+    age15: 34,
+    age16: 34,
+    age17: 34,
+    age18: 34,
+    age19: 34,
+    age20: 34,
+    id: 2,
+    lastName: 'Lannister',
+    firstName: 'Cersei',
+    age: 31,
+  },
+  {
     id: 1,
     lastName: 'Snow',
     firstName: 'Jon',
@@ -276,11 +302,14 @@ export const rows2: Row[] = [
     age18: 34,
     age19: 34,
     age20: 34,
-    id: 2,
+    id: 3,
     lastName: 'Lannister',
-    firstName: 'Cersei',
+    firstName: 'Jaime',
     age: 31,
   },
+];
+
+export const rows: Row[] = [
   {
     age1: 34,
     age2: 34,
@@ -302,14 +331,11 @@ export const rows2: Row[] = [
     age18: 34,
     age19: 34,
     age20: 34,
-    id: 3,
+    id: 2,
     lastName: 'Lannister',
-    firstName: 'Jaime',
+    firstName: 'Cersei',
     age: 31,
   },
-];
-
-export const rows: Row[] = [
   {
     id: 1,
     lastName: 'Snow',
@@ -350,43 +376,11 @@ export const rows: Row[] = [
         <AclTable
           rowItems={rows2}
           hideCheckbox
-          // disableRowSelect
-          // defaultSelectedRows={[rows[5]]}
           columnItems={[columns[0], columns[1], columns[2]]}
-          selectedRows={(row) => console.log('selected rows', row)}
-          defaultSortingKey={'id'}
-          defaultSortingOrder="asc"
-          onRowClick={() => console.log('single row')}
           stickyLastColumn={false}
         ></AclTable>
       </div>
     ),
-  },
-  {
-    age1: 34,
-    age2: 34,
-    age3: 34,
-    age4: 34,
-    age5: 34,
-    age6: 34,
-    age7: 34,
-    age8: 34,
-    age9: 34,
-    age10: 34,
-    age11: 34,
-    age12: 34,
-    age13: 34,
-    age14: 34,
-    age15: 34,
-    age16: 34,
-    age17: 34,
-    age18: 34,
-    age19: 34,
-    age20: 34,
-    id: 2,
-    lastName: 'Lannister',
-    firstName: 'Cersei',
-    age: 31,
   },
   {
     age1: 34,
