@@ -1,12 +1,12 @@
 {
   "name": "@acl/ui",
-  "version": "1.5.4",
+  "version": "1.5.6",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@acl/ui",
-      "version": "1.5.4",
+      "version": "1.5.6",
       "license": "UST Healthproof",
       "dependencies": {
         "@emotion/react": "^11.13.5",

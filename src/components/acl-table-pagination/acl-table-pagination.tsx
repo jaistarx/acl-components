@@ -33,8 +33,8 @@ const getForwardedProps = (props: AclTablePaginationProps) => {
 
 const AclTablePagination = ({ children, ...props }: AclTablePaginationProps) => {
   const forwardedProps = getForwardedProps(props);
-  const [rowsPerPageValue, setRowsPerPageValue] = useState<number>(
-    props.defaultRowsPerPage ?? props.rowsPerPage?.[0] ?? 1,
+  const [rowsPerPageValue, setRowsPerPageValue] = useState<number | ''>(
+    props.defaultRowsPerPage ?? props.rowsPerPage?.[0] ?? '',
   );
 
   // NOTE: Reference logic for paginatedRowItems
@@ -62,12 +62,6 @@ const AclTablePagination = ({ children, ...props }: AclTablePaginationProps) => 
     }
   }, [props.rowsPerPageValue]);
 
-  useEffect(() => {
-    if (props.defaultRowsPerPage) {
-      setRowsPerPageValue(props.defaultRowsPerPage);
-    }
-  }, [props.defaultRowsPerPage]);
-
   return (
     <ThemeProvider theme={AclThemeProvider}>
       <Box component="div" sx={OUTER_CONTAINER}>
@@ -79,7 +73,11 @@ const AclTablePagination = ({ children, ...props }: AclTablePaginationProps) => 
           ))}
         </Select>
         <Pagination
-          count={props.totalNumberOfRows ? Math.ceil(props.totalNumberOfRows / rowsPerPageValue) : undefined}
+          count={
+            props.totalNumberOfRows && rowsPerPageValue
+              ? Math.ceil(props.totalNumberOfRows / rowsPerPageValue)
+              : props.count
+          }
           renderItem={(item) => (
             <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />
           )}

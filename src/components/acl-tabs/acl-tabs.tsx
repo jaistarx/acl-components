@@ -27,7 +27,7 @@ const AclTabs = ({ children, ...props }: AclTabsProps) => {
       <ThemeProvider theme={AclThemeProvider}>
         <Tabs {...forwardedProps}>
           {props.tabItems?.map((item: AclTabItem, index: number) => {
-            if (!Boolean(item)) return <></>;
+            if (!Boolean(item)) return <div key={index}></div>;
 
             const variantAddedTabProps: IDictionary<any> = {
               ...item,

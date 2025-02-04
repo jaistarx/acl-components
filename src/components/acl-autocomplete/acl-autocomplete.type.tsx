@@ -2,7 +2,7 @@ import { AutocompleteProps, TextFieldProps } from '@mui/material';
 import React from 'react';
 
 type OmittedAutocompleteProps = {
-  renderInput?: (params: TextFieldProps) => React.ReactNode;
+  renderInput: (params: TextFieldProps) => React.ReactNode;
 };
 
 export type AclAutocompleteProps<

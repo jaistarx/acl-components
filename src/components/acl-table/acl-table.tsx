@@ -47,6 +47,7 @@ const getForwardedProps = (props: AclTableProps) => {
     onSelectAll,
     defaultSortingState,
     getSortingState,
+    sortingFunction,
     ...forwardedProps
   } = props;
 
@@ -56,24 +57,35 @@ const getForwardedProps = (props: AclTableProps) => {
 };
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
+  const valueA = a[orderBy] ?? '';
+  const valueB = b[orderBy] ?? '';
+
+  if (typeof valueA === 'string' && typeof valueB === 'string') {
+    return valueB.localeCompare(valueA, undefined, { sensitivity: 'base' });
   }
 
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
+  if (typeof valueA === 'number' && typeof valueB === 'number') {
+    return valueB - valueA;
   }
+
+  if (valueB < valueA) return -1;
+  if (valueB > valueA) return 1;
 
   return 0;
 }
 
-const getComparator = <Field extends OrderBy>(
+const getComparator = <T, Field extends keyof T>(
   order: Order,
   orderBy: Field,
-): ((a: { [key in Field]: number | string | symbol }, b: { [key in Field]: number | string | symbol }) => number) => {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+  sortingFunction?: (a: T[Field], b: T[Field]) => number,
+): ((a: T, b: T) => number) => {
+  return (a, b) => {
+    if (sortingFunction) {
+      return order === 'desc' ? sortingFunction(b[orderBy], a[orderBy]) : sortingFunction(a[orderBy], b[orderBy]);
+    }
+
+    return order === 'desc' ? descendingComparator(a, b, orderBy) : -descendingComparator(a, b, orderBy);
+  };
 };
 
 const VirtuosoTableComponents = (
@@ -348,8 +360,8 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
 
     if (orderBy === '') return [...props.rowItems];
 
-    return [...props.rowItems].sort(getComparator(order, orderBy));
-  }, [props.rowItems, order, orderBy]);
+    return [...props.rowItems].sort(getComparator(order, orderBy, props.sortingFunction));
+  }, [props.rowItems, order, orderBy, props.sortingFunction]);
 
   useEffect(() => {
     if (props.rowItems?.length <= 0) return;

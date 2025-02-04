@@ -1,7 +1,11 @@
 import { TableVirtuosoProps } from 'react-virtuoso';
 import { IDictionary } from '../../common/types';
 
-export declare type AclTableProps<T = any, C = AclTableVirtuosoContext> = TableVirtuosoProps<T, C> & {
+export declare type AclTableProps<
+  T = any,
+  C = AclTableVirtuosoContext,
+  Field extends keyof T = keyof T,
+> = TableVirtuosoProps<T, C> & {
   children?: React.ReactNode;
   rowItems: IDictionary<T>[];
   columnItems: AclTableColDef<T>[];
@@ -20,6 +24,7 @@ export declare type AclTableProps<T = any, C = AclTableVirtuosoContext> = TableV
   onSelectAll?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   defaultSortingState?: { field: OrderBy; order?: Order };
   getSortingState?: ({ field, order }: { field: OrderBy; order: Order }) => void;
+  sortingFunction?: (a: T[Field], b: T[Field]) => number;
 };
 
 export declare type AclTableVirtuosoContext<T = unknown> = {

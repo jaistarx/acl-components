@@ -268,15 +268,15 @@ const Playground = () => {
             />
           </div>
           <AclTablePagination
-            rowsPerPage={[1, 3, 4, 5]}
-            defaultRowsPerPage={5}
-            rowsPerPageValue={rowsPerPage}
-            // count={10}
-            totalNumberOfRows={10}
-            // onChange={(e) => console.log(e)}
-            onChangePage={(e) => setCurrentPage(e)}
-            page={currentPage}
-            onChangeRowsPerPage={(e) => setRowsPerPage(e)}
+          // rowsPerPage={[1, 3, 4, 5]}
+          // defaultRowsPerPage={5}
+          // rowsPerPageValue={rowsPerPage}
+          // count={10}
+          // totalNumberOfRows={10}
+          // onChange={(e) => console.log(e)}
+          // onChangePage={(e) => setCurrentPage(e)}
+          // page={currentPage}
+          // onChangeRowsPerPage={(e) => setRowsPerPage(e)}
           ></AclTablePagination>
         </div>
         <div style={{ display: 'flex' }}>
@@ -293,30 +293,34 @@ const Playground = () => {
             // open
             showCheckbox
             // optionIdKey="i"
-            defaultValue={{}}
+            value={{}}
             // optionValueKey={1}
-            onChange={(e, newVal) => console.log(newVal)}
-            options={[{ value: 'two' }, { value: 'three' }]}
-            label="00OO"
+            // onChange={(e, newVal) => console.log(newVal)}
+            options={[
+              { id: 1, value: 'Option 1' },
+              { id: 2, value: 'Option 2' },
+              { id: 3, value: 'Option 3' },
+            ]}
+            label="00OO2"
             // loading={bool2}
           />
-          <AclInput label="input label" multiline></AclInput>
+          <AclInput label="input label"></AclInput>
           <AclButton>Button</AclButton>
         </div>
         <div style={{ display: 'flex' }}>
           <AclDropdown
             optionIdKey="i"
             optionValueKey="val"
-            value={val}
+            // value={val}
             label="label"
             onChange={(e) => setVal(e.target.value)}
             options={OPTIONS_2}
             // variant="standard"
-            // defaultValue={OPTIONS_2[0]}
-            // multiple
-            //
+            // defaultValue={[{ val: 1 }]}
+            multiple
             showCheckbox
             loading={bool2}
+            disabled
           />
           <AclDatepicker className={PlaygroundStyles['date-picker']} label="label" value={null}></AclDatepicker>
           <AclInput disabled label="label"></AclInput>
@@ -404,17 +408,24 @@ const Playground = () => {
               <AclLoader open={bool2} />
             ) : (
               <AclTable
-                rowItems={data}
-                hasCollapsibleContent
+                rowItems={[
+                  { id: 1, name: 'John Doe', age: 30 },
+                  { id: 2, name: 'Jane Smith', age: 25 },
+                ]}
+                columnItems={[
+                  { field: 'name', headerName: 'Name' },
+                  { field: 'age', headerName: 'Age', sortable: true },
+                ]}
+                // hasCollapsibleContent
                 // hideCheckbox
                 // disableRowSelect
-                // onSelectAll={(e) => console.log(e)}
-                defaultSelectedRows={[rows[5]]}
+                // onSelectAll={(e) => cons ole.log(e)}
+                // sortingFunction={descendingComparator}
+                // defaultSelectedRows={[rows[5]]}
                 selectedRows={selectedRows}
-                columnItems={columns}
                 onChangeSelectedRows={(event, rows) => {
                   setSelectedRows(rows as Row[]);
-                  console.log('selected rows', rows);
+                  // console.log('selected rows', rows);
                 }}
                 defaultSortingState={{
                   order: localStorage.getItem('order') as Order,

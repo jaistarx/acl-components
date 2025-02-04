@@ -50,16 +50,22 @@ describe('AclTabs', () => {
   });
 
   it('renders nothing for invalid tab items', () => {
-    const tabItems = [{ label: null }, { label: undefined }, { label: 'Tab 1' }];
+    const tabItems = [null, undefined, { label: 'Tab 1' }];
     render(<AclTabs tabItems={tabItems as AclTabItem[]} />);
     const tabs = screen.getAllByTestId('tab');
-    expect(tabs).toHaveLength(3);
-    expect(tabs[2]).toHaveTextContent('Tab 1');
+    expect(tabs).toHaveLength(1);
+    expect(tabs[0]).toHaveTextContent('Tab 1');
+  });
+
+  it('renders nothing when tab items are not provided', () => {
+    const { container } = render(<AclTabs />);
+    const tabs = container.querySelector('.MuiTabs-root');
+    expect(tabs).not.toBeInTheDocument();
   });
 
   it('applies custom variant and handles additional tab properties', () => {
     const tabItems = [{ label: 'Custom Tab', variant: 'secondary', count: 15 }];
-    render(<AclTabs tabItems={tabItems} variant="primary" />);
+    render(<AclTabs tabItems={tabItems} variant="secondary" />);
     expect(Tabs).toHaveBeenCalledWith(
       expect.objectContaining({
         sx: expect.objectContaining({

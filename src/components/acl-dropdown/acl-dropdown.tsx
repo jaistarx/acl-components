@@ -26,14 +26,22 @@ const getForwardedProps = (props: AclDropdownProps): IDictionary<any> => {
   };
 };
 
+const getFormattedValues = (value: IDictionary<any> | IDictionary<any>[] | undefined | null): string | string[] => {
+  return Array.isArray(value)
+    ? value.map((element: IDictionary<any>) => JSON.stringify(element))
+    : value
+      ? JSON.stringify(value)
+      : '';
+};
+
 const getDefaultValues = (
   defaultValue: IDictionary<any> | IDictionary<any>[] | undefined,
   multipleSelect: boolean | undefined,
 ): string | string[] => {
   if (defaultValue) {
-    return Array.isArray(defaultValue)
-      ? defaultValue.map((element: IDictionary<any>) => JSON.stringify(element))
-      : JSON.stringify(defaultValue);
+    const formattedValue = getFormattedValues(defaultValue);
+
+    return formattedValue;
   } else {
     return multipleSelect ? [] : '';
   }
@@ -65,17 +73,11 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
   };
 
   useEffect(() => {
-    setSelectedOptions(getDefaultValues(forwardedProps.defaultValue, forwardedProps.multiple));
-  }, [forwardedProps.defaultValue, forwardedProps.multiple]);
+    if (props.value) {
+      const formattedValue = getFormattedValues(props.value);
 
-  useEffect(() => {
-    const formattedValue = Array.isArray(props.value)
-      ? props.value.map((element: IDictionary<any>) => JSON.stringify(element))
-      : props.value
-        ? JSON.stringify(props.value)
-        : '';
-
-    setSelectedOptions(formattedValue);
+      setSelectedOptions(formattedValue);
+    }
   }, [props.value]);
 
   return (

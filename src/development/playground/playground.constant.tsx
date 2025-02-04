@@ -82,12 +82,12 @@ export const columns: AclTableColDef<Row>[] = [
     field: 'firstName',
     headerName: 'First name',
     width: 100,
-    sortable: false,
   },
   {
     field: 'lastName',
     headerName: 'Last name',
     width: 100,
+    sortable: false,
   },
   {
     field: 'age',
@@ -333,7 +333,7 @@ export const rows: Row[] = [
     age20: 34,
     id: 2,
     lastName: 'Lannister',
-    firstName: 'Cersei',
+    firstName: 'cersei',
     age: 31,
   },
   {

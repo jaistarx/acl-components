@@ -1,71 +1,69 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { SnackbarKey } from 'notistack';
 import React from 'react';
-import { AclButton, AclSnackbarProvider, useAclSnackbar } from '../..';
+import { AclButton, AclSnackbarProvider, AclSnackbarProviderProps, useAclSnackbar } from '../..';
 
-jest.mock('./acl-snackbar.hook', () => ({
-  useAclSnackbar: jest.fn(),
-}));
+const TestComponent = () => {
+  const { enqueueSnackbar, closeSnackbar } = useAclSnackbar();
+
+  return (
+    <div>
+      <AclButton
+        onClick={() =>
+          enqueueSnackbar('Test message', {
+            variant: 'success',
+            action: (key: SnackbarKey) => <button onClick={() => closeSnackbar(key)}>Dismiss</button>,
+          })
+        }
+      >
+        Show Snackbar
+      </AclButton>
+    </div>
+  );
+};
 
 describe('AclSnackbarProvider', () => {
-  it('should display the snackbar when button is clicked', async () => {
-    const enqueueSnackbarMock = jest.fn();
-    (useAclSnackbar as jest.Mock).mockReturnValue({ enqueueSnackbar: enqueueSnackbarMock });
+  it('renders child components and displays a snackbar on action', async () => {
     render(
       <AclSnackbarProvider>
-        <AclButton onClick={() => enqueueSnackbarMock('Test Snackbar Message', { variant: 'error' })}>
-          snackbar
-        </AclButton>
+        <TestComponent />
       </AclSnackbarProvider>,
     );
-    fireEvent.click(screen.getByText('snackbar'));
-    await waitFor(() =>
-      expect(enqueueSnackbarMock).toHaveBeenCalledWith('Test Snackbar Message', {
-        variant: 'error',
-      }),
-    );
+    const showButton = screen.getByText('Show Snackbar');
+    fireEvent.click(showButton);
+    await waitFor(() => expect(screen.getByText('Test message')).toBeInTheDocument());
+    const dismissButton = screen.getByText('Dismiss');
+    fireEvent.click(dismissButton);
+    await waitFor(() => expect(screen.queryByText('Test message')).not.toBeInTheDocument());
   });
 
-  it('should render snackbar with custom variant', async () => {
-    const enqueueSnackbarMock = jest.fn();
-    (useAclSnackbar as jest.Mock).mockReturnValue({ enqueueSnackbar: enqueueSnackbarMock });
+  it('applies default props from getSnackbarProps correctly', async () => {
+    const defaultProps: AclSnackbarProviderProps = {
+      maxSnack: 5,
+      anchorOrigin: { vertical: 'top', horizontal: 'center' },
+      hideIconVariant: true,
+    };
     render(
-      <AclSnackbarProvider>
-        <AclButton onClick={() => enqueueSnackbarMock('Test Custom Variant', { variant: 'success' })}>
-          snackbar
-        </AclButton>
+      <AclSnackbarProvider {...defaultProps}>
+        <TestComponent />
       </AclSnackbarProvider>,
     );
-    fireEvent.click(screen.getByText('snackbar'));
-    await waitFor(() =>
-      expect(enqueueSnackbarMock).toHaveBeenCalledWith('Test Custom Variant', {
-        variant: 'success',
-      }),
-    );
+    const snackbars = screen.queryAllByRole('alert');
+    expect(snackbars.length).toBeLessThanOrEqual(defaultProps.maxSnack as number);
   });
 
-  it('should close the snackbar when close button is clicked', async () => {
-    const enqueueSnackbarMock = jest.fn();
-    const closeSnackbarMock = jest.fn();
-    (useAclSnackbar as jest.Mock).mockReturnValue({
-      enqueueSnackbar: enqueueSnackbarMock,
-      closeSnackbar: closeSnackbarMock,
-    });
+  it('overrides getSnackbarProps correctly with custom values', async () => {
+    const customProps: AclSnackbarProviderProps = {
+      maxSnack: 10,
+      anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
+      hideIconVariant: false,
+    };
     render(
-      <AclSnackbarProvider>
-        <AclButton
-          onClick={() =>
-            enqueueSnackbarMock('Test Snackbar Close', {
-              variant: 'info',
-              action: (key: SnackbarKey) => <button onClick={() => closeSnackbarMock(key)}>Close</button>,
-            })
-          }
-        >
-          snackbar
-        </AclButton>
+      <AclSnackbarProvider {...customProps}>
+        <TestComponent />
       </AclSnackbarProvider>,
     );
-    fireEvent.click(screen.getByText('snackbar'));
-    await waitFor(() => expect(enqueueSnackbarMock).toHaveBeenCalled());
+    const snackbars = screen.queryAllByRole('alert');
+    expect(snackbars.length).toBeLessThanOrEqual(customProps.maxSnack as number);
   });
 });

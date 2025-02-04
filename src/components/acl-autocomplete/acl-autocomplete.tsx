@@ -55,9 +55,6 @@ const getForwardedProps = <
     popupIcon: props.popupIcon ?? (loading ? <CircularProgress size={20} /> : undefined),
     readOnly: props.readOnly ?? loading ?? false,
     slots: { ...props.slots, popper: CustomPopper },
-    isOptionEqualToValue:
-      props.isOptionEqualToValue ??
-      ((option, value) => option[(optionIdKey as string) ?? 'id'] === value[(optionIdKey as string) ?? 'id']),
     getOptionKey:
       props.getOptionKey ??
       ((option: Value | AutocompleteFreeSoloValueMapping<FreeSolo>) =>

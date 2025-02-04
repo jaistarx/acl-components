@@ -303,6 +303,9 @@ const AclThemeProvider = createTheme({
           borderColor: 'blue',
           '.MuiFormLabel-root': {
             color: '#4B4B4B',
+            '&.Mui-disabled': {
+              color: '#00000061',
+            },
           },
           '.MuiFormHelperText-root': {
             color: '#4B4B4B',
