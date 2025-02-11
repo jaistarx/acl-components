@@ -22,4 +22,26 @@ describe('AclPopper', () => {
     const popover = screen.queryByText('Test Popover');
     expect(popover).not.toBeInTheDocument();
   });
+
+  it('respects other props', () => {
+    render(
+      <AclPopper open={true} anchorEl={document.body} disablePortal={false} transition={false}>
+        Test Popover
+      </AclPopper>,
+    );
+    const popover = screen.queryByText('Test Popover');
+    expect(popover).toBeInTheDocument();
+  });
+
+  it('renders transition correctly with children', () => {
+    render(
+      <AclPopper open={true} anchorEl={document.body}>
+        {() => {
+          return 'Test Popover';
+        }}
+      </AclPopper>,
+    );
+    const popover = screen.getByText('Test Popover');
+    expect(popover).toBeInTheDocument();
+  });
 });

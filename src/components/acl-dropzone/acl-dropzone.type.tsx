@@ -18,5 +18,8 @@ export declare type UseAclDropzone = {
 };
 
 export type AclDropzoneProviderProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  acceptedFiles?: File[];
+  fileRejections?: FileRejection[];
+  dropEvent?: DropEvent;
 };

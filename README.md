@@ -9,7 +9,7 @@ This repository contains the source code for the RAQ Reusable React Components L
 - Latest version
 
   ```plaintext
-  1.5.6
+  1.5.8
   ```
 
 ## Prerequisites

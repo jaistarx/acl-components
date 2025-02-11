@@ -4,29 +4,31 @@ import { AclDropzoneProviderProps, UseAclDropzone } from './acl-dropzone.type';
 
 export const AclDropzoneContext = createContext<UseAclDropzone | undefined>(undefined);
 
-const AclDropzoneProvider = ({ children }: AclDropzoneProviderProps) => {
-  const [acceptedFiles, setAcceptedFiles] = useState<File[] | undefined>(undefined);
-  const [fileRejections, setFileRejections] = useState<FileRejection[] | undefined>(undefined);
-  const [dropEvent, setDropEvent] = useState<DropEvent | undefined>(undefined);
+const AclDropzoneProvider = ({ children, acceptedFiles, fileRejections, dropEvent }: AclDropzoneProviderProps) => {
+  const [acceptedFilesLocal, setAcceptedFilesLocal] = useState<File[] | undefined>(acceptedFiles || undefined);
+  const [fileRejectionsLocal, setFileRejectionsLocal] = useState<FileRejection[] | undefined>(
+    fileRejections || undefined,
+  );
+  const [dropEventLocal, setDropEventLocal] = useState<DropEvent | undefined>(dropEvent || undefined);
 
   const resetAclDropzone = useCallback(() => {
-    setAcceptedFiles(undefined);
-    setFileRejections(undefined);
-    setDropEvent(undefined);
+    setAcceptedFilesLocal(undefined);
+    setFileRejectionsLocal(undefined);
+    setDropEventLocal(undefined);
   }, []);
 
   const handleOnDrop = useCallback((accepted: File[], rejections: FileRejection[], event: DropEvent) => {
-    setAcceptedFiles(accepted);
-    setFileRejections(rejections);
-    setDropEvent(event);
+    setAcceptedFilesLocal(accepted);
+    setFileRejectionsLocal(rejections);
+    setDropEventLocal(event);
   }, []);
 
   return (
     <AclDropzoneContext.Provider
       value={{
-        acceptedFiles,
-        fileRejections,
-        dropEvent,
+        acceptedFiles: acceptedFilesLocal,
+        fileRejections: fileRejectionsLocal,
+        dropEvent: dropEventLocal,
         resetAclDropzone,
         handleOnDrop,
       }}

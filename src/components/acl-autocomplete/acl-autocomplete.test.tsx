@@ -44,7 +44,9 @@ describe('AclAutocomplete', () => {
   });
 
   it('displays loading indicator when loading is true', () => {
-    render(<AclAutocomplete options={options} label="Test Autocomplete" loading />);
+    render(
+      <AclAutocomplete options={options} optionIdKey="id" optionValueKey="value" label="Test Autocomplete" loading />,
+    );
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
@@ -75,6 +77,10 @@ describe('AclAutocomplete', () => {
       optionValueKey: 'val',
       required: true,
       multiple: true,
+      clearIcon: <div>X</div>,
+      popupIcon: <div>^</div>,
+      getOptionKey: (option: string | Record<string, any>) => JSON.stringify(option),
+      getOptionLabel: (option: string | Record<string, any>) => (option as Record<string, any>)['value'] ?? '',
     };
     render(<AclAutocomplete {...props} />);
     expect(screen.getByLabelText('Test Autocomplete *')).toBeInTheDocument();
@@ -85,5 +91,61 @@ describe('AclAutocomplete', () => {
     await waitFor(() => expect(screen.getAllByRole('checkbox')).not.toHaveLength(0));
     await waitFor(() => userEvent.click(screen.getByText('Option 2')));
     await waitFor(() => expect(screen.getAllByText('Option 2')).not.toHaveLength(0));
+  });
+
+  it('renders custom input', async () => {
+    const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation((message) => {
+      if (message.includes('MUI: Unable to find the input element')) {
+        return;
+      }
+
+      console.error(message);
+    });
+
+    const props: AclAutocompleteProps<Record<string, any>, boolean, boolean, boolean> = {
+      options,
+      renderInput: () => <input type="text" />,
+    };
+    render(<AclAutocomplete {...props} />);
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+
+    consoleErrorMock.mockRestore();
+  });
+
+  it('renders custom options', async () => {
+    const props: AclAutocompleteProps<Record<string, any>, boolean, boolean, boolean> = {
+      options,
+      renderOption: (props, option) => {
+        const { key, ...optionProps } = props;
+
+        return (
+          <li key={key} {...optionProps}>
+            {option['value'] ?? ''}
+          </li>
+        );
+      },
+    };
+    render(<AclAutocomplete {...props} />);
+    await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'Open' })));
+    await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(3));
+  });
+
+  it('renders correct optionIdKey and optionValueKey', async () => {
+    const props: AclAutocompleteProps<Record<string, any>> = {
+      options: [
+        { i: 1, val: 'Option 1' },
+        { i: 2, val: 'Option 2' },
+      ],
+      label: 'Test Autocomplete',
+      optionIdKey: 'i',
+      optionValueKey: 'val',
+      renderOption: '' as unknown as jest.Mock,
+    };
+    render(<AclAutocomplete {...props} />);
+    expect(screen.getByLabelText('Test Autocomplete')).toBeInTheDocument();
+    await waitFor(() => userEvent.click(screen.getByRole('button', { name: 'Open' })));
+    await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(2));
+    await waitFor(() => expect(screen.getByText('Option 1')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Option 2')).toBeInTheDocument());
   });
 });

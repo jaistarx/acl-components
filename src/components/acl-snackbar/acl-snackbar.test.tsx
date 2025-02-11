@@ -3,7 +3,7 @@ import { SnackbarKey } from 'notistack';
 import React from 'react';
 import { AclButton, AclSnackbarProvider, AclSnackbarProviderProps, useAclSnackbar } from '../..';
 
-const TestComponent = () => {
+const TestComponent1 = () => {
   const { enqueueSnackbar, closeSnackbar } = useAclSnackbar();
 
   return (
@@ -22,11 +22,30 @@ const TestComponent = () => {
   );
 };
 
+const TestComponent2 = () => {
+  const { enqueueSnackbar } = useAclSnackbar();
+
+  return (
+    <div>
+      <AclButton
+        onClick={() =>
+          enqueueSnackbar('Test message', {
+            variant: 'success',
+            action: null,
+          })
+        }
+      >
+        Show Snackbar
+      </AclButton>
+    </div>
+  );
+};
+
 describe('AclSnackbarProvider', () => {
   it('renders child components and displays a snackbar on action', async () => {
     render(
       <AclSnackbarProvider>
-        <TestComponent />
+        <TestComponent1 />
       </AclSnackbarProvider>,
     );
     const showButton = screen.getByText('Show Snackbar');
@@ -45,7 +64,7 @@ describe('AclSnackbarProvider', () => {
     };
     render(
       <AclSnackbarProvider {...defaultProps}>
-        <TestComponent />
+        <TestComponent1 />
       </AclSnackbarProvider>,
     );
     const snackbars = screen.queryAllByRole('alert');
@@ -60,10 +79,24 @@ describe('AclSnackbarProvider', () => {
     };
     render(
       <AclSnackbarProvider {...customProps}>
-        <TestComponent />
+        <TestComponent1 />
       </AclSnackbarProvider>,
     );
     const snackbars = screen.queryAllByRole('alert');
     expect(snackbars.length).toBeLessThanOrEqual(customProps.maxSnack as number);
+  });
+
+  it('renders snackbar correctly without action provided', async () => {
+    render(
+      <AclSnackbarProvider>
+        <TestComponent2 />
+      </AclSnackbarProvider>,
+    );
+    const showButton = screen.getByText('Show Snackbar');
+    fireEvent.click(showButton);
+    await waitFor(() => expect(screen.getByText('Test message')).toBeInTheDocument());
+    const closeButtonImg = screen.getByAltText('close-icon');
+    fireEvent.click(closeButtonImg.parentElement!);
+    await waitFor(() => expect(screen.queryByText('Test message')).not.toBeInTheDocument());
   });
 });

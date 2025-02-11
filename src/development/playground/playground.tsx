@@ -40,11 +40,12 @@ import { MEMBER_COLUMNS, OPPORTUNITY_ROWS, OPTIONS_2, columns, rows } from './pl
 import * as PlaygroundStyles from './playground.module.css';
 import { AColumn, ARow, Row } from './playground.type';
 import { SnackbarKey } from 'notistack';
+import { DropEvent, FileRejection } from 'react-dropzone';
 
 // FEATURE: Test the components by importing and using it inside this function
 const Playground = () => {
   const { enqueueSnackbar, closeSnackbar } = useAclSnackbar();
-  const { resetAclDropzone } = useAclDropzone();
+  const { resetAclDropzone, handleOnDrop } = useAclDropzone();
   const [val, setVal] = useState<any>(OPTIONS_2[1]);
   const [val2, setVal2] = useState<any>([OPTIONS_2[0]]);
   const [options, setOptions] = useState<any>(OPTIONS_2);
@@ -78,8 +79,12 @@ const Playground = () => {
   };
 
   useEffect(() => {
-    console.log(val);
-  }, [val]);
+    // console.log(val);
+    const mockFiles = [new File(['file content'], 'test-file.txt', { type: 'text/plain' })];
+    const mockRejections: FileRejection[] = [];
+    const testEvent = {} as DropEvent;
+    handleOnDrop(mockFiles, mockRejections, testEvent);
+  }, []);
 
   useEffect(() => {
     console.log(rowsPerPage);
@@ -261,10 +266,10 @@ const Playground = () => {
                 'image/jpeg': ['.jpg', '.jpeg'],
               }}
               isUploading={bool}
-              onClickUpload={() => setBool(true)}
+              onClickUpload={() => setBool(!bool)}
               // errorText="this is an error"
               // maxSize={10}
-              disableUploadButton
+              // disableUploadButton
             />
           </div>
           <AclTablePagination
@@ -309,18 +314,12 @@ const Playground = () => {
         </div>
         <div style={{ display: 'flex' }}>
           <AclDropdown
-            optionIdKey="i"
-            optionValueKey="val"
-            // value={val}
-            label="label"
-            onChange={(e) => setVal(e.target.value)}
-            options={OPTIONS_2}
+            label="Test Dropdown"
+            options={[{ val: 'Option 1' }, { val: 'Option 2' }, { val: 'Option 3' }]}
+            optionValueKey="value"
             // variant="standard"
-            // defaultValue={[{ val: 1 }]}
+            defaultValue={[{ val: 'Option 4' }]}
             multiple
-            showCheckbox
-            loading={bool2}
-            disabled
           />
           <AclDatepicker className={PlaygroundStyles['date-picker']} label="label" value={null}></AclDatepicker>
           <AclInput disabled label="label"></AclInput>
@@ -409,32 +408,35 @@ const Playground = () => {
             ) : (
               <AclTable
                 rowItems={[
-                  { id: 1, name: 'John Doe', age: 30 },
-                  { id: 2, name: 'Jane Smith', age: 25 },
+                  { id: 1, name: 'John Doe', age: 30, collapsibleContent: <>Custom collapsible content 1</> },
+                  { id: 2, name: ['Jane Smith'], age: 25 },
+                  { id: 3, name: <>Fisal</>, age: 37 },
+                  { id: 4, name: <>Fisal</>, age: 30, collapsibleContent: <>Custom collapsible content 2</> },
                 ]}
                 columnItems={[
                   { field: 'name', headerName: 'Name' },
                   { field: 'age', headerName: 'Age', sortable: true },
                 ]}
-                // hasCollapsibleContent
+                hasCollapsibleContent
+                onChangeSelectedRows={(_, row) => console.log(row)}
                 // hideCheckbox
                 // disableRowSelect
                 // onSelectAll={(e) => cons ole.log(e)}
                 // sortingFunction={descendingComparator}
                 // defaultSelectedRows={[rows[5]]}
-                selectedRows={selectedRows}
-                onChangeSelectedRows={(event, rows) => {
-                  setSelectedRows(rows as Row[]);
-                  // console.log('selected rows', rows);
-                }}
-                defaultSortingState={{
-                  order: localStorage.getItem('order') as Order,
-                  field: localStorage.getItem('field') as string,
-                }}
-                getSortingState={({ order, field }) => {
-                  localStorage.setItem('order', order);
-                  localStorage.setItem('field', field as string);
-                }}
+                // selectedRows={selectedRows}
+                // onChangeSelectedRows={(event, rows) => {
+                //   setSelectedRows(rows as Row[]);
+                //   // console.log('selected rows', rows);
+                // }}
+                // defaultSortingState={{
+                //   order: localStorage.getItem('order') as Order,
+                //   field: localStorage.getItem('field') as string,
+                // }}
+                // getSortingState={({ order, field }) => {
+                //   localStorage.setItem('order', order);
+                //   localStorage.setItem('field', field as string);
+                // }}
                 // onRowClick={() => console.log('single row')}
                 // stickyLastColumn={false}
               ></AclTable>

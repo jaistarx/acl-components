@@ -36,7 +36,7 @@ const AclDropzone = (props: AclDropzoneProps) => {
   const { acceptedFiles, fileRejections, dropEvent, resetAclDropzone, handleOnDrop } = useAclDropzone();
 
   const handleOnDropLocal = (acceptedFiles: File[], fileRejections: FileRejection[], dropEvent: DropEvent) => {
-    handleOnDrop?.(acceptedFiles, fileRejections, dropEvent);
+    handleOnDrop(acceptedFiles, fileRejections, dropEvent);
     props.onDrop?.(acceptedFiles, fileRejections, dropEvent);
   };
 
@@ -61,8 +61,8 @@ const AclDropzone = (props: AclDropzoneProps) => {
     }
   };
 
-  const isFilesAccepted = acceptedFiles && acceptedFiles?.length > 0;
-  const isFilesRejected = fileRejections && fileRejections?.length > 0;
+  const isFilesAccepted = Array.isArray(acceptedFiles) && acceptedFiles.length > 0;
+  const isFilesRejected = Array.isArray(fileRejections) && fileRejections.length > 0;
   const isFilesDropped = Boolean(dropEvent);
 
   return (
@@ -89,10 +89,7 @@ const AclDropzone = (props: AclDropzoneProps) => {
                       </div>
                       <Box sx={FILE_NAMES_SIZE_OR_ERROR_CONTAINER}>
                         <div style={FILE_NAMES(Boolean(props.isUploading))}>
-                          {(isFilesRejected || (props.errorText && fileRejections?.length)
-                            ? fileRejections
-                            : acceptedFiles
-                          )
+                          {(isFilesRejected || props.errorText ? fileRejections : acceptedFiles)
                             ?.map(
                               (file: File | FileRejection) => (file as File).name || (file as FileRejection).file.name,
                             )

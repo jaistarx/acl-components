@@ -18,7 +18,7 @@ describe('AclLink', () => {
 
   it('passes additional props to Link', () => {
     render(
-      <AclLink href="https://example.com" underline="hover" data-testid="custom-link">
+      <AclLink component="button" href="https://example.com" underline="hover" data-testid="custom-link">
         Custom Link
       </AclLink>,
     );

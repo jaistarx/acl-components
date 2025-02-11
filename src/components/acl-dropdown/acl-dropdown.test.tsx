@@ -13,7 +13,7 @@ const defaultProps: AclDropdownProps = {
 
 beforeAll(() => {
   jest.spyOn(console, 'warn').mockImplementation(() => {
-    /* NOTE: Empty Object */
+    return;
   });
 });
 
@@ -67,6 +67,12 @@ describe('AclDropdown', () => {
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
+  it('should handle undefined options', async () => {
+    render(<AclDropdown />);
+    const input = screen.getByRole('combobox');
+    expect(input).toBeInTheDocument();
+  });
+
   it('should trigger onChange when an option is selected', async () => {
     const onChange = jest.fn();
     render(<AclDropdown {...defaultProps} onChange={onChange} />);
@@ -112,6 +118,7 @@ describe('AclDropdown', () => {
         optionIdKey="i"
         optionValueKey="val"
         variant="standard"
+        fullWidth={false}
       />,
     );
     const input = screen.getByRole('combobox');
@@ -130,12 +137,15 @@ describe('AclDropdown', () => {
         optionValueKey="value"
         variant="standard"
         defaultValue={{ val: 'Option 4' }}
+        onChange={onChange}
       />,
     );
-    const input = screen.getByRole('combobox');
-    fireEvent.mouseDown(input);
+    const select = screen.getByRole('combobox');
+    fireEvent.mouseDown(select);
     expect(onChange).toHaveBeenCalledTimes(0);
     expect(screen.getAllByText('undefined_value')).not.toHaveLength(0);
+    const option = await screen.findAllByText(/undefined_value/);
+    expect(option).not.toHaveLength(0);
   });
 
   it('should supports invalid values for multiselect', async () => {
@@ -154,5 +164,18 @@ describe('AclDropdown', () => {
     fireEvent.mouseDown(input);
     expect(onChange).toHaveBeenCalledTimes(0);
     expect(screen.getAllByText('undefined_value')).not.toHaveLength(0);
+  });
+
+  it('renders readOnly correctly', async () => {
+    render(
+      <AclDropdown
+        label="Test Dropdown"
+        options={[{ value: 'Option 1' }, { value: 'Option 2' }, { value: 'Option 3' }]}
+        fullWidth={false}
+        readOnly={true}
+        value={null}
+      />,
+    );
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 });

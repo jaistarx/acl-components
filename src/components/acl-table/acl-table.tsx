@@ -101,7 +101,7 @@ const VirtuosoTableComponents = (
       const stringifiedRow = stringifyObjectValues(item);
       const isItemSelected = contextProps.disableRowSelect ? false : selectedRows.includes(stringifiedRow);
       const collapsibleColSpan =
-        columnItems?.length +
+        columnItems.length +
         Number(Boolean(contextProps.hideCheckbox)) +
         Number(Boolean(contextProps.hasCollapsibleContent)) +
         1;
@@ -117,6 +117,7 @@ const VirtuosoTableComponents = (
             tabIndex={-1}
             key={stringifiedRow}
             selected={isItemSelected}
+            data-testid="body-row"
           />
           {contextProps.hasCollapsibleContent && (
             <TableRow
@@ -130,6 +131,7 @@ const VirtuosoTableComponents = (
                 event?.preventDefault();
                 event?.stopPropagation();
               }}
+              data-testid="body-row"
             >
               <TableCell
                 style={TABLE_CELL_COLLAPSIBLE_CONTENT(openCollapsibleContent[stringifiedRow])}
@@ -151,7 +153,7 @@ function fixedHeaderContent<T>(context: AclTableVirtuosoContext) {
   const { selectedRows, columnItems, rowItems, handleSelectAllClick, order, orderBy, handleRequestSort, props } =
     context;
   const selectedLength = selectedRows.length;
-  const rowLength = rowItems?.length;
+  const rowLength = rowItems.length;
 
   const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
     const selection = window.getSelection();
@@ -166,7 +168,7 @@ function fixedHeaderContent<T>(context: AclTableVirtuosoContext) {
   return (
     <TableRow>
       {props.hasCollapsibleContent && <TableCell padding="checkbox" variant="head" />}
-      {!props?.hideCheckbox && (
+      {!props.hideCheckbox && (
         <TableCell padding="checkbox" variant="head">
           <Checkbox
             color="primary"
@@ -216,8 +218,8 @@ const rowContent = (index: number, row: IDictionary<any>, context: AclTableVirtu
   const stringifiedRow = stringifyObjectValues(row);
 
   const handleCollapseIconClick = (event: React.MouseEvent<unknown>) => {
-    event?.stopPropagation();
-    event?.preventDefault();
+    event.stopPropagation();
+    event.preventDefault();
 
     setOpenCollapsibleContent((prev) => ({
       ...prev,
@@ -239,7 +241,7 @@ const rowContent = (index: number, row: IDictionary<any>, context: AclTableVirtu
           </IconButton>
         </TableCell>
       )}
-      {!props?.hideCheckbox && (
+      {!props.hideCheckbox && (
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
@@ -250,7 +252,7 @@ const rowContent = (index: number, row: IDictionary<any>, context: AclTableVirtu
           />
         </TableCell>
       )}
-      {columnItems?.map((column: AclTableColDef) => (
+      {columnItems.map((column: AclTableColDef) => (
         <TableCell key={String(column.field)} sx={TABLE_CELL(column, props)}>
           <Box component="span" sx={TABLE_ROW_SPAN}>
             {row[column.field]}
@@ -300,8 +302,8 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event?.stopPropagation();
-    event?.preventDefault();
+    event.stopPropagation();
+    event.preventDefault();
     props.onSelectAll?.(event);
 
     const totalItems = props.rowItems.length;
@@ -324,8 +326,8 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
       return;
     }
 
-    event?.stopPropagation();
-    event?.preventDefault();
+    event.stopPropagation();
+    event.preventDefault();
 
     const stringifiedRow = stringifyObjectValues(row);
     const selectedIndex = selectedStringified.indexOf(stringifiedRow);
@@ -366,10 +368,11 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
   useEffect(() => {
     if (props.rowItems?.length <= 0) return;
 
-    if ((props.selectedRows?.length ?? 0) > (props.rowItems?.length ?? 0)) {
-      console.warn(
-        `Warning: The number of "selectedRows" (${props.selectedRows?.length}) exceeds the number of "rowItems" (${props.rowItems?.length}). Please ensure that the value passed to "selectedRows" is correct.`,
-      );
+    if (Array.isArray(props.selectedRows) && Array.isArray(props.rowItems)) {
+      if (props.selectedRows.length > props.rowItems.length)
+        console.warn(
+          `Warning: The number of "selectedRows" (${props.selectedRows.length}) exceeds the number of "rowItems" (${props.rowItems.length}). Please ensure that the value passed to "selectedRows" is correct.`,
+        );
     }
 
     if (Array.isArray(props.selectedRows)) {
@@ -384,7 +387,7 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
 
   const contextValues: AclTableVirtuosoContext = {
     rowItems: sortedRowItems,
-    columnItems: props.columnItems,
+    columnItems: props.columnItems || [],
     selectedRows: selectedStringified,
     handleSelectAllClick,
     handleClick,

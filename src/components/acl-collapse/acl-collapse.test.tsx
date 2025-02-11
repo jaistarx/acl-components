@@ -36,7 +36,7 @@ describe('AclCollapse', () => {
 
   it('respects passed props', () => {
     render(
-      <AclCollapse in={true} timeout={500}>
+      <AclCollapse in={true} timeout={500} unmountOnExit={false}>
         <div data-testid="child">Visible Content</div>
       </AclCollapse>,
     );

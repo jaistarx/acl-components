@@ -1,8 +1,7 @@
 import { ModalProps } from '@mui/material';
-import { IDictionary } from '../../common/types';
+import { IDictionary } from '../../common';
 
 type OmittedModalProps = {
-  // Omit the property to override it
   children?: React.ReactNode;
 };
 

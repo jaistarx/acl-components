@@ -29,14 +29,18 @@ describe('AclTabs', () => {
     render(
       <AclTabs tabItems={tabItems} centered={false} justifyContent="flex-start" sx={{ backgroundColor: 'red' }} />,
     );
-    expect(Tabs).toHaveBeenCalledWith(
-      expect.objectContaining({
-        centered: false,
-        sx: expect.objectContaining({
-          backgroundColor: 'red',
-        }),
-      }),
-      expect.anything(),
+    expect((Tabs as jest.Mock).mock.calls).toEqual(
+      expect.arrayContaining([
+        expect.arrayContaining([
+          expect.objectContaining({
+            centered: false,
+            sx: expect.objectContaining({
+              backgroundColor: 'red',
+            }),
+          }),
+          expect.anything(),
+        ]),
+      ]),
     );
   });
 
@@ -66,13 +70,17 @@ describe('AclTabs', () => {
   it('applies custom variant and handles additional tab properties', () => {
     const tabItems = [{ label: 'Custom Tab', variant: 'secondary', count: 15 }];
     render(<AclTabs tabItems={tabItems} variant="secondary" />);
-    expect(Tabs).toHaveBeenCalledWith(
-      expect.objectContaining({
-        sx: expect.objectContaining({
-          '& .MuiTabs-flexContainer': { justifyContent: 'space-evenly' },
-        }),
-      }),
-      expect.anything(),
+    expect((Tabs as jest.Mock).mock.calls).toEqual(
+      expect.arrayContaining([
+        expect.arrayContaining([
+          expect.objectContaining({
+            sx: expect.objectContaining({
+              '& .MuiTabs-flexContainer': { justifyContent: 'space-evenly' },
+            }),
+          }),
+          expect.anything(),
+        ]),
+      ]),
     );
     const tabLabels = screen.getAllByTestId('tab');
     expect(tabLabels[0]).toHaveTextContent('Custom Tab');

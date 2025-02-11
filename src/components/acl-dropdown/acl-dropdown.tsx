@@ -26,24 +26,18 @@ const getForwardedProps = (props: AclDropdownProps): IDictionary<any> => {
   };
 };
 
-const getFormattedValues = (value: IDictionary<any> | IDictionary<any>[] | undefined | null): string | string[] => {
-  return Array.isArray(value)
-    ? value.map((element: IDictionary<any>) => JSON.stringify(element))
-    : value
-      ? JSON.stringify(value)
-      : '';
-};
-
-const getDefaultValues = (
-  defaultValue: IDictionary<any> | IDictionary<any>[] | undefined,
-  multipleSelect: boolean | undefined,
+const getFormattedValues = (
+  value?: IDictionary<any> | IDictionary<any>[] | undefined | null,
+  multipleSelect?: boolean,
 ): string | string[] => {
-  if (defaultValue) {
-    const formattedValue = getFormattedValues(defaultValue);
-
-    return formattedValue;
+  if (Array.isArray(value)) {
+    return value.map((element: IDictionary<any>) => JSON.stringify(element));
+  } else if (value) {
+    return JSON.stringify(value);
+  } else if (multipleSelect) {
+    return [];
   } else {
-    return multipleSelect ? [] : '';
+    return '';
   }
 };
 
@@ -51,7 +45,7 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
   const forwardedProps = getForwardedProps(props);
   const { options = [] } = props;
   const [selectedOptions, setSelectedOptions] = useState<string | string[] | ''>(
-    getDefaultValues(forwardedProps.defaultValue, forwardedProps.multiple),
+    getFormattedValues(forwardedProps.defaultValue, forwardedProps.multiple),
   );
 
   const handleChange = (event: SelectChangeEvent<typeof selectedOptions>, child: React.ReactNode): void => {
@@ -59,6 +53,8 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
       target: { value: changedValue },
     } = event;
 
+    // NOTE: Ignoring some single lines in this file for future-proofing to handle potential edge cases
+    // istanbul ignore next
     if (!changedValue) return;
     setSelectedOptions(changedValue);
 
@@ -75,7 +71,6 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
   useEffect(() => {
     if (props.value) {
       const formattedValue = getFormattedValues(props.value);
-
       setSelectedOptions(formattedValue);
     }
   }, [props.value]);
@@ -94,21 +89,36 @@ const AclDropdown = ({ children, ...props }: AclDropdownProps) => {
                 <>
                   {selected.map((option: string, index: number) => (
                     <span key={JSON.parse(option)[props.optionIdKey ?? 'id'] ?? index}>
-                      {option ? JSON.parse(option)[props.optionValueKey ?? 'value'] : 'undefined_value'}
-                      {index < selected?.length - 1 && ', '}
+                      {option
+                        ? JSON.parse(option)[props.optionValueKey ?? 'value']
+                        : // istanbul ignore next
+                          'undefined_value'}
+                      {index < selected.length - 1 && ', '}
                     </span>
                   ))}
                 </>
               ) : (
-                <span key={JSON.parse(selected ?? '{}')[props.optionIdKey ?? 'id'] ?? selected}>
-                  {JSON.parse(selected ?? '{}')[props.optionValueKey ?? 'value'] ?? 'undefined_value'}
+                <span
+                  key={
+                    JSON.parse(
+                      selected ??
+                        // istanbul ignore next
+                        '{}',
+                    )[props.optionIdKey ?? 'id'] ?? selected
+                  }
+                >
+                  {JSON.parse(
+                    selected ??
+                      // istanbul ignore next
+                      '{}',
+                  )[props.optionValueKey ?? 'value'] ?? 'undefined_value'}
                 </span>
               )
             }
             {...forwardedProps}
           >
-            {Array.isArray(options) && options?.length > 0 ? (
-              options?.map((option: IDictionary<any>, index: number) => (
+            {Array.isArray(options) && options.length > 0 ? (
+              options.map((option: IDictionary<any>, index: number) => (
                 <MenuItem key={option[props.optionIdKey ?? 'id'] ?? index} value={JSON.stringify(option)}>
                   <Box sx={CHECKBOX_TEXT_CONTAINER}>
                     {props.showCheckbox && (

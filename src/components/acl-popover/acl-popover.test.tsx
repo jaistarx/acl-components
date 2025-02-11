@@ -22,4 +22,25 @@ describe('AclPopover', () => {
     const popover = screen.queryByText('Test Popover');
     expect(popover).not.toBeInTheDocument();
   });
+
+  it('respects other props', () => {
+    render(
+      <AclPopover
+        open={true}
+        anchorEl={document.body}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+      >
+        Test Popover
+      </AclPopover>,
+    );
+    const popover = screen.queryByText('Test Popover');
+    expect(popover).toBeInTheDocument();
+  });
 });
