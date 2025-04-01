@@ -25,6 +25,7 @@ export declare type AclTableProps<
   defaultSortingState?: { field: OrderBy; order?: Order };
   getSortingState?: ({ field, order }: { field: OrderBy; order: Order }) => void;
   sortingFunction?: (a: T[Field], b: T[Field]) => number;
+  loading?: boolean;
 };
 
 export declare type AclTableVirtuosoContext<T = unknown> = {

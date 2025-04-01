@@ -1,4 +1,4 @@
-# Logs
+# logs
 logs
 *.log
 npm-debug.log*
@@ -13,7 +13,7 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -30,3 +30,7 @@ storybook-static
 
 # test coverage
 coverage/
+
+# veracode
+results.json
+veracode-auto-pack-rqsr-ui-design-library-js.zip

@@ -51,6 +51,7 @@ const Playground = () => {
   const [options, setOptions] = useState<any>(OPTIONS_2);
   const [bool, setBool] = useState<boolean>(false);
   const [bool2, setBool2] = useState<boolean>(false);
+  const [bool3, setBool3] = useState<boolean>(false);
   const [tabItems, setTabItems] = useState<AclTabItem[]>([
     { label: 'Item One', value: 'one' },
     { label: 'Item Two', value: 'two', count: 3 },
@@ -399,7 +400,7 @@ const Playground = () => {
         <AclDivider />
         <AclBackdropLoader open={bool2} />
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <AclButton variant="outlined" onClick={() => setData((prev) => (prev.length > 3 ? rows.slice(0, 2) : rows))}>
+          <AclButton variant="outlined" onClick={() => setBool3((prev) => !prev)}>
             Sample Button
           </AclButton>
           <div style={{ flex: 1, height: data.length > 6 ? 'calc(100vh - 200px)' : '400px', padding: '0px 50px' }}>
@@ -407,18 +408,11 @@ const Playground = () => {
               <AclLoader open={bool2} />
             ) : (
               <AclTable
-                rowItems={[
-                  { id: 1, name: 'John Doe', age: 30, collapsibleContent: <>Custom collapsible content 1</> },
-                  { id: 2, name: ['Jane Smith'], age: 25 },
-                  { id: 3, name: <>Fisal</>, age: 37 },
-                  { id: 4, name: <>Fisal</>, age: 30, collapsibleContent: <>Custom collapsible content 2</> },
-                ]}
-                columnItems={[
-                  { field: 'name', headerName: 'Name' },
-                  { field: 'age', headerName: 'Age', sortable: true },
-                ]}
+                rowItems={rows}
+                columnItems={columns}
                 hasCollapsibleContent
                 onChangeSelectedRows={(_, row) => console.log(row)}
+                loading={bool3}
                 // hideCheckbox
                 // disableRowSelect
                 // onSelectAll={(e) => cons ole.log(e)}

@@ -59,3 +59,5 @@ export const TABLE_CELL_COLLAPSIBLE_CONTENT = (openCollapsibleContent: boolean) 
     border: openCollapsibleContent ? 'auto' : 'none',
   };
 };
+
+export const TABLE_BACKDROP_LOADER = { position: 'absolute' };

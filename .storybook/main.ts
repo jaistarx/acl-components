@@ -23,8 +23,7 @@ const config: StorybookConfig = {
     options: {},
   },
   docs: {
-    autodocs: 'tag',
-    defaultName: 'Documentation',
+    defaultName: 'Documentation'
   },
   core: {
     builder: {

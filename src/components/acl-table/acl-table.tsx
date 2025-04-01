@@ -1,8 +1,10 @@
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
+  Backdrop,
   Box,
   Checkbox,
+  CircularProgress,
   IconButton,
   Table,
   TableBody,
@@ -17,11 +19,11 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { TableComponents, TableVirtuoso } from 'react-virtuoso';
-import { AclThemeProvider, stringifyObjectValues } from '../../common';
-import { IDictionary } from '../../common/types';
+import { AclThemeProvider, IDictionary, stringifyObjectValues } from '../../common';
 import {
   NO_DATA_MESSAGE,
   OUTER_CONTAINER,
+  TABLE_BACKDROP_LOADER,
   TABLE_CELL,
   TABLE_CELL_COLLAPSIBLE_CONTENT,
   TABLE_HEAD_SPAN,
@@ -48,6 +50,7 @@ const getForwardedProps = (props: AclTableProps) => {
     defaultSortingState,
     getSortingState,
     sortingFunction,
+    loading,
     ...forwardedProps
   } = props;
 
@@ -414,6 +417,11 @@ const AclTable = ({ children, ...props }: AclTableProps) => {
           {...forwardedProps}
         />
         {sortedRowItems.length === 0 && emptyRowContent(contextValues)}
+        {props.loading === true && (
+          <Backdrop open={true} sx={TABLE_BACKDROP_LOADER}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        )}
       </Box>
     </ThemeProvider>
   );

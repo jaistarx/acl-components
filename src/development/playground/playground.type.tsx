@@ -36,7 +36,7 @@ export type Row = {
   age17: number;
   age18: number;
   age19: number;
-  age20: number;
+  age20: number | string;
   // age18: number;
   // age18: number;
   action?: React.ReactNode;

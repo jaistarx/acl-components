@@ -35,6 +35,7 @@ describe('AclTable', () => {
       noDataText: 'No records found',
       fixedFooterContent: undefined,
       stickyLastColumn: true,
+      loading: false,
     };
   });
 
@@ -233,5 +234,17 @@ describe('AclTable', () => {
     await waitFor(() => fireEvent.click(rows[1]));
     expect(props.onChangeSelectedRows).toBeUndefined();
     expect(props.onRowClick).toBeUndefined();
+  });
+
+  it('shows backdrop loader when loading is true', () => {
+    props.loading = true;
+    const { container } = render(<AclTable {...props} />, {
+      wrapper: ({ children }) => (
+        <VirtuosoMockContext.Provider value={{ viewportHeight: 5000, itemHeight: 100 }}>
+          {children}
+        </VirtuosoMockContext.Provider>
+      ),
+    });
+    expect(container.querySelector('.MuiCircularProgress-root')).toBeInTheDocument();
   });
 });

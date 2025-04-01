@@ -179,6 +179,7 @@ const AclThemeProvider = createTheme({
       styleOverrides: {
         root: {
           position: 'relative',
+          wordBreak: 'break-word',
         },
       },
     },

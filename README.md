@@ -9,7 +9,7 @@ This repository contains the source code for the RAQ Reusable React Components L
 - Latest version
 
   ```plaintext
-  1.5.8
+  1.5.13
   ```
 
 ## Prerequisites
@@ -40,7 +40,7 @@ This repository contains the source code for the RAQ Reusable React Components L
 4. Run the following command to add an `Azure Artifacts token` to your user-level `.npmrc file`
 
    ```bash
-   npx vsts-npm-auth -config .npmrc
+   npx vsts-npm-auth -config .npmrc -force
    ```
 
    - Follow the on-screen instructions. If prompted to log in, use your `entcorecloud account`

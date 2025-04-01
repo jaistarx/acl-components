@@ -131,6 +131,10 @@ describe('AclAutocomplete', () => {
   });
 
   it('renders correct optionIdKey and optionValueKey', async () => {
+    const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation(() => {
+      /* NOTE: Empty function */
+    });
+
     const props: AclAutocompleteProps<Record<string, any>> = {
       options: [
         { i: 1, val: 'Option 1' },
@@ -147,5 +151,7 @@ describe('AclAutocomplete', () => {
     await waitFor(() => expect(screen.getAllByRole('option')).toHaveLength(2));
     await waitFor(() => expect(screen.getByText('Option 1')).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText('Option 2')).toBeInTheDocument());
+
+    consoleErrorMock.mockRestore();
   });
 });
